@@ -1,5 +1,11 @@
 package by.fpmibsu.water.entity;
+
+import java.util.Date;
+
 public abstract class Message {
-    private String content;
-    private String message_hash_id;
+    private String messageId;
+    private User sender;
+    private Chat chat;
+    private Message content;
+    private Date messagePostDate;
 }
