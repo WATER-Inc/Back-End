@@ -13,7 +13,7 @@ CREATE TABLE chat(
 );
 
 CREATE TABLE user_chat_link(
-    user_chat_link_id,
+    user_chat_link_id INT PRIMARY KEY AUTO_INCREMENT,
 	user_id INT,
 	chat_id INT,
 	FOREIGN KEY (chat_id) REFERENCES chat (chat_id),
