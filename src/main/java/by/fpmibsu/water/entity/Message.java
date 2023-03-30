@@ -6,6 +6,6 @@ public abstract class Message {
     private String messageId;
     private User sender;
     private Chat chat;
-    private Message content;
+    private MessageContent content;
     private Date messagePostDate;
 }
