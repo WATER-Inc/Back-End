@@ -2,32 +2,41 @@ package by.fpmibsu.water.dao;
 
 import by.fpmibsu.water.entity.Message;
 
+import java.io.Serializable;
 import java.util.List;
-import java.util.Optional;
 
 public class MessageDAO implements GenericDAO<Message> {
+
     @Override
-    public List<Message> getAll() {
+    public Message create() throws PersistException {
         return null;
     }
 
     @Override
-    public Optional<Message> get(String id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Boolean save(Message message) {
+    public Message persist(Identified object) throws PersistException {
         return null;
     }
 
     @Override
-    public Boolean update(Message message) {
+    public Message getByPK(Serializable key) throws PersistException {
         return null;
     }
 
     @Override
-    public Boolean delete(Message message) {
+    public void delete(Identified object) throws PersistException {
+
+    }
+
+    @Override
+    public void update(Identified object) throws PersistException {
+
+    }
+
+    @Override
+    public List<Message> getAll() throws PersistException {
         return null;
     }
+
+
+
 }

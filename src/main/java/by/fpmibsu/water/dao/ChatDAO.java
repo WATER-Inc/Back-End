@@ -27,7 +27,7 @@ public class ChatDAO implements GenericDAO<Chat> {
     }
 
     @Override
-    public Boolean delete(Chat chat) {
+    public Boolean delete(Identified chat) {
         return null;
     }
 }
