@@ -67,7 +67,7 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Integ
     private Set<ManyToOne> relations = new HashSet<ManyToOne>();
 
     @Override
-    public T getByPK(Integer key) throws PersistException {
+    public T getByPrimaryKey(Integer key) throws PersistException {
         List<T> list;
         String sql = getSelectQuery();
         sql += " WHERE id = ?";
@@ -126,7 +126,7 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Integ
             ResultSet rs = statement.executeQuery();
             List<T> list = parseResultSet(rs);
             if ((list == null) || (list.size() != 1)) {
-                throw new PersistException("Exception on findByPK new persist data.");
+                throw new PersistException("Exception on findByPrimaryKey new persist data.");
             }
             persistInstance = list.iterator().next();
         } catch (Exception e) {
@@ -177,7 +177,7 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Integ
     }
 
     protected Identified getDependence(Class<? extends Identified> dtoClass, Serializable pk) throws PersistException {
-        return parentFactory.getDao(connection, dtoClass).getByPK(pk);
+        return parentFactory.getDao(connection, dtoClass).getByPrimaryKey(pk);
     }
 
     protected boolean addRelation(Class<? extends Identified> ownerClass, String field) {

@@ -14,7 +14,7 @@ public class UserDAO implements GenericDAO<User>{
     }
 
     @Override
-    public User getByPK(Serializable key) throws PersistException {
+    public User getByPrimaryKey(Serializable key) throws PersistException {
         return null;
     }
 

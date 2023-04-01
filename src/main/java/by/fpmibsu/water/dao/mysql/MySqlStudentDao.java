@@ -1,6 +1,8 @@
 package by.fpmibsu.water.dao.mysql;
 
 
+import by.fpmibsu.water.dao.*;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -45,7 +47,7 @@ public class MySqlStudentDao extends AbstractJDBCDao<Student, Integer> {
         return persist(s);
     }
 
-    public MySqlStudentDao(DaoFactory<Connection> parentFactory, Connection connection) {
+    public MySqlStudentDao(DAOFactory<Connection> parentFactory, Connection connection) {
         super(parentFactory, connection);
         addRelation(Student.class, "group");
     }

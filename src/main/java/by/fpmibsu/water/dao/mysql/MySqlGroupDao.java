@@ -3,6 +3,11 @@ package by.fpmibsu.water.dao.mysql;
 
 
 
+import by.fpmibsu.water.dao.AbstractJDBCDao;
+import by.fpmibsu.water.dao.DAOFactory;
+import by.fpmibsu.water.dao.Group;
+import by.fpmibsu.water.dao.PersistException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,7 +50,7 @@ public class MySqlGroupDao extends AbstractJDBCDao<Group, Integer> {
         return persist(g);
     }
 
-    public MySqlGroupDao(DaoFactory<Connection> parentFactory, Connection connection) {
+    public MySqlGroupDao(DAOFactory<Connection> parentFactory, Connection connection) {
         super(parentFactory, connection);
     }
 

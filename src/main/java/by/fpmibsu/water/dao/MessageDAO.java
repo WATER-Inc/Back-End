@@ -18,7 +18,7 @@ public class MessageDAO implements GenericDAO<Message> {
     }
 
     @Override
-    public Message getByPK(Serializable key) throws PersistException {
+    public Message getByPrimaryKey(Serializable key) throws PersistException {
         return null;
     }
 
