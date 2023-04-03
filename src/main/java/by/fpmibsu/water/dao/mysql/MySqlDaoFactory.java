@@ -12,7 +12,7 @@ import java.util.Map;
 public class MySqlDaoFactory implements DAOFactory<Connection> {
 
     private String user = "root";//Логин пользователя
-    private String password = "";//Пароль пользователя
+    private String password = "polyak";//Пароль пользователя
     private String url = "jdbc:mysql://localhost:3306/skillbox";//URL адрес
     private String driver = "com.mysql.jdbc.Driver";//Имя драйвера
     private Map<Class, DAOFactory.DaoCreator> creators;
