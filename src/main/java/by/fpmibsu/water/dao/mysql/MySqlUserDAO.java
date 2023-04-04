@@ -76,10 +76,10 @@ public class MySqlUserDAO extends AbstractJDBCDao<User, Integer> {
     protected void prepareStatementForInsert(PreparedStatement statement, User object) throws PersistException {
         try {
             statement.setString(1, object.getUsername());
-            statement.setString(2,object.getEmail());
-            statement.setString(3,object.getPasswordHash());
+            statement.setString(2, object.getEmail());
+            statement.setString(3, object.getPasswordHash());
             statement.setDate(4, (Date) object.getLastSeen());
-            statement.setString(5,object.getAboutMe());
+            statement.setString(5, object.getAboutMe());
         } catch (Exception e) {
             throw new PersistException(e);
         }
@@ -89,11 +89,11 @@ public class MySqlUserDAO extends AbstractJDBCDao<User, Integer> {
     protected void prepareStatementForUpdate(PreparedStatement statement, User object) throws PersistException {
         try {
             statement.setString(1, object.getUsername());
-            statement.setString(2,object.getEmail());
-            statement.setString(3,object.getPasswordHash());
+            statement.setString(2, object.getEmail());
+            statement.setString(3, object.getPasswordHash());
             statement.setDate(4, (Date) object.getLastSeen());
-            statement.setString(5,object.getAboutMe());
-            statement.setInt(6,object.getId());
+            statement.setString(5, object.getAboutMe());
+            statement.setInt(6, object.getId());
         } catch (Exception e) {
             throw new PersistException(e);
         }

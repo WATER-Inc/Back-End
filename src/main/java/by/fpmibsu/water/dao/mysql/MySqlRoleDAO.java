@@ -4,10 +4,8 @@ import by.fpmibsu.water.dao.AbstractJDBCDao;
 import by.fpmibsu.water.dao.DAOFactory;
 import by.fpmibsu.water.dao.PersistException;
 import by.fpmibsu.water.dao.entity.Role;
-import by.fpmibsu.water.entity.User;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.LinkedList;
@@ -74,7 +72,7 @@ public class MySqlRoleDAO extends AbstractJDBCDao<Role, Integer> {
     protected void prepareStatementForInsert(PreparedStatement statement, Role object) throws PersistException {
         try {
             statement.setInt(1, object.getUserId());
-            statement.setString(2,object.getTitle());
+            statement.setString(2, object.getTitle());
         } catch (Exception e) {
             throw new PersistException(e);
         }
@@ -84,8 +82,8 @@ public class MySqlRoleDAO extends AbstractJDBCDao<Role, Integer> {
     protected void prepareStatementForUpdate(PreparedStatement statement, Role object) throws PersistException {
         try {
             statement.setInt(1, object.getUserId());
-            statement.setString(2,object.getTitle());
-            statement.setInt(3,object.getId());
+            statement.setString(2, object.getTitle());
+            statement.setInt(3, object.getId());
         } catch (Exception e) {
             throw new PersistException(e);
         }
