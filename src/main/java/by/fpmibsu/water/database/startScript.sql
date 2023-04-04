@@ -1,5 +1,5 @@
 
-CREATE TABLE users(
+CREATE TABLE user(
                       user_id INT PRIMARY KEY AUTO_INCREMENT,
                       username VARCHAR(64),
                       email VARCHAR(120),
@@ -9,6 +9,7 @@ CREATE TABLE users(
 );
 CREATE TABLE role(
                      role_id INT PRIMARY KEY AUTO_INCREMENT,
+                     user_id INT,
                      title VARCHAR(64)
 );
 CREATE TABLE chat(
@@ -21,7 +22,7 @@ CREATE TABLE user_chat_link(
                                user_id INT,
                                chat_id INT,
                                FOREIGN KEY (chat_id) REFERENCES chat (chat_id),
-                               FOREIGN KEY (user_id) REFERENCES users (user_id)
+                               FOREIGN KEY (user_id) REFERENCES user (user_id)
 );
 
 CREATE TABLE chat_user(
@@ -30,7 +31,7 @@ CREATE TABLE chat_user(
                           user_id INT,
                           role_id INT,
                           FOREIGN KEY (chat_id) REFERENCES chat (chat_id),
-                          FOREIGN KEY (user_id) REFERENCES users (user_id),
+                          FOREIGN KEY (user_id) REFERENCES user (user_id),
                           FOREIGN KEY (role_id) REFERENCES role (role_id)
 );
 
@@ -42,7 +43,7 @@ CREATE TABLE messages(
                          chat_id INT,
                          content VARCHAR(140),
                          created_date DATE,
-                         FOREIGN KEY (sender_id) REFERENCES users (user_id),
+                         FOREIGN KEY (sender_id) REFERENCES user (user_id),
                          FOREIGN KEY (chat_id) REFERENCES chat (chat_id)
 );
 
@@ -51,15 +52,15 @@ CREATE TABLE post(
                      content VARCHAR(140),
                      created_date DATE,
                      user_id INT,
-                     FOREIGN KEY (user_id) REFERENCES users (user_id)
+                     FOREIGN KEY (user_id) REFERENCES user (user_id)
 );
 
 CREATE TABLE followers(
                           followers_id INT PRIMARY KEY AUTO_INCREMENT,
                           follower_id INT,
                           followed_id INT,
-                          FOREIGN KEY (follower_id) REFERENCES users (user_id),
-                          FOREIGN KEY (followed_id) REFERENCES users (user_id)
+                          FOREIGN KEY (follower_id) REFERENCES user (user_id),
+                          FOREIGN KEY (followed_id) REFERENCES user (user_id)
 );
 
 CREATE TABLE comments(
@@ -68,6 +69,6 @@ CREATE TABLE comments(
                          post_id INT,
                          author_id INT,
                          created_date DATE,
-                         FOREIGN KEY (author_id) REFERENCES users (user_id),
+                         FOREIGN KEY (author_id) REFERENCES user (user_id),
                          FOREIGN KEY (post_id) REFERENCES post (post_id)
 );

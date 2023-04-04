@@ -2,6 +2,7 @@ package by.fpmibsu.water.dao.mysql;
 
 
 import by.fpmibsu.water.dao.*;
+import by.fpmibsu.water.entity.User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +13,7 @@ import java.util.Map;
 public class MySqlDaoFactory implements DAOFactory<Connection> {
 
     private String user = "root";//Логин пользователя
-    private String password = "polyak";//Пароль пользователя
+    private String password = "";//Пароль пользователя//TODO need to add password
     private String url = "jdbc:mysql://localhost:3306/skillbox";//URL адрес
     private String driver = "com.mysql.jdbc.Driver";//Имя драйвера
     private Map<Class, DAOFactory.DaoCreator> creators;
@@ -44,16 +45,10 @@ public class MySqlDaoFactory implements DAOFactory<Connection> {
         }
 
         creators = new HashMap<Class, DAOFactory.DaoCreator>();
-        creators.put(Group.class, new DAOFactory.DaoCreator<Connection>() {
+        creators.put(User.class, new DaoCreator<Connection>() {
             @Override
             public GenericDAO create(Connection connection) {
-                return new MySqlGroupDao(MySqlDaoFactory.this, connection);
-            }
-        });
-        creators.put(Student.class, new DaoCreator<Connection>() {
-            @Override
-            public GenericDAO create(Connection connection) {
-                return new MySqlStudentDao(MySqlDaoFactory.this, connection);
+                return new MySqlUserDAO(MySqlDaoFactory.this, connection);
             }
         });
     }
