@@ -2,10 +2,7 @@
 CREATE TABLE user(
                       user_id INT PRIMARY KEY AUTO_INCREMENT,
                       username VARCHAR(64),
-                      email VARCHAR(120),
-                      password_hash VARCHAR(128),
-                      last_seen DATE,
-                      about_me VARCHAR(120)
+                      password_hash VARCHAR(128)
 );
 CREATE TABLE role(
                      role_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -34,8 +31,6 @@ CREATE TABLE chat_user(
                           FOREIGN KEY (user_id) REFERENCES user (user_id),
                           FOREIGN KEY (role_id) REFERENCES role (role_id)
 );
-
-
 
 CREATE TABLE messages(
                          message_id INT PRIMARY KEY AUTO_INCREMENT,
