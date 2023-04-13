@@ -14,7 +14,7 @@ import java.util.List;
 public class MySqlChatDAO extends AbstractJDBCDao<Chat, Integer> {
 
     private class PersistChat extends Chat {
-        public void setId(int id) {
+        public void setString(String id) {
             super.setId(id);
         }
     }
@@ -57,7 +57,7 @@ public class MySqlChatDAO extends AbstractJDBCDao<Chat, Integer> {
         try {
             while (rs.next()) {
                 PersistChat chat = new PersistChat();
-                chat.setId(rs.getInt("chat_id"));
+                chat.setId(rs.getString("chat_id"));
                 chat.setName(rs.getString("name"));
                 //TODO need to add SELECT all users to list;
                 result.add(chat);
@@ -81,7 +81,7 @@ public class MySqlChatDAO extends AbstractJDBCDao<Chat, Integer> {
     protected void prepareStatementForUpdate(PreparedStatement statement, Chat object) throws PersistException {
         try {
             statement.setString(1, object.getName());
-            statement.setInt(2, object.getId());
+            statement.setString(2, object.getId());
         } catch (Exception e) {
             throw new PersistException(e);
         }

@@ -4,8 +4,8 @@ import by.fpmibsu.water.dao.Identified;
 
 import java.util.List;
 
-public class Chat implements Identified<Integer> {
-    private Integer Id;
+public class Chat implements Identified<String> {
+    private String Id;
     private String name;
     private List<User> users;
     public String getName() {
@@ -16,11 +16,11 @@ public class Chat implements Identified<Integer> {
         this.name = name;
     }
 
-    public Integer getId() {
+    public String getId() {
         return Id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         Id = id;
     }
 

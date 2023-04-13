@@ -4,16 +4,16 @@ import by.fpmibsu.water.dao.Identified;
 
 import java.util.Date;
 
-public abstract class Message implements Identified<Integer> {
-    private Integer id;
+public abstract class Message implements Identified<String> {
+    private String id;
     private User sender;
     private Chat chat;
     private MessageContent content;
     @Override
-    public Integer getId() {
+    public String getId() {
         return id;
     }
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
     public User getSender() {
