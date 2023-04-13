@@ -1,0 +1,17 @@
+minput, minput::placeholder{
+    font-family: Roboto, Arial, sans-serif;
+    font-weight: 800;
+    font-size: 36px;
+}
+minput{
+    color: #0F1B8A;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid rgba(0,0,0,50%);
+}
+minput::placeholder {
+    color: #A5B0D8;
+}
+password{
+    color:black;
+}

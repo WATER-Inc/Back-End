@@ -1,15 +1,13 @@
 package by.fpmibsu.water.entity;
 
 import by.fpmibsu.water.dao.Identified;
-import jdk.internal.net.http.common.Pair;
 
 import java.util.List;
 
-public class Chat implements Identified<Integer> {
-    private Integer Id;
+public class Chat implements Identified<String> {
+    private String Id;
     private String name;
-    private List<Pair<User, String>> users; //TODO second element in the pair is the role of the user of this pair
-
+    private List<User> users;
     public String getName() {
         return name;
     }
@@ -18,19 +16,19 @@ public class Chat implements Identified<Integer> {
         this.name = name;
     }
 
-    public Integer getId() {
+    public  String getId() {
         return Id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         Id = id;
     }
 
-    public List<Pair<User, String>> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<Pair<User, String>> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 }
