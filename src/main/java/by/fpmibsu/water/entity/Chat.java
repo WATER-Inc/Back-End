@@ -16,7 +16,7 @@ public class Chat implements Identified<String> {
         this.name = name;
     }
 
-    public String getId() {
+    public  String getId() {
         return Id;
     }
 

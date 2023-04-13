@@ -12,10 +12,10 @@ import java.sql.ResultSet;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MySqlUserDAO extends AbstractJDBCDao<User, Integer> {
+public class MySqlUserDAO extends AbstractJDBCDao<User, String> {
 
     private class PersistUser extends User {
-        public void setId(int id) {
+        public void setId(String id) {
             super.setId(id);
         }
     }
@@ -58,7 +58,7 @@ public class MySqlUserDAO extends AbstractJDBCDao<User, Integer> {
         try {
             while (rs.next()) {
                 MySqlUserDAO.PersistUser user = new MySqlUserDAO.PersistUser();
-                user.setId(rs.getInt("user_id"));
+                user.setId(rs.getString("user_id"));
                 user.setUsername(rs.getString("username"));
                 user.setPasswordHash(rs.getString("password_hash"));
                 result.add(user);
@@ -84,7 +84,7 @@ public class MySqlUserDAO extends AbstractJDBCDao<User, Integer> {
         try {
             statement.setString(1, object.getUsername());
             statement.setString(3, object.getPasswordHash());
-            statement.setInt(6, object.getId());
+            statement.setString(6, object.getId());
         } catch (Exception e) {
             throw new PersistException(e);
         }

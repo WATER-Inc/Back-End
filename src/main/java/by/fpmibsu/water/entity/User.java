@@ -2,18 +2,18 @@ package by.fpmibsu.water.entity;
 
 import by.fpmibsu.water.dao.Identified;
 
-public class User implements Identified<Integer> {
-    private Integer id;
+public class User implements Identified<String> {
+    private String id;
     private String username;
     private String passwordHash;
     private Contacts contacts;
 
     @Override
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
     public String getUsername() {

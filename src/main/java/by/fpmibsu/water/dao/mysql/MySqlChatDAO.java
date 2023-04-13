@@ -11,10 +11,10 @@ import java.sql.ResultSet;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MySqlChatDAO extends AbstractJDBCDao<Chat, Integer> {
+public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
 
     private class PersistChat extends Chat {
-        public void setString(String id) {
+        public void setId(String id) {
             super.setId(id);
         }
     }

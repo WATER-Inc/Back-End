@@ -15,7 +15,7 @@ import java.util.Set;
  * @param <T>  тип объекта персистенции
  * @param <PK> тип первичного ключа
  */
-public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Integer> implements GenericDAO<T, PK> {
+public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends String> implements GenericDAO<T, PK> {
 
     /**
      * Возвращает sql запрос для получения всех записей.
@@ -67,12 +67,12 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Integ
     private Set<ManyToOne> relations = new HashSet<ManyToOne>();
 
     @Override
-    public T getByPrimaryKey(Integer key) throws PersistException {
+    public T getByPrimaryKey(String key) throws PersistException {
         List<T> list;
         String sql = getSelectQuery();
         sql += " WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, key);
+            statement.setString(1, key);
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
         } catch (Exception e) {
