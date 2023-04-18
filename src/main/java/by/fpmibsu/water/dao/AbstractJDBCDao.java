@@ -1,7 +1,5 @@
 package by.fpmibsu.water.dao;
 
-
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
