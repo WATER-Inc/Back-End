@@ -2,13 +2,15 @@ package by.fpmibsu.water.entity;
 
 import by.fpmibsu.water.dao.Identified;
 
-import java.util.Date;
+import java.sql.Date;
 
-public abstract class Message implements Identified<String> {
+public class Message implements Identified<String> {
     private String id;
     private User sender;
     private Chat chat;
-    private MessageContent content;
+    private String content;
+
+    private Date date;
     @Override
     public String getId() {
         return id;
@@ -28,10 +30,17 @@ public abstract class Message implements Identified<String> {
     public void setChat(Chat chat) {
         this.chat = chat;
     }
-    public MessageContent getContent() {
+    public String getContent() {
         return content;
     }
-    public void setContent(MessageContent content) {
+    public void setContent(String content) {
         this.content = content;
+    }
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
