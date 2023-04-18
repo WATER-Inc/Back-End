@@ -3,12 +3,16 @@ package by.fpmibsu.water.dao.mysql;
 import by.fpmibsu.water.dao.AbstractJDBCDao;
 import by.fpmibsu.water.dao.DAOFactory;
 import by.fpmibsu.water.dao.PersistException;
+import by.fpmibsu.water.dao.entity.ChatLink;
+import by.fpmibsu.water.dao.entity.Participants;
+import by.fpmibsu.water.dao.entity.Role;
 import by.fpmibsu.water.entity.Chat;
 import by.fpmibsu.water.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -71,8 +75,13 @@ public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
                 chat.setName(rs.getString("name"));
                 MySqlDaoFactory mySqlDaoFactory = new MySqlDaoFactory();
                 MySqlUserDAO userDAO = (MySqlUserDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getContext(), User.class);
-                //chat.setUsers();
-                //TODO need to add SELECT all users to list;
+                MySqlRoleDAO roleDAO = (MySqlRoleDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getContext(), Role.class);
+                MySqlChatLinkDAO chatLinkDAO = (MySqlChatLinkDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getContext(), ChatLink.class);
+                ArrayList<ChatLink> list = (ArrayList<ChatLink>) chatLinkDAO.getByChat(chat);
+                Participants participants = new Participants();
+                for(ChatLink chatLink : list){
+                    participants.addUser(userDAO.getByPrimaryKey(chatLink.getUserId()), roleDAO.getByPrimaryKey(chatLink.getRoleId()));
+                }
                 result.add(chat);
             }
         } catch (Exception e) {
