@@ -13,7 +13,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MySqlUserDAO extends AbstractJDBCDao<User, String> {
-    private final static String selectQ = "SELECT user_id, username, password_hash FROM water.user";
+    private final static String selectQ = "SELECT user_id, username, password_hash FROM water.user WHERE user_id= ?;";
+    private final static String selectALlQ = "SELECT user_id, username, password_hash FROM water.user";
     private final static String insertQ = "INSERT INTO water.user (username, password_hash) \n" +
             "VALUES (?, ?);";
     private final static String updateQ = "UPDATE water.user SET username=?, password_hash=? WHERE user_id= ?;";
@@ -28,6 +29,11 @@ public class MySqlUserDAO extends AbstractJDBCDao<User, String> {
     @Override
     public String getSelectQuery() {
         return selectQ;
+    }
+
+    @Override
+    public String getSelectAllQuery() {
+        return selectALlQ;
     }
 
     @Override

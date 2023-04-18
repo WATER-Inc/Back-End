@@ -18,12 +18,17 @@ import java.util.Set;
 public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends String> implements GenericDAO<T, PK> {
 
     /**
-     * Возвращает sql запрос для получения всех записей.
+     * Возвращает sql запрос для получения одной записи.
      * <p/>
      * SELECT * FROM [Table]
      */
     public abstract String getSelectQuery();
-
+    /**
+     * Возвращает sql запрос для получения всех записей.
+     * <p/>
+     * SELECT * FROM [Table]
+     */
+    public abstract String getSelectAllQuery();
     /**
      * Возвращает sql запрос для вставки новой записи в базу данных.
      * <p/>

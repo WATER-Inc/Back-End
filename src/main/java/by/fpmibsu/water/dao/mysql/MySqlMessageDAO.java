@@ -15,7 +15,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
-    private final static String selectQ = "SELECT * FROM water.message;";
+    private final static String selectQ = "SELECT * FROM water.message WHERE message_id=?;";
+    private final static String selectAllQ = "SELECT * FROM water.message";
     private final static String insertQ = "INSERT INTO water.message (sender_id, chat_id, content, created_date) \n" +
             "VALUES (?);";
     private final static String updateQ = "UPDATE water.message SET content=? WHERE message_id= ?;";
@@ -30,6 +31,11 @@ public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
     @Override
     public String getSelectQuery() {
         return selectQ;
+    }
+
+    @Override
+    public String getSelectAllQuery() {
+        return selectAllQ;
     }
 
     @Override
