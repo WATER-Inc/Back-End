@@ -86,4 +86,6 @@ public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
             throw new PersistException(e);
         }
     }
+
+
 }

@@ -1,4 +1,3 @@
-
 CREATE TABLE user(
                       user_id INT PRIMARY KEY AUTO_INCREMENT,
                       username VARCHAR(64),
