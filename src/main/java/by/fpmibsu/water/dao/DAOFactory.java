@@ -1,18 +1,13 @@
 package by.fpmibsu.water.dao;
 
-import by.fpmibsu.water.dao.GenericDAO;
+public interface DAOFactory<Connection> {
 
-import java.sql.Connection;
-
-public interface DAOFactory<Context> {
-
-    public interface DaoCreator<Context> {
-        public GenericDAO create(Context context);
+    public interface DaoCreator<Connection> {
+        public GenericDAO create(Connection context);
     }
-
     /** Возвращает подключение к базе данных */
-    public Context getContext() throws PersistException;
+    public Connection getContext() throws PersistException;
 
     /** Возвращает объект для управления персистентным состоянием объекта */
-    public GenericDAO getDao(Context context, Class dtoClass) throws PersistException;
+    public GenericDAO getDao(Connection connection, Class dtoClass) throws PersistException;
 }

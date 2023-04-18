@@ -26,6 +26,11 @@ public class MySqlRoleDAO extends AbstractJDBCDao<Role, String> {
     }
 
     @Override
+    public String getSelectAllQuery() {
+        return null;
+    }
+
+    @Override
     public String getCreateQuery() {
         return "INSERT INTO water.role (user_id, title) \n" +
                 "VALUES (?, ?);";

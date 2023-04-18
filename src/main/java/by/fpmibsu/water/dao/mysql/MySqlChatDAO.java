@@ -4,6 +4,7 @@ import by.fpmibsu.water.dao.AbstractJDBCDao;
 import by.fpmibsu.water.dao.DAOFactory;
 import by.fpmibsu.water.dao.PersistException;
 import by.fpmibsu.water.entity.Chat;
+import by.fpmibsu.water.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +13,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
-
+    private final static String selectQ = "SELECT name FROM water.chat WHERE chat_id= ?;";
+    private final static String selectAllQ = "SELECT chat_id, name FROM water.chat";
+    private final static String insertQ = "INSERT INTO water.chat (name) \n" +
+            "VALUES (?);";
+    private final static String updateQ = "UPDATE water.chat SET name=? WHERE chat_id= ?;";
+    private final static String deleteQ = "DELETE FROM water.chat WHERE chat_id= ?;";
     private class PersistChat extends Chat {
         public void setId(String id) {
             super.setId(id);
@@ -22,23 +28,27 @@ public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
 
     @Override
     public String getSelectQuery() {
-        return "SELECT chat_id, name FROM water.chat";
+        return selectQ;
+    }
+
+    @Override
+    public String getSelectAllQuery() {
+        return selectAllQ;
     }
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO water.chat (name) \n" +
-                "VALUES (?);";
+        return insertQ;
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE water.chat SET name=? WHERE chat_id= ?;";
+        return updateQ;
     }
 
     @Override
     public String getDeleteQuery() {
-        return "DELETE FROM water.chat WHERE chat_id= ?;";
+        return deleteQ;
     }
 
     @Override
@@ -59,6 +69,9 @@ public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
                 PersistChat chat = new PersistChat();
                 chat.setId(rs.getString("chat_id"));
                 chat.setName(rs.getString("name"));
+                MySqlDaoFactory mySqlDaoFactory = new MySqlDaoFactory();
+                MySqlUserDAO userDAO = (MySqlUserDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getContext(), User.class);
+                //chat.setUsers();
                 //TODO need to add SELECT all users to list;
                 result.add(chat);
             }

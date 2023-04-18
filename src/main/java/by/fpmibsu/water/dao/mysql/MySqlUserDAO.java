@@ -13,7 +13,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MySqlUserDAO extends AbstractJDBCDao<User, String> {
-
+    private final static String selectQ = "SELECT user_id, username, password_hash FROM water.user WHERE user_id= ?;";
+    private final static String selectALlQ = "SELECT user_id, username, password_hash FROM water.user";
+    private final static String insertQ = "INSERT INTO water.user (username, password_hash) \n" +
+            "VALUES (?, ?);";
+    private final static String updateQ = "UPDATE water.user SET username=?, password_hash=? WHERE user_id= ?;";
+    private final static String deleteQ = "DELETE FROM water.user WHERE user_id= ?;";
     private class PersistUser extends User {
         public void setId(String id) {
             super.setId(id);
@@ -23,23 +28,27 @@ public class MySqlUserDAO extends AbstractJDBCDao<User, String> {
 
     @Override
     public String getSelectQuery() {
-        return "SELECT user_id, username, password_hash FROM water.user";
+        return selectQ;
+    }
+
+    @Override
+    public String getSelectAllQuery() {
+        return selectALlQ;
     }
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO water.user (username, password_hash) \n" +
-                "VALUES (?, ?);";
+        return insertQ;
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE water.user SET username=?, password_hash=? WHERE user_id= ?;";
+        return updateQ;
     }
 
     @Override
     public String getDeleteQuery() {
-        return "DELETE FROM water.user WHERE user_id= ?;";
+        return deleteQ;
     }
 
     @Override

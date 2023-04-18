@@ -18,12 +18,17 @@ import java.util.Set;
 public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends String> implements GenericDAO<T, PK> {
 
     /**
-     * Возвращает sql запрос для получения всех записей.
+     * Возвращает sql запрос для получения одной записи.
      * <p/>
      * SELECT * FROM [Table]
      */
     public abstract String getSelectQuery();
-
+    /**
+     * Возвращает sql запрос для получения всех записей.
+     * <p/>
+     * SELECT * FROM [Table]
+     */
+    public abstract String getSelectAllQuery();
     /**
      * Возвращает sql запрос для вставки новой записи в базу данных.
      * <p/>
@@ -165,7 +170,6 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
             if (count != 1) {
                 throw new PersistException("On delete modify more then 1 record: " + count);
             }
-            statement.close();
         } catch (Exception e) {
             throw new PersistException(e);
         }
@@ -174,18 +178,6 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
     public AbstractJDBCDao(DAOFactory<Connection> parentFactory, Connection connection) {
         this.parentFactory = parentFactory;
         this.connection = connection;
-    }
-
-    protected Identified getDependence(Class<? extends Identified> dtoClass, Serializable pk) throws PersistException {
-        return parentFactory.getDao(connection, dtoClass).getByPrimaryKey(pk);
-    }
-
-    protected boolean addRelation(Class<? extends Identified> ownerClass, String field) {
-        try {
-            return relations.add(new ManyToOne(ownerClass, parentFactory, field));
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void saveDependences(Identified owner) throws PersistException {
