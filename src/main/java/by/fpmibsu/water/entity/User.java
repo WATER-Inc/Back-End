@@ -32,4 +32,13 @@ public class User implements Identified<String> {
         return contacts;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", passwordHash='" + passwordHash + '\'' +
+                ", contacts=" + contacts +
+                '}';
+    }
 }

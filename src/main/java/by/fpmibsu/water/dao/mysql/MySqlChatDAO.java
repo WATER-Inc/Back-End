@@ -12,7 +12,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
-
+    private final static String selectQ = "SELECT chat_id, name FROM water.chat";
+    private final static String insertQ = "INSERT INTO water.chat (name) \n" +
+            "VALUES (?);";
+    private final static String updateQ = "UPDATE water.chat SET name=? WHERE chat_id= ?;";
+    private final static String deleteQ = "DELETE FROM water.chat WHERE chat_id= ?;";
     private class PersistChat extends Chat {
         public void setId(String id) {
             super.setId(id);
@@ -22,23 +26,22 @@ public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
 
     @Override
     public String getSelectQuery() {
-        return "SELECT chat_id, name FROM water.chat";
+        return selectQ;
     }
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO water.chat (name) \n" +
-                "VALUES (?);";
+        return insertQ;
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE water.chat SET name=? WHERE chat_id= ?;";
+        return updateQ;
     }
 
     @Override
     public String getDeleteQuery() {
-        return "DELETE FROM water.chat WHERE chat_id= ?;";
+        return deleteQ;
     }
 
     @Override
@@ -86,4 +89,6 @@ public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
             throw new PersistException(e);
         }
     }
+
+
 }
