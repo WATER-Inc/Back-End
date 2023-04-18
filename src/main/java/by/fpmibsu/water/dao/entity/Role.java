@@ -2,17 +2,17 @@ package by.fpmibsu.water.dao.entity;
 
 import by.fpmibsu.water.dao.Identified;
 
-public class Role implements Identified<Integer> {
-    private Integer id;
+public class Role implements Identified<String> {
+    private String id;
     private Integer userId;
     private String title;
 
     @Override
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -11,10 +11,10 @@ import java.sql.ResultSet;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MySqlRoleDAO extends AbstractJDBCDao<Role, Integer> {
+public class MySqlRoleDAO extends AbstractJDBCDao<Role, String> {
 
     private class PersistRole extends Role {
-        public void setId(int id) {
+        public void setId(String id) {
             super.setId(id);
         }
     }
@@ -57,7 +57,7 @@ public class MySqlRoleDAO extends AbstractJDBCDao<Role, Integer> {
         try {
             while (rs.next()) {
                 MySqlRoleDAO.PersistRole role = new MySqlRoleDAO.PersistRole();
-                role.setId(rs.getInt("role_id"));
+                role.setId(rs.getString("role_id"));
                 role.setUserId(rs.getInt("user_id"));
                 role.setTitle(rs.getString("title"));
                 result.add(role);
@@ -83,7 +83,7 @@ public class MySqlRoleDAO extends AbstractJDBCDao<Role, Integer> {
         try {
             statement.setInt(1, object.getUserId());
             statement.setString(2, object.getTitle());
-            statement.setInt(3, object.getId());
+            statement.setString(3, object.getId());
         } catch (Exception e) {
             throw new PersistException(e);
         }

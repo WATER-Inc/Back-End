@@ -23,18 +23,18 @@ public class MySqlUserDAO extends AbstractJDBCDao<User, String> {
 
     @Override
     public String getSelectQuery() {
-        return "SELECT user_id, username, email, password_hash, last_seen, about_me FROM water.user";
+        return "SELECT user_id, username, password_hash FROM water.user";
     }
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO water.user (username, email, password_hash, last_seen, about_me) \n" +
-                "VALUES (?, ?, ?, ?, ?);";
+        return "INSERT INTO water.user (username, password_hash) \n" +
+                "VALUES (?, ?);";
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE water.user SET username=?, email=?, password_hash=?, last_seen=?, about_me=? WHERE user_id= ?;";
+        return "UPDATE water.user SET username=?, password_hash=? WHERE user_id= ?;";
     }
 
     @Override
@@ -73,7 +73,7 @@ public class MySqlUserDAO extends AbstractJDBCDao<User, String> {
     protected void prepareStatementForInsert(PreparedStatement statement, User object) throws PersistException {
         try {
             statement.setString(1, object.getUsername());
-            statement.setString(3, object.getPasswordHash());
+            statement.setString(2, object.getPasswordHash());
         } catch (Exception e) {
             throw new PersistException(e);
         }
@@ -83,8 +83,8 @@ public class MySqlUserDAO extends AbstractJDBCDao<User, String> {
     protected void prepareStatementForUpdate(PreparedStatement statement, User object) throws PersistException {
         try {
             statement.setString(1, object.getUsername());
-            statement.setString(3, object.getPasswordHash());
-            statement.setString(6, object.getId());
+            statement.setString(2, object.getPasswordHash());
+            statement.setString(3, object.getId());
         } catch (Exception e) {
             throw new PersistException(e);
         }

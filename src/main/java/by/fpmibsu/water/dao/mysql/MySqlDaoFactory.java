@@ -2,6 +2,8 @@ package by.fpmibsu.water.dao.mysql;
 
 
 import by.fpmibsu.water.dao.*;
+import by.fpmibsu.water.dao.entity.Role;
+import by.fpmibsu.water.entity.Chat;
 import by.fpmibsu.water.entity.User;
 
 import java.sql.Connection;
@@ -14,7 +16,7 @@ public class MySqlDaoFactory implements DAOFactory<Connection> {
 
     private String user = "root";//Логин пользователя
     private String password = "";//Пароль пользователя//TODO need to add password
-    private String url = "jdbc:mysql://localhost:3306/skillbox";//URL адрес
+    private String url = "jdbc:mysql://localhost:3306/water";//URL адрес
     private String driver = "com.mysql.jdbc.Driver";//Имя драйвера
     private Map<Class, DAOFactory.DaoCreator> creators;
 
@@ -38,17 +40,29 @@ public class MySqlDaoFactory implements DAOFactory<Connection> {
     }
 
     public MySqlDaoFactory() {
-        try {
-            Class.forName(driver);//Регистрируем драйвер
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Class.forName(driver);//Регистрируем драйвер
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
         creators = new HashMap<Class, DAOFactory.DaoCreator>();
         creators.put(User.class, new DaoCreator<Connection>() {
             @Override
             public GenericDAO create(Connection connection) {
                 return new MySqlUserDAO(MySqlDaoFactory.this, connection);
+            }
+        });
+        creators.put(Chat.class, new DaoCreator<Connection>() {
+            @Override
+            public GenericDAO create(Connection connection) {
+                return new MySqlChatDAO(MySqlDaoFactory.this, connection);
+            }
+        });
+        creators.put(Role.class, new DaoCreator<Connection>() {
+            @Override
+            public GenericDAO create(Connection connection) {
+                return new MySqlRoleDAO(MySqlDaoFactory.this, connection);
             }
         });
     }
