@@ -33,16 +33,7 @@ CREATE TABLE messages(
                          FOREIGN KEY (sender_id) REFERENCES user (user_id),
                          FOREIGN KEY (chat_id) REFERENCES chat (chat_id)
 );
-
-CREATE TABLE post(
-                     post_id INT PRIMARY KEY AUTO_INCREMENT,
-                     content VARCHAR(140),
-                     created_date DATE,
-                     user_id INT,
-                     FOREIGN KEY (user_id) REFERENCES user (user_id)
-);
-
-CREATE TABLE followers(
+CREATE TABLE contacts(
                           followers_id INT PRIMARY KEY AUTO_INCREMENT,
                           follower_id INT,
                           followed_id INT,
@@ -50,12 +41,3 @@ CREATE TABLE followers(
                           FOREIGN KEY (followed_id) REFERENCES user (user_id)
 );
 
-CREATE TABLE comments(
-                         comment_id INT PRIMARY KEY AUTO_INCREMENT,
-                         content VARCHAR(120),
-                         post_id INT,
-                         author_id INT,
-                         created_date DATE,
-                         FOREIGN KEY (author_id) REFERENCES user (user_id),
-                         FOREIGN KEY (post_id) REFERENCES post (post_id)
-);

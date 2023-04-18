@@ -65,7 +65,7 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
 
     private DAOFactory<Connection> parentFactory;
 
-    private Connection connection;
+    protected Connection connection;
 
     private Set<ManyToOne> relations = new HashSet<ManyToOne>();
 
@@ -73,7 +73,6 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
     public T getByPrimaryKey(String key) throws PersistException {
         List<T> list;
         String sql = getSelectQuery();
-        sql += " WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, key);
             ResultSet rs = statement.executeQuery();
@@ -93,7 +92,7 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
     @Override
     public List<T> getAll() throws PersistException {
         List<T> list;
-        String sql = getSelectQuery();
+        String sql = getSelectAllQuery();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
@@ -102,7 +101,6 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
         }
         return list;
     }
-
     @Override
     public T persist(T object) throws PersistException {
         if (object.getId() != null) {
