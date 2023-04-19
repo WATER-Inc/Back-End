@@ -12,12 +12,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MySqlFollowerDAO extends AbstractJDBCDao<Follower, String> {
-    private final static String selectQ = "SELECT * FROM water.followers WHERE followed_id=? ;";
-    private final static String selectAllQ = "SELECT * FROM water.followers";
-    private final static String insertQ = "INSERT INTO water.followers (follower_id, followed_id) \n" +
+    private final static String selectQ = "SELECT * FROM water.contacts WHERE follower_id=? ;";
+    private final static String selectAllQ = "SELECT follower_id,followed_id FROM water.contacts";
+    private final static String insertQ = "INSERT INTO water.contacts (follower_id, followed_id) \n" +
             "VALUES (?);";
-    private final static String updateQ = "UPDATE water.followers SET follower_id=? WHERE followed_id= ? AND follower_id= ?;";
-    private final static String deleteQ = "DELETE FROM water.followers WHERE followed_id= ? AND follower_id= ?;";
+    private final static String updateQ = "UPDATE water.contacts SET follower_id=? WHERE followers_id=?;";
+    private final static String deleteQ = "DELETE FROM water.contacts WHERE ;";
 
     private class PersistFollower extends Follower {
         public void setId(String id) {
@@ -67,6 +67,7 @@ public class MySqlFollowerDAO extends AbstractJDBCDao<Follower, String> {
         try {
             while (rs.next()) {
                 MySqlFollowerDAO.PersistFollower Follower = new MySqlFollowerDAO.PersistFollower();
+                Follower.setId(rs.getString("followers_id"));
                 Follower.setFollowerId(rs.getString("follower_id"));
                 Follower.setFollowedId(rs.getString("follower_id"));
                 result.add(Follower);
