@@ -114,6 +114,7 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
         String sql = getCreateQuery();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             prepareStatementForInsert(statement, object);
+            System.out.println(statement);
             int count = statement.executeUpdate();
             if (count != 1) {
                 throw new PersistException("On persist modify more then 1 record: " + count);
@@ -122,7 +123,8 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
             throw new PersistException(e);
         }
         // Получаем только что вставленную запись
-        sql = getSelectQuery() + " WHERE id = last_insert_id();";
+        sql = getSelectQuery() + " WHERE user_id = last_insert_id();";
+        System.out.println(sql);
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet rs = statement.executeQuery();
             List<T> list = parseResultSet(rs);

@@ -5,7 +5,7 @@ import by.fpmibsu.water.dao.Identified;
 import java.util.List;
 
 public class User implements Identified<String> {
-    private String id;
+    private String id = null;
     private String username;
     private String passwordHash;
     private List<User> contacts;

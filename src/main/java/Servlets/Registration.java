@@ -1,5 +1,10 @@
 package Servlets;
 
+import by.fpmibsu.water.dao.PersistException;
+import by.fpmibsu.water.dao.mysql.MySqlDaoFactory;
+import by.fpmibsu.water.dao.mysql.MySqlUserDAO;
+import by.fpmibsu.water.entity.User;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -33,11 +38,22 @@ public class Registration extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String queryString = request.getQueryString();
-        Map<String, String[]> parameterMap = request.getParameterMap();
-        String username = parameterMap.get("username")[0];
-        String password = parameterMap.get("password")[0];
-        response.setContentType("text/plain");
-        response.getWriter().write("Username: " + username + ", Password: " + password);
+        try {
+            String queryString = request.getQueryString();
+            Map<String, String[]> parameterMap = request.getParameterMap();
+            String username = parameterMap.get("username")[0];
+            String password = parameterMap.get("password")[0];
+            response.setContentType("text/plain");
+            //response.getWriter().write("Username: " + username + ", Password: " + password);
+            MySqlDaoFactory mySqlDaoFactory = new MySqlDaoFactory();
+            MySqlUserDAO userDAO = (MySqlUserDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getContext(), User.class);
+            User user = new User();
+            user.setUsername(username);
+            user.setPasswordHash(password);
+            userDAO.persist(user);
+            response.getWriter().write(user.toString());
+        } catch (PersistException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
