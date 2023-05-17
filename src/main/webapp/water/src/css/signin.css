@@ -1,17 +1,154 @@
-minput, minput::placeholder{
+*{
+    margin: 0;
+    padding: 0;
+}
+a{
+    text-decoration: none;
+}
+button{
+    padding: 0;
+    border: none;
+    background: none;
+}
+body{
+    overflow: hidden;
+}
+/* WRAPPERS */
+.wrapper{
+    display: flex;
+}
+.main-wrapper{
+    flex-direction: column;
+}
+.column-wrapper{
+    flex-direction: column;
+}
+.row-wrapper{
+    flex-direction: row;
+}
+.main-section{
+    height: 66vh;
+    position: absolute;
+}
+.center{
+    width: 50%;
+    margin: auto;
+}
+/* IMG */
+#waves{
+    position: absolute;
+    top: -10vh;
+    left: 0;
+}
+/* INPUT SECTION */
+.water{
+    letter-spacing: 5px;
+    color: #0F1B8A;
+    font-size: 40px;
+    margin: 40px 40px 0 40px;
+}
+input, input::placeholder{
+    max-width: 300px;
     font-family: Roboto, Arial, sans-serif;
     font-weight: 800;
-    font-size: 36px;
+    font-size: 20px;
 }
-minput{
-    color: #0F1B8A;
+input{
+    color: #3F52B3;
     outline: none;
     border: none;
     border-bottom: 2px solid rgba(0,0,0,50%);
+    margin: 10px 0 10px 0;
 }
-minput::placeholder {
+input::placeholder {
     color: #A5B0D8;
 }
-password{
-    color:black;
+.main-section{
+    flex: 1;
+    margin: auto;
+    max-width: 400px;
+    max-height: 600px;
+}
+.input-section{
+    margin: auto;
+}
+.forgot{
+    color: #3F52B3;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 12px;
+    align-content: end;
+    margin: 10px;
+}
+.link-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+/* SUBMIT SECTION */
+.submit-section{
+    margin: 40px 0 40px 0;
+    display: flex;
+    justify-content: space-around;
+}
+.link{
+    text-decoration: none;
+    color: #0F1B8A;
+}
+.link:visited{
+    text-decoration: none;
+}
+.link:hover{
+    text-decoration: none;
+}
+.big-link{
+    font-size: 30px;
+}
+.small-link{
+    font-size: 20px;
+}
+.small-link, .small-link:hover{
+    text-decoration: underline;
+}
+.submit{
+    height: 80px;
+    width: 80px;
+    border-radius: 100%;
+    color: transparent;
+    background-color: #3F52B3;
+}
+.submit img{
+    height: 50px;
+    width: 50px;
+    position: relative;
+}
+/* FONTS */
+.water, .link{
+    font-family: 'MuseoModerno';
+}
+
+/* ADAPT */
+
+@media only screen and (max-width: 800px){
+    .main-section{
+        top: 20vh;
+        width: 100vw;
+    }
+}
+
+@media only screen and (min-width: 800px){
+    #waves{
+        left: 0;
+        top: 0;
+        bottom: 0;
+        position: absolute;
+        height: 100vh;
+
+    }
+    .main-section{
+        width: 60vw;
+        position: absolute;
+        right: 10vw;
+        top: 0;
+        bottom: 0;
+    }
 }

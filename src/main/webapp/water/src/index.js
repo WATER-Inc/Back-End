@@ -1,7 +1,6 @@
 import React from "react";
 import * as ReactDOMClient from 'react-dom/client';
-import SingIn from "./SingIn/SingIn";
-
+import SingIn from "./js/singin/singin";
 
 
 const container = document.getElementById('root');
