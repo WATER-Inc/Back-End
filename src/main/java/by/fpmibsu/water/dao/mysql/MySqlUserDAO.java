@@ -13,12 +13,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MySqlUserDAO extends AbstractJDBCDao<User, String> {
-    private final static String selectQ = "SELECT user_id, username, password_hash FROM water.user WHERE user_id= ?;";
-    private final static String selectALlQ = "SELECT user_id, username, password_hash FROM water.user";
+    private final static String selectQ = "SELECT * FROM water.user";
+    private final static String selectALlQ = "SELECT * FROM water.user";
     private final static String insertQ = "INSERT INTO water.user (username, password_hash) \n" +
             "VALUES (?, ?);";
-    private final static String updateQ = "UPDATE water.user SET username=?, password_hash=? WHERE user_id= ?;";
-    private final static String deleteQ = "DELETE FROM water.user WHERE user_id= ?;";
+    private final static String updateQ = "UPDATE water.user SET username=?, password_hash=? WHERE id= ?;";
+    private final static String deleteQ = "DELETE FROM water.user WHERE id= ?;";
     private class PersistUser extends User {
         public void setId(String id) {
             super.setId(id);
@@ -67,7 +67,7 @@ public class MySqlUserDAO extends AbstractJDBCDao<User, String> {
         try {
             while (rs.next()) {
                 MySqlUserDAO.PersistUser user = new MySqlUserDAO.PersistUser();
-                user.setId(rs.getString("user_id"));
+                user.setId(rs.getString("id"));
                 user.setUsername(rs.getString("username"));
                 user.setPasswordHash(rs.getString("password_hash"));
                 result.add(user);
