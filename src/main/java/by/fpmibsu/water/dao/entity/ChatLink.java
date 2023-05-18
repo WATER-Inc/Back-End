@@ -40,4 +40,14 @@ public class ChatLink implements Identified<String> {
     public void setRoleId(String roleId) {
         this.roleId = roleId;
     }
+
+    @Override
+    public String toString() {
+        return "ChatLink{" +
+                "id='" + id + '\'' +
+                ", chatId='" + chatId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", roleId='" + roleId + '\'' +
+                '}';
+    }
 }

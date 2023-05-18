@@ -74,14 +74,8 @@ public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
                 chat.setId(rs.getString("chat_id"));
                 chat.setName(rs.getString("name"));
                 MySqlDaoFactory mySqlDaoFactory = new MySqlDaoFactory();
-                MySqlUserDAO userDAO = (MySqlUserDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), User.class);
-                MySqlRoleDAO roleDAO = (MySqlRoleDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), Role.class);
                 MySqlChatLinkDAO chatLinkDAO = (MySqlChatLinkDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), ChatLink.class);
-                ArrayList<ChatLink> list = (ArrayList<ChatLink>) chatLinkDAO.getByChat(chat);
-                Participants participants = new Participants();
-                for(ChatLink chatLink : list){
-                    participants.addUser(userDAO.getByPrimaryKey(chatLink.getUserId()), roleDAO.getByPrimaryKey(chatLink.getRoleId()));
-                }
+                chat.setParticipants(chatLinkDAO.getByChat(chat));
                 result.add(chat);
             }
         } catch (Exception e) {

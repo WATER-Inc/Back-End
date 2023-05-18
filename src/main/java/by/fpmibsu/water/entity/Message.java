@@ -9,7 +9,6 @@ public class Message implements Identified<String> {
     private User sender;
     private Chat chat;
     private String content;
-
     private Date date;
     @Override
     public String getId() {

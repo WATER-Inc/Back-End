@@ -1,20 +1,11 @@
-INSERT INTO user (username, password_hash) VALUES ('user1', 'p@ssw0rd1');
-INSERT INTO user (username, password_hash) VALUES ('user2', 'p@ssw0rd2');
-INSERT INTO user (username, password_hash) VALUES ('user3', 'p@ssw0rd3');
-INSERT INTO user (username, password_hash) VALUES ('user4', 'p@ssw0rd4');
-INSERT INTO user (username, password_hash) VALUES ('user5', 'p@ssw0rd5');
-INSERT INTO user (username, password_hash) VALUES ('user6', 'p@ssw0rd6');
-INSERT INTO user (username, password_hash) VALUES ('user7', 'p@ssw0rd7');
-INSERT INTO user (username, password_hash) VALUES ('user8', 'p@ssw0rd8');
-INSERT INTO user (username, password_hash) VALUES ('user9', 'p@ssw0rd9');
-INSERT INTO user (username, password_hash) VALUES ('user10', 'p@ssw0rd10');
-INSERT INTO user (username, password_hash) VALUES ('user11', 'p@ssw0rd11');
-INSERT INTO user (username, password_hash) VALUES ('user12', 'p@ssw0rd12');
-INSERT INTO user (username, password_hash) VALUES ('user13', 'p@ssw0rd13');
-INSERT INTO user (username, password_hash) VALUES ('user14', 'p@ssw0rd14');
-INSERT INTO user (username, password_hash) VALUES ('user15', 'p@ssw0rd15');
-INSERT INTO user (username, password_hash) VALUES ('user16', 'p@ssw0rd16');
-INSERT INTO user (username, password_hash) VALUES ('user17', 'p@ssw0rd17');
-INSERT INTO user (username, password_hash) VALUES ('user18', 'p@ssw0rd18');
-INSERT INTO user (username, password_hash) VALUES ('user19', 'p@ssw0rd19');
-INSERT INTO user (username, password_hash) VALUES ('user20', 'p@ssw0rd20');
+INSERT INTO user(username, password_hash) VALUES
+                                              ('user1', 'hash1'),
+                                              ('user2', 'hash2'),
+                                              ('user3', 'hash3'),
+                                              ('user4', 'hash4'),
+                                              ('user5', 'hash5'),
+                                              ('user6', 'hash6'),
+                                              ('user7', 'hash7'),
+                                              ('user8', 'hash8'),
+                                              ('user9', 'hash9'),
+                                              ('user10', 'hash10');
