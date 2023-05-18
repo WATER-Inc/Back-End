@@ -8,7 +8,6 @@ public class User implements Identified<String> {
     private String id = null;
     private String username;
     private String passwordHash;
-    private List<User> contacts;
 
     @Override
     public String getId() {
@@ -31,9 +30,6 @@ public class User implements Identified<String> {
         this.passwordHash = passwordHash;
     }
 
-    public List<User> getContacts() {
-        return contacts;
-    }
 
     @Override
     public String toString() {
@@ -41,7 +37,6 @@ public class User implements Identified<String> {
                 "id='" + id + '\'' +
                 ", username='" + username + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
-                ", contacts=" + contacts +
                 '}';
     }
 }
