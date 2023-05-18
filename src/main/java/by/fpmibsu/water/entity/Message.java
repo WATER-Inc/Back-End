@@ -9,7 +9,6 @@ public class Message implements Identified<String> {
     private User sender;
     private Chat chat;
     private String content;
-
     private Date date;
     @Override
     public String getId() {
@@ -42,5 +41,16 @@ public class Message implements Identified<String> {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id='" + id + '\'' +
+                ", sender=" + sender +
+                ", chat=" + chat +
+                ", content='" + content + '\'' +
+                ", date=" + date +
+                '}';
     }
 }

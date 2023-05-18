@@ -34,4 +34,12 @@ public class Participants{
         this.users = new ArrayList<>();
         this.roles = new ArrayList<>();
     }
+
+    @Override
+    public String toString() {
+        return "Participants{" +
+                "users=" + users +
+                ", roles=" + roles +
+                '}';
+    }
 }

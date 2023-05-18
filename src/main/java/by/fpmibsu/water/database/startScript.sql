@@ -14,7 +14,7 @@ CREATE TABLE chat(
 
 
 CREATE TABLE chat_user(
-                          chat_user_id INT PRIMARY KEY AUTO_INCREMENT,
+                          id INT PRIMARY KEY AUTO_INCREMENT,
                           chat_id INT,
                           user_id INT,
                           role_id INT,
@@ -23,6 +23,8 @@ CREATE TABLE chat_user(
                           FOREIGN KEY (role_id) REFERENCES role (id)
 );
 
+ALTER TABLE chat_user ADD UNIQUE (user_id, chat_id);
+
 CREATE TABLE messages(
                          id INT PRIMARY KEY AUTO_INCREMENT,
                          sender_id INT,
@@ -30,13 +32,6 @@ CREATE TABLE messages(
                          content VARCHAR(140),
                          created_date DATE,
                          FOREIGN KEY (sender_id) REFERENCES user (id),
-                         FOREIGN KEY (chat_id) REFERENCES chat (id)
-);
-CREATE TABLE contacts(
-                          id INT PRIMARY KEY AUTO_INCREMENT,
-                          follower_id INT,
-                          followed_id INT,
-                          FOREIGN KEY (follower_id) REFERENCES user (id),
-                          FOREIGN KEY (followed_id) REFERENCES user (id)
+                         FOREIGN KEY (chat_id) REFERENCES chat (id) ON DELETE CASCADE
 );
 

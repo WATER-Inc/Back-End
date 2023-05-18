@@ -2,6 +2,8 @@ package by.fpmibsu.water.dao.mysql;
 
 
 import by.fpmibsu.water.dao.*;
+import by.fpmibsu.water.dao.entity.ChatLink;
+import by.fpmibsu.water.entity.Message;
 import by.fpmibsu.water.entity.Role;
 import by.fpmibsu.water.entity.Chat;
 import by.fpmibsu.water.entity.User;
@@ -59,10 +61,22 @@ public class MySqlDaoFactory implements DAOFactory<Connection> {
                 return new MySqlChatDAO(MySqlDaoFactory.this, connection);
             }
         });
+        creators.put(ChatLink.class, new DaoCreator<Connection>() {
+            @Override
+            public GenericDAO create(Connection connection) {
+                return new MySqlChatLinkDAO(MySqlDaoFactory.this, connection);
+            }
+        });
         creators.put(Role.class, new DaoCreator<Connection>() {
             @Override
             public GenericDAO create(Connection connection) {
                 return new MySqlRoleDAO(MySqlDaoFactory.this, connection);
+            }
+        });
+        creators.put(Message.class, new DaoCreator<Connection>() {
+            @Override
+            public GenericDAO create(Connection connection) {
+                return new MySqlMessageDAO(MySqlDaoFactory.this, connection);
             }
         });
     }
