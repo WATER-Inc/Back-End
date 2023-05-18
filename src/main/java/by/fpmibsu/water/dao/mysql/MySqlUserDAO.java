@@ -15,8 +15,7 @@ import java.util.List;
 public class MySqlUserDAO extends AbstractJDBCDao<User, String> {
     private final static String selectQ = "SELECT * FROM water.user";
     private final static String selectALlQ = "SELECT * FROM water.user";
-    private final static String insertQ = "INSERT INTO water.user (username, password_hash) \n" +
-            "VALUES (?, ?);";
+    private final static String insertQ = "INSERT INTO water.user (username, password_hash) \n" + "VALUES (?, ?);";
     private final static String updateQ = "UPDATE water.user SET username=?, password_hash=? WHERE id= ?;";
     private final static String deleteQ = "DELETE FROM water.user WHERE id= ?;";
     private class PersistUser extends User {

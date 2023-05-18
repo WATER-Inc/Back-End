@@ -5,7 +5,7 @@ import by.fpmibsu.water.dao.DAOFactory;
 import by.fpmibsu.water.dao.PersistException;
 import by.fpmibsu.water.dao.entity.ChatLink;
 import by.fpmibsu.water.dao.entity.Participants;
-import by.fpmibsu.water.dao.entity.Role;
+import by.fpmibsu.water.entity.Role;
 import by.fpmibsu.water.entity.Chat;
 import by.fpmibsu.water.entity.User;
 

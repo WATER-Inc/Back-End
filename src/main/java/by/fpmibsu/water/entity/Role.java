@@ -1,9 +1,9 @@
-package by.fpmibsu.water.dao.entity;
+package by.fpmibsu.water.entity;
 
 import by.fpmibsu.water.dao.Identified;
 
 public class Role implements Identified<String> {
-    private String id;
+    private String id = null;
     private String title;
 
     @Override
@@ -21,5 +21,13 @@ public class Role implements Identified<String> {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                '}';
     }
 }
