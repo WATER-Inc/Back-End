@@ -42,4 +42,15 @@ public class Message implements Identified<String> {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id='" + id + '\'' +
+                ", sender=" + sender +
+                ", chat=" + chat +
+                ", content='" + content + '\'' +
+                ", date=" + date +
+                '}';
+    }
 }

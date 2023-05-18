@@ -19,6 +19,7 @@ import java.util.List;
 public class MySqlChatLinkDAO extends AbstractJDBCDao<ChatLink, String> {
     private final static String selectQ = "SELECT * FROM water.chat_user";
     private final static String selectUsersByChat = "SELECT link.user_id, link.role_id FROM chat_user link WHERE link.chat_id = ?;";
+    private final static String selectChatsByUser = "SELECT link.user_id, link.role_id FROM chat_user link WHERE link.user_id = ?;";
     private final static String selectALlQ = "SELECT * FROM water.chat_user;";
     private final static String insertQ = "INSERT INTO water.chat_user (chat_id, user_id, role_id) \n" + "VALUES (?, ?, ?);";
     private final static String updateQ = "UPDATE water.chat_user SET chat_id=?, user_id=?, role_id=? WHERE id= ?;";
@@ -107,7 +108,7 @@ public class MySqlChatLinkDAO extends AbstractJDBCDao<ChatLink, String> {
         }
     }
 
-    public Participants getByChat(final Chat chat) throws PersistException {
+    public Participants getParticipants(final Chat chat) throws PersistException {
         String sql = selectUsersByChat;
         Participants participants = new Participants();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -123,4 +124,21 @@ public class MySqlChatLinkDAO extends AbstractJDBCDao<ChatLink, String> {
         }
         return participants;
     }
+
+    public List<Chat> getChats(final User user) throws PersistException {
+        String sql = selectChatsByUser;
+        List<Chat> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, user.getId());
+            ResultSet rs = statement.executeQuery();
+            MySqlDaoFactory mySqlDaoFactory = new MySqlDaoFactory();
+            MySqlChatDAO chatDAO = (MySqlChatDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), Chat.class);
+            while (rs.next())
+                list.add(chatDAO.getByPrimaryKey(rs.getString("chat_id")));
+        } catch (Exception e) {
+            throw new PersistException(e);
+        }
+        return list;
+    }
+
 }

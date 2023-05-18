@@ -7,6 +7,7 @@ public class Chat implements Identified<String> {
     private String id;
     private String name;
     private Participants participants;
+
     public String getName() {
         return name;
     }
@@ -15,7 +16,7 @@ public class Chat implements Identified<String> {
         this.name = name;
     }
 
-    public  String getId() {
+    public String getId() {
         return id;
     }
 
@@ -29,5 +30,14 @@ public class Chat implements Identified<String> {
 
     public Participants getParticipants() {
         return participants;
+    }
+
+    @Override
+    public String toString() {
+        return "Chat{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", participants=" + participants +
+                '}';
     }
 }

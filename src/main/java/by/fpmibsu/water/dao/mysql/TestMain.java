@@ -12,16 +12,16 @@ import java.util.Scanner;
 public class TestMain {
     public static void main(String[] argv) throws PersistException {
         MySqlDaoFactory mySqlDaoFactory = new MySqlDaoFactory();
-        MySqlChatLinkDAO chatLinkDAO  = (MySqlChatLinkDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), ChatLink.class);
-        ChatLink chatLink = new ChatLink();
+        MySqlMessageDAO messageDAO  = (MySqlMessageDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), Message.class);
+        Message message = new Message();
 
         while(true) {
             Scanner scanner = new Scanner(System.in);
             String id = scanner.next();
-            chatLink.setId(id);
-
+            Chat chat = new Chat();
+            chat.setId(id);
             try {
-                chatLinkDAO.delete(chatLink);
+                System.out.println(messageDAO.getMessages(chat));
                 //System.out.println(chatLinkDAO.getByChat(chat));
             }
             catch (PersistException e){

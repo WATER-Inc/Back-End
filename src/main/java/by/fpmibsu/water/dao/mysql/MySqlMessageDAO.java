@@ -4,29 +4,42 @@ package by.fpmibsu.water.dao.mysql;
 import by.fpmibsu.water.dao.AbstractJDBCDao;
 import by.fpmibsu.water.dao.DAOFactory;
 import by.fpmibsu.water.dao.PersistException;
+import by.fpmibsu.water.dao.entity.Participants;
 import by.fpmibsu.water.entity.Chat;
 import by.fpmibsu.water.entity.Message;
+import by.fpmibsu.water.entity.Role;
 import by.fpmibsu.water.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
-    private final static String selectQ = "SELECT * FROM water.message WHERE message_id=?;";
-    private final static String selectAllQ = "SELECT * FROM water.message";
-    private final static String insertQ = "INSERT INTO water.message (sender_id, chat_id, content, created_date) \n" +
+    private final static String selectQ = "SELECT * FROM water.messages";
+    private final static String selectAllQ = "SELECT * FROM water.messages";
+    private final static String insertQ = "INSERT INTO water.messages (sender_id, chat_id, content, created_date) \n" +
             "VALUES (?);";
-    private final static String updateQ = "UPDATE water.message SET content=? WHERE message_id= ?;";
-    private final static String deleteQ = "DELETE FROM water.message WHERE message_id= ?;";
+    private final static String selectByUser = "SELECT messages.id FROM water.messages WHERE messages.sender_id = ?;";
+    private final static String selectByChat = "SELECT messages.id FROM water.messages WHERE messages.chat_id = ?;";
+    private final static String updateQ = "UPDATE water.messages SET content=? WHERE id= ?;";
+    private final static String deleteQ = "DELETE FROM water.messages WHERE id= ?;";
+
     private class PersistMessage extends Message {
         public void setId(String id) {
             super.setId(id);
         }
     }
 
+    public String getByUser() {
+        return selectByUser;
+    }
+
+    public String getByChat() {
+        return selectByChat;
+    }
 
     @Override
     public String getSelectQuery() {
@@ -69,7 +82,7 @@ public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
         try {
             while (rs.next()) {
                 PersistMessage Message = new PersistMessage();
-                Message.setId(rs.getString("message_id"));
+                Message.setId(rs.getString("id"));
                 String SenderId = rs.getString("sender_id");
                 String ChatId = rs.getString("chat_id");
                 MySqlDaoFactory mySqlDaoFactory = new MySqlDaoFactory();
@@ -105,5 +118,36 @@ public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
         } catch (Exception e) {
             throw new PersistException(e);
         }
+    }
+
+    public List<Message> getMessages(final Chat chat) throws PersistException {
+        String sql = getByChat();
+        List<Message> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, chat.getId());
+            ResultSet rs = statement.executeQuery();
+            MySqlDaoFactory mySqlDaoFactory = new MySqlDaoFactory();
+            MySqlMessageDAO messageDAO = (MySqlMessageDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), Message.class);
+            while (rs.next())
+                list.add(messageDAO.getByPrimaryKey(rs.getString("id")));
+        } catch (Exception e) {
+            throw new PersistException(e);
+        }
+        return list;
+    }
+    public List<Message> getMessages(final User user) throws PersistException {
+        String sql = getByUser();
+        List<Message> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, user.getId());
+            ResultSet rs = statement.executeQuery();
+            MySqlDaoFactory mySqlDaoFactory = new MySqlDaoFactory();
+            MySqlMessageDAO messageDAO = (MySqlMessageDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), Message.class);
+            while (rs.next())
+                list.add(messageDAO.getByPrimaryKey(rs.getString("id")));
+        } catch (Exception e) {
+            throw new PersistException(e);
+        }
+        return list;
     }
 }
