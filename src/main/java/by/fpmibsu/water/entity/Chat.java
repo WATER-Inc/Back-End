@@ -3,10 +3,8 @@ package by.fpmibsu.water.entity;
 import by.fpmibsu.water.dao.Identified;
 import by.fpmibsu.water.dao.entity.Participants;
 
-import java.util.List;
-
 public class Chat implements Identified<String> {
-    private String Id;
+    private String id;
     private String name;
     private Participants participants;
     public String getName() {
@@ -18,11 +16,11 @@ public class Chat implements Identified<String> {
     }
 
     public  String getId() {
-        return Id;
+        return id;
     }
 
     public void setId(String id) {
-        Id = id;
+        this.id = id;
     }
 
     public void setParticipants(Participants participants) {

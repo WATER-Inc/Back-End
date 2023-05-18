@@ -1,15 +1,14 @@
 CREATE TABLE user(
-                      user_id INT PRIMARY KEY AUTO_INCREMENT,
-                      username VARCHAR(64),
+                      id INT PRIMARY KEY AUTO_INCREMENT,
+                      username VARCHAR(64) UNIQUE,
                       password_hash VARCHAR(128)
 );
 CREATE TABLE role(
-                     role_id INT PRIMARY KEY AUTO_INCREMENT,
-                     user_id INT,
-                     title VARCHAR(64)
+                     id INT PRIMARY KEY AUTO_INCREMENT,
+                     title VARCHAR(64) UNIQUE
 );
 CREATE TABLE chat(
-                     chat_id INT PRIMARY KEY AUTO_INCREMENT,
+                     id INT PRIMARY KEY AUTO_INCREMENT,
                      name VARCHAR(64)
 );
 
@@ -19,25 +18,25 @@ CREATE TABLE chat_user(
                           chat_id INT,
                           user_id INT,
                           role_id INT,
-                          FOREIGN KEY (chat_id) REFERENCES chat (chat_id),
-                          FOREIGN KEY (user_id) REFERENCES user (user_id),
-                          FOREIGN KEY (role_id) REFERENCES role (role_id)
+                          FOREIGN KEY (chat_id) REFERENCES chat (id),
+                          FOREIGN KEY (user_id) REFERENCES user (id),
+                          FOREIGN KEY (role_id) REFERENCES role (id)
 );
 
 CREATE TABLE messages(
-                         message_id INT PRIMARY KEY AUTO_INCREMENT,
+                         id INT PRIMARY KEY AUTO_INCREMENT,
                          sender_id INT,
                          chat_id INT,
                          content VARCHAR(140),
                          created_date DATE,
-                         FOREIGN KEY (sender_id) REFERENCES user (user_id),
-                         FOREIGN KEY (chat_id) REFERENCES chat (chat_id)
+                         FOREIGN KEY (sender_id) REFERENCES user (id),
+                         FOREIGN KEY (chat_id) REFERENCES chat (id)
 );
 CREATE TABLE contacts(
-                          followers_id INT PRIMARY KEY AUTO_INCREMENT,
+                          id INT PRIMARY KEY AUTO_INCREMENT,
                           follower_id INT,
                           followed_id INT,
-                          FOREIGN KEY (follower_id) REFERENCES user (user_id),
-                          FOREIGN KEY (followed_id) REFERENCES user (user_id)
+                          FOREIGN KEY (follower_id) REFERENCES user (id),
+                          FOREIGN KEY (followed_id) REFERENCES user (id)
 );
 

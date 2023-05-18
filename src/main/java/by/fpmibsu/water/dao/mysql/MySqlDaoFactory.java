@@ -20,7 +20,7 @@ public class MySqlDaoFactory implements DAOFactory<Connection> {
     private String driver = "com.mysql.jdbc.Driver";//Имя драйвера
     private Map<Class, DAOFactory.DaoCreator> creators;
 
-    public Connection getContext() throws PersistException {
+    public Connection getConnection() throws PersistException {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(url, user, password);

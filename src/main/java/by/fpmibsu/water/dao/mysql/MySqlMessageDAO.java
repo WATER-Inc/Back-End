@@ -73,8 +73,8 @@ public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
                 String SenderId = rs.getString("sender_id");
                 String ChatId = rs.getString("chat_id");
                 MySqlDaoFactory mySqlDaoFactory = new MySqlDaoFactory();
-                MySqlUserDAO userDAO = (MySqlUserDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getContext(), User.class);
-                MySqlChatDAO chatDAO = (MySqlChatDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getContext(), Chat.class);
+                MySqlUserDAO userDAO = (MySqlUserDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), User.class);
+                MySqlChatDAO chatDAO = (MySqlChatDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), Chat.class);
                 Message.setSender(userDAO.getByPrimaryKey(SenderId));
                 Message.setChat(chatDAO.getByPrimaryKey(ChatId));
                 Message.setContent(rs.getString("content"));

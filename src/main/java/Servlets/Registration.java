@@ -15,6 +15,13 @@ import java.util.Map;
 public class Registration extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            System.out.println("MySQL JDBC Driver успешно загружен!");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Не удалось загрузить MySQL JDBC Driver!");
+            e.printStackTrace();
+        }
         response.setContentType("text/html");
         PrintWriter writer = response.getWriter();
         writer.println("<!DOCTYPE html>\n" +
@@ -46,7 +53,7 @@ public class Registration extends HttpServlet {
             response.setContentType("text/plain");
             //response.getWriter().write("Username: " + username + ", Password: " + password);
             MySqlDaoFactory mySqlDaoFactory = new MySqlDaoFactory();
-            MySqlUserDAO userDAO = (MySqlUserDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getContext(), User.class);
+            MySqlUserDAO userDAO = (MySqlUserDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), User.class);
             User user = new User();
             user.setUsername(username);
             user.setPasswordHash(password);

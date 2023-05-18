@@ -72,7 +72,7 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
     @Override
     public T getByPrimaryKey(String key) throws PersistException {
         List<T> list;
-        String sql = getSelectQuery();
+        String sql = getSelectQuery() + " WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, key);
             ResultSet rs = statement.executeQuery();
@@ -123,8 +123,7 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
             throw new PersistException(e);
         }
         // Получаем только что вставленную запись
-        sql = getSelectQuery() + " WHERE user_id = last_insert_id();";
-        System.out.println(sql);
+        sql = getSelectQuery() + " WHERE id = last_insert_id();";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet rs = statement.executeQuery();
             List<T> list = parseResultSet(rs);

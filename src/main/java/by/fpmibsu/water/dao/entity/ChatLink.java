@@ -3,18 +3,18 @@ package by.fpmibsu.water.dao.entity;
 import by.fpmibsu.water.dao.Identified;
 
 public class ChatLink implements Identified<String> {
-    private String linkId;
+    private String id;
     private String chatId;
     private String userId;
     private String roleId;
 
     @Override
     public String getId() {
-        return linkId;
+        return id;
     }
 
     public void setId(String linkId) {
-        this.linkId = linkId;
+        this.id = linkId;
     }
 
     public String getChatId() {

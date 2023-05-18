@@ -63,7 +63,6 @@ public class MySqlRoleDAO extends AbstractJDBCDao<Role, String> {
             while (rs.next()) {
                 MySqlRoleDAO.PersistRole role = new MySqlRoleDAO.PersistRole();
                 role.setId(rs.getString("role_id"));
-                role.setUserId(rs.getInt("user_id"));
                 role.setTitle(rs.getString("title"));
                 result.add(role);
             }
@@ -76,8 +75,7 @@ public class MySqlRoleDAO extends AbstractJDBCDao<Role, String> {
     @Override
     protected void prepareStatementForInsert(PreparedStatement statement, Role object) throws PersistException {
         try {
-            statement.setInt(1, object.getUserId());
-            statement.setString(2, object.getTitle());
+            statement.setString(1, object.getTitle());
         } catch (Exception e) {
             throw new PersistException(e);
         }
@@ -86,9 +84,8 @@ public class MySqlRoleDAO extends AbstractJDBCDao<Role, String> {
     @Override
     protected void prepareStatementForUpdate(PreparedStatement statement, Role object) throws PersistException {
         try {
-            statement.setInt(1, object.getUserId());
-            statement.setString(2, object.getTitle());
-            statement.setString(3, object.getId());
+            statement.setString(1, object.getTitle());
+            statement.setString(2, object.getId());
         } catch (Exception e) {
             throw new PersistException(e);
         }
