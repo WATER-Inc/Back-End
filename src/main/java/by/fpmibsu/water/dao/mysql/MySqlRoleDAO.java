@@ -3,7 +3,7 @@ package by.fpmibsu.water.dao.mysql;
 import by.fpmibsu.water.dao.AbstractJDBCDao;
 import by.fpmibsu.water.dao.DAOFactory;
 import by.fpmibsu.water.dao.PersistException;
-import by.fpmibsu.water.dao.entity.Role;
+import by.fpmibsu.water.entity.Role;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +12,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MySqlRoleDAO extends AbstractJDBCDao<Role, String> {
+
+    private final static String selectQ = "SELECT * FROM water.role";
+    private final static String selectALlQ = "SELECT * FROM water.role";
+    private final static String insertQ = "INSERT INTO water.role (title) \n" + "VALUES (?);";
+    private final static String updateQ = "UPDATE water.role SET title=? WHERE id= ?;";
+    private final static String deleteQ = "DELETE FROM water.role WHERE id= ?;";
 
     private class PersistRole extends Role {
         public void setId(String id) {
@@ -22,28 +28,27 @@ public class MySqlRoleDAO extends AbstractJDBCDao<Role, String> {
 
     @Override
     public String getSelectQuery() {
-        return "SELECT role_id, user_id, title FROM water.role";
+        return selectQ;
     }
 
     @Override
     public String getSelectAllQuery() {
-        return null;
+        return selectALlQ;
     }
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO water.role (user_id, title) \n" +
-                "VALUES (?, ?);";
+        return insertQ;
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE water.role SET user_id=?, title=? WHERE role_id= ?;";
+        return updateQ;
     }
 
     @Override
     public String getDeleteQuery() {
-        return "DELETE FROM water.role WHERE role_id= ?;";
+        return deleteQ;
     }
 
     @Override
@@ -62,7 +67,7 @@ public class MySqlRoleDAO extends AbstractJDBCDao<Role, String> {
         try {
             while (rs.next()) {
                 MySqlRoleDAO.PersistRole role = new MySqlRoleDAO.PersistRole();
-                role.setId(rs.getString("role_id"));
+                role.setId(rs.getString("id"));
                 role.setTitle(rs.getString("title"));
                 result.add(role);
             }

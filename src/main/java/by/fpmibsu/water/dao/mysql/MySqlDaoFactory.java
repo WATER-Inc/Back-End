@@ -2,7 +2,7 @@ package by.fpmibsu.water.dao.mysql;
 
 
 import by.fpmibsu.water.dao.*;
-import by.fpmibsu.water.dao.entity.Role;
+import by.fpmibsu.water.entity.Role;
 import by.fpmibsu.water.entity.Chat;
 import by.fpmibsu.water.entity.User;
 
