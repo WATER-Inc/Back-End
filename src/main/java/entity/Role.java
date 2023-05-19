@@ -1,8 +1,8 @@
-package by.fpmibsu.water.entity;
+package entity;
 
-import by.fpmibsu.water.dao.Identified;
+import dao.Identified;
 
-public class Role implements Identified<String> {
+public class Role extends Entity {
     private String id = null;
     private String title;
 

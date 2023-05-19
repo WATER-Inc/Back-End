@@ -1,6 +1,6 @@
-package by.fpmibsu.water.dao.entity;
+package dao.entity;
 
-import by.fpmibsu.water.dao.Identified;
+import dao.Identified;
 
 public class ChatLink implements Identified<String> {
     private String id;

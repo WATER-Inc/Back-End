@@ -1,4 +1,4 @@
-package by.fpmibsu.water.dao;
+package dao;
 
 public interface DAOFactory<Connection> {
 

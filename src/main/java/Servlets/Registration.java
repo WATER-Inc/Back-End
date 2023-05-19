@@ -1,9 +1,9 @@
 package Servlets;
 
-import by.fpmibsu.water.dao.PersistException;
-import by.fpmibsu.water.dao.mysql.MySqlDaoFactory;
-import by.fpmibsu.water.dao.mysql.MySqlUserDAO;
-import by.fpmibsu.water.entity.User;
+import dao.PersistException;
+import dao.mysql.MySqlDaoFactory;
+import dao.mysql.MySqlUserDAO;
+import entity.User;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

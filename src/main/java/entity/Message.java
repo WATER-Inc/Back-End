@@ -1,10 +1,10 @@
-package by.fpmibsu.water.entity;
+package entity;
 
-import by.fpmibsu.water.dao.Identified;
+import dao.Identified;
 
 import java.sql.Date;
 
-public class Message implements Identified<String> {
+public class Message extends Entity {
     private String id;
     private User sender;
     private Chat chat;

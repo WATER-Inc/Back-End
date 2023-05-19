@@ -1,7 +1,7 @@
-package by.fpmibsu.water.dao.entity;
+package dao.entity;
 
-import by.fpmibsu.water.entity.Role;
-import by.fpmibsu.water.entity.User;
+import entity.Role;
+import entity.User;
 
 import java.util.ArrayList;
 import java.util.List;

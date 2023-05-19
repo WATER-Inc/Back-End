@@ -1,9 +1,9 @@
-package by.fpmibsu.water.entity;
+package entity;
 
-import by.fpmibsu.water.dao.Identified;
-import by.fpmibsu.water.dao.entity.Participants;
+import dao.Identified;
+import dao.entity.Participants;
 
-public class Chat implements Identified<String> {
+public class Chat extends Entity {
     private String id;
     private String name;
     private Participants participants;
