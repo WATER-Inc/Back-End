@@ -1,14 +1,12 @@
-package by.fpmibsu.water.dao.mysql;
+package dao.mysql;
 
 
-import by.fpmibsu.water.dao.AbstractJDBCDao;
-import by.fpmibsu.water.dao.DAOFactory;
-import by.fpmibsu.water.dao.PersistException;
-import by.fpmibsu.water.dao.entity.Participants;
-import by.fpmibsu.water.entity.Chat;
-import by.fpmibsu.water.entity.Message;
-import by.fpmibsu.water.entity.Role;
-import by.fpmibsu.water.entity.User;
+import dao.PersistException;
+import dao.AbstractJDBCDao;
+import dao.DAOFactory;
+import entity.Chat;
+import entity.Message;
+import entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

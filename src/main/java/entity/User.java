@@ -1,14 +1,11 @@
-package by.fpmibsu.water.entity;
+package entity;
 
-import by.fpmibsu.water.dao.Identified;
+import dao.Identified;
 
-import java.util.List;
-
-public class User implements Identified<String> {
+public class User extends Entity {
     private String id = null;
     private String username;
     private String passwordHash;
-
     @Override
     public String getId() {
         return id;

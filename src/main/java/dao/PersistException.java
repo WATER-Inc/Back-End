@@ -1,4 +1,4 @@
-package by.fpmibsu.water.dao;
+package dao;
 
 public class PersistException extends Exception {
 

@@ -1,4 +1,4 @@
-package by.fpmibsu.water.dao;
+package dao;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
