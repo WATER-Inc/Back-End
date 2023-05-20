@@ -6,7 +6,7 @@ import entity.Message;
 
 import java.util.List;
 
-public class MessageService extends GenericService {
+public class MessageService extends Service {
     public MessageService() throws PersistException {
         super(Message.class);
     }

@@ -6,7 +6,7 @@ import entity.User;
 
 import java.util.List;
 
-public class UserService extends GenericService {
+public class UserService extends Service {
     public UserService() throws PersistException {
         super(User.class);
     }

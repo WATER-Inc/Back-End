@@ -1,22 +1,18 @@
 package service;
 
-import dao.AbstractJDBCDao;
 import dao.GenericDAO;
-import dao.Identified;
 import dao.PersistException;
 import dao.mysql.MySqlDaoFactory;
 import entity.Entity;
-import entity.User;
 
-import java.io.Serializable;
 import java.util.List;
 
-public abstract class GenericService {
+public abstract class Service {
     protected static MySqlDaoFactory daoFactory;
     protected GenericDAO genericDAO;
     protected Class<? extends Entity> entityClass;
 
-    protected GenericService(Class<? extends Entity> entityClass) throws PersistException {
+    protected Service(Class<? extends Entity> entityClass) throws PersistException {
         daoFactory = new MySqlDaoFactory();
         this.entityClass = entityClass;
         genericDAO = daoFactory.getDao(daoFactory.getConnection(), entityClass);

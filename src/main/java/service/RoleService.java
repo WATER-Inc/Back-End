@@ -1,14 +1,12 @@
 package service;
 
 import dao.PersistException;
-import dao.mysql.MySqlRoleDAO;
-import dao.mysql.MySqlUserDAO;
 import entity.Entity;
 import entity.Role;
 
 import java.util.List;
 
-public class RoleService extends GenericService {
+public class RoleService extends Service {
 
     public RoleService() throws PersistException {
         super(Role.class);

@@ -6,7 +6,7 @@ import entity.Entity;
 
 import java.util.List;
 
-public class ChatService extends GenericService {
+public class ChatService extends Service {
     public ChatService() throws PersistException {
         super(Chat.class);
     }
