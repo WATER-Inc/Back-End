@@ -1,8 +1,10 @@
 package service;
 
 import dao.PersistException;
+import dao.mysql.MySqlUserDAO;
 import entity.Entity;
 import entity.User;
+import validator.IncorrectFormDataException;
 
 import java.util.List;
 
@@ -24,5 +26,18 @@ public class UserService extends Service {
     @Override
     public User persist(Entity object) throws PersistException {
         return (User) super.persist(object);
+    }
+
+    public User getByUsernameAndPassword(String username, String password) throws PersistException {
+        User user = null;
+        try {
+            user = ((MySqlUserDAO) genericDAO).getByUsername(username);
+        } catch (PersistException exception) {
+            throw new PersistException("Incorrect Username");
+        }
+        if (user.getPasswordHash().equals(password))
+            return user;
+        else
+            throw new PersistException("Incorrect Password");
     }
 }
