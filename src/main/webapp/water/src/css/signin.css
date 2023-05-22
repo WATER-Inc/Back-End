@@ -2,6 +2,10 @@
     margin: 0;
     padding: 0;
 }
+body{
+    width: 100vw;
+    height: 100vh;
+}
 a{
     text-decoration: none;
 }
@@ -17,9 +21,6 @@ body{
 .wrapper{
     display: flex;
 }
-.main-wrapper{
-    flex-direction: column;
-}
 .column-wrapper{
     flex-direction: column;
 }
@@ -27,8 +28,8 @@ body{
     flex-direction: row;
 }
 .main-section{
-    height: 66vh;
     position: absolute;
+    height: 66vh;
 }
 .center{
     width: 50%;
@@ -37,8 +38,6 @@ body{
 /* IMG */
 #waves{
     position: absolute;
-    top: -10vh;
-    left: 0;
 }
 /* INPUT SECTION */
 .water{
@@ -64,8 +63,8 @@ input::placeholder {
     color: #A5B0D8;
 }
 .main-section{
-    flex: 1;
-    margin: auto;
+    justify-content: space-around;
+    align-content: center;
     max-width: 400px;
     max-height: 600px;
 }
@@ -130,25 +129,30 @@ input::placeholder {
 
 @media only screen and (max-width: 800px){
     .main-section{
-        top: 20vh;
+        top: 33vh;
         width: 100vw;
+        left:50%;
+        transform: translateX(-50%);
+    }
+    #waves{
+        width: 100vw;
+        min-height: 50vh;
+        bottom: 67vh;
     }
 }
 
 @media only screen and (min-width: 800px){
     #waves{
-        left: 0;
+        right: 50vw;
         top: 0;
         bottom: 0;
-        position: absolute;
         height: 100vh;
 
     }
     .main-section{
-        width: 60vw;
-        position: absolute;
+        width: 40vw;
         right: 10vw;
-        top: 0;
-        bottom: 0;
+        top:50%;
+        transform: translateY(-50%);
     }
 }

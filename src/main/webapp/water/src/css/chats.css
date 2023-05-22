@@ -1,0 +1,94 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+body{
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+p{
+    color: white;
+}
+
+.wrapper{
+    display: flex;
+}
+
+.column-wrapper{
+    flex-direction: column;
+}
+
+.row-wrapper{
+    flex-direction: row;
+}
+
+/* SEARCH BAR */
+.search-bar > form{
+    position: absolute;
+    width: min(90vw,800px);
+    height: 75px;
+    top: 25px;
+    background-color: white;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 20px;
+    justify-content: space-around;
+}
+.search-bar > form > input{
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 30px;
+    color: #3F52B3;
+    outline: none;
+    border: none;
+}
+
+.search-bar > form > button{
+    background-color: white;
+    outline: none;
+    border: none;
+}
+
+/* CHAT LIST*/
+
+.chat-list{
+    background-color: #5E79D1;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 125px 0;
+}
+.chat{
+    height: 100px;
+    width: min(80vw,800px);
+    margin: 10px 0;
+}
+
+.chat-info{
+    margin: 10px 0;
+    width: 100%;
+    justify-content: space-between;
+}
+.chat-name{
+    font-size: 30px;
+    font-family: 'MuseoModerno';
+}
+.chat-link{
+    border-bottom: 2px solid white;
+}
+
+/* Footer */
+.footer{
+    position: absolute;
+    bottom: 0;
+    height: 20vh;
+    width: 100vw;
+    background-color: white;
+    border-radius: 20px 20px 0 0;
+    justify-content: space-between;
+}
