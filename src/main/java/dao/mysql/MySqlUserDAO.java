@@ -17,6 +17,7 @@ public class MySqlUserDAO extends AbstractJDBCDao<User, String> {
     private final static String insertQ = "INSERT INTO water.user (username, password_hash) \n" + "VALUES (?, ?);";
     private final static String updateQ = "UPDATE water.user SET username=?, password_hash=? WHERE id= ?;";
     private final static String deleteQ = "DELETE FROM water.user WHERE id= ?;";
+
     private class PersistUser extends User {
         public void setId(String id) {
             super.setId(id);
@@ -95,5 +96,24 @@ public class MySqlUserDAO extends AbstractJDBCDao<User, String> {
         } catch (Exception e) {
             throw new PersistException(e);
         }
+    }
+
+    public User getByUsername(String username) throws PersistException {
+        List<User> list;
+        String sql = getSelectQuery() + " WHERE username = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, username);
+            ResultSet rs = statement.executeQuery();
+            list = parseResultSet(rs);
+        } catch (Exception e) {
+            throw new PersistException(e);
+        }
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        if (list.size() > 1) {
+            throw new PersistException("Received more than one record.");
+        }
+        return list.iterator().next();
     }
 }
