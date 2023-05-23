@@ -17,4 +17,8 @@ public class ActionManager {
         action.setFactory(factory);
         return action.exec(request, response);
     }
+
+    public void close(){
+        //TODO
+    }
 }

@@ -1,0 +1,4 @@
+
+2023-05-23 22:13:42,646
+DEBUG	dao.pool.ConnectionPool.getConnection:53
+Connection was received from pool. Current pool size: 1 used connections; 9 free connection

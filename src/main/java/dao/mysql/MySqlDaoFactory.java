@@ -5,6 +5,7 @@ import dao.DAOFactory;
 import dao.GenericDAO;
 import dao.PersistException;
 import dao.entity.ChatLink;
+import dao.pool.ConnectionPool;
 import entity.Message;
 import entity.Role;
 import entity.Chat;
@@ -23,15 +24,10 @@ public class MySqlDaoFactory implements DAOFactory<Connection> {
     private String url = "jdbc:mysql://localhost:3306/water";//URL адрес
     private String driver = "com.mysql.jdbc.Driver";//Имя драйвера
     private Map<Class, DAOFactory.DaoCreator> creators;
+    private ConnectionPool connectionPool;
 
     public Connection getConnection() throws PersistException {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(url, user, password);
-        } catch (SQLException e) {
-            throw new PersistException(e);
-        }
-        return  connection;
+        return ConnectionPool.getInstance().getConnection();
     }
 
     @Override
@@ -44,12 +40,6 @@ public class MySqlDaoFactory implements DAOFactory<Connection> {
     }
 
     public MySqlDaoFactory() {
-//        try {
-//            Class.forName(driver);//Регистрируем драйвер
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-
         creators = new HashMap<Class, DAOFactory.DaoCreator>();
         creators.put(User.class, new DaoCreator<Connection>() {
             @Override
