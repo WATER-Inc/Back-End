@@ -1,6 +1,6 @@
 import React from "react";
 import * as ReactDOMClient from 'react-dom/client';
-import Chat from "./js/chat";
+import SingUp from "../js/singup";
 
 const container = document.getElementById('root');
 const root = ReactDOMClient.createRoot(container);
@@ -8,7 +8,7 @@ const root = ReactDOMClient.createRoot(container);
 
 root.render(
     <React.StrictMode>
-        <Chat/>
+        <SingUp/>
     </React.StrictMode>
 );
 

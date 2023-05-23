@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "../css/chats.css";
 import searchIcon from "../resources/icons8-find-67.png"
 import ChatLink from "./components/chatlink";
 

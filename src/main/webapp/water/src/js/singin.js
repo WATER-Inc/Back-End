@@ -1,7 +1,6 @@
 import React from "react";
 import TextInput from "./components/textinput";
 import SubmitButton from "./components/submitButton";
-import styles from "../css/signin.css";
 import wavesDesktop from "../resources/desktopSIngIn.svg";
 import wavesPhone from "../resources/phoneSingIn.svg";
 

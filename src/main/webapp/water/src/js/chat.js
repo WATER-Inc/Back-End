@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../css/chat.css";
+import styles from "../chat/chat.css";
 import sendIcon from "../resources/icons8-email-send-60.png"
 import returnIcon from "../resources/icons8-double-left-48.png"
 import Message from "./components/message";

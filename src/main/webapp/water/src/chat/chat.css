@@ -1,0 +1,139 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+body{
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+p{
+    color: white;
+}
+
+.wrapper{
+    display: flex;
+}
+
+.column-wrapper{
+    flex-direction: column;
+}
+
+.row-wrapper{
+    flex-direction: row;
+}
+
+/* message block*/
+.message-list{
+    background-color: #E0E5F8;
+    padding: 125px 10vw;
+    position: absolute;
+    z-index: -1;
+    min-height: 100vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80vw;
+}
+
+.message-wrapper{
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.message{
+    font-family: Roboto, Arial, sans-serif;
+    padding: 10px;
+    margin: 10px 0;
+    width: 40vw;
+}
+
+.sender{
+    font-family: 'MuseoModerno';
+}
+
+.message-text, .sender{
+    padding: 10px;
+}
+
+#my{
+    align-items: flex-end;
+}
+
+#from{
+    align-items: flex-start;
+}
+
+#my > .message{
+    transform: translateX(100%);
+    border-radius: 15px 15px 0 15px;
+    background-color: white;
+}
+
+#my > .message > p,#my > .message > .sender > p{
+    color: #3F52B3;
+}
+
+#from > .message{
+    border-radius: 15px 15px 15px 0;
+    background-color: #3F52B3;
+}
+
+#from  > .message > p,#from  > .message > .sender > p{
+    color: white;
+}
+
+/* message-input*/
+.message-input > form{
+    position: fixed;
+    width: min(90vw,800px);
+    height: 75px;
+    bottom: 25px;
+    background-color: white;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 20px;
+    justify-content: space-around;
+}
+.message-input > form > input{
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 30px;
+    color: #3F52B3;
+    outline: none;
+    border: none;
+}
+
+.message-input > form > button{
+    background-color: white;
+    outline: none;
+    border: none;
+}
+
+.header{
+    position: fixed;
+    top: 0;
+    height: min(10vh,100px);
+    width: 100vw;
+    background-color: white;
+    align-items: center;
+}
+.header > .arrow{
+    margin-left: 20px;
+}
+.chat-img{
+    border-radius: 100%;
+    background-color: white;
+    height: 100px;
+    width: 100px;
+}
+
+.chat-name{
+    font-size: 30px;
+    font-family: 'MuseoModerno';
+    color:#3F52B3;
+    margin: 0 20px;
+}

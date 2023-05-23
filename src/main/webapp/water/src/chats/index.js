@@ -1,14 +1,15 @@
 import React from "react";
 import * as ReactDOMClient from 'react-dom/client';
-import Chat from "./js/chat";
+import Chats from "../js/chats";
 
 const container = document.getElementById('root');
 const root = ReactDOMClient.createRoot(container);
 
 
+
 root.render(
     <React.StrictMode>
-        <Chat/>
+        <Chats/>
     </React.StrictMode>
 );
 
