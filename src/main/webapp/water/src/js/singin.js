@@ -1,10 +1,36 @@
-import React from "react";
-import TextInput from "./components/textinput";
+import React, {useState} from "react";
 import SubmitButton from "./components/submitButton";
 import wavesDesktop from "../resources/desktopSIngIn.svg";
 import wavesPhone from "../resources/phoneSingIn.svg";
 
-class SingUp extends React.Component{
+class SingIn extends React.Component{
+    state = {
+      userName: "",
+      userPassword: ""
+    };
+    handleUserNameInput = (event) => {
+        this.setState({
+            userName: event.target.value,
+            userPassword: this.state.userPassword
+        })
+    }
+
+    handleUserPasswordInput = (event) => {
+        this.setState({
+            userName: this.state.userName,
+            userPassword: event.target.value
+        })
+    }
+
+    sendData = () => {
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST','https://localhost:8080/singup');
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = () => {
+            console.log(this);
+        }
+        xhr.send(JSON.stringify(this.state));
+    }
     componentDidMount() {
         const waves = document.getElementById("waves");
         let prevWidth = document.body.offsetWidth;
@@ -28,8 +54,8 @@ class SingUp extends React.Component{
                 <h3 className="water">WATER</h3>
                 <div className="wrapper column-wrapper input-section">
                     <div className="wrapper column-wrapper input-wrapper">
-                        <TextInput id="userName" type="text" placeholder="Name"/>
-                        <TextInput id="password" type="password" placeholder="Password"/>
+                        <input id="userName" type="text" placeholder="Name" onChange={this.handleUserNameInput}/>
+                        <input id="password" type="password" placeholder="Password" onChange={this.handleUserPasswordInput}/>
                         <div className="wrapper link-wrapper">
                             <a className="forgot" href="/forgot-password">Forgot password?</a>
                         </div>
@@ -41,11 +67,11 @@ class SingUp extends React.Component{
                         <a className="link small-link" href="/singup">Sing Up</a>
                     </div>
                     <div className="submit-wrapper">
-                        <SubmitButton />
+                        <SubmitButton onClick={this.sendData}/>
                     </div>
                 </div>
             </div>
         </div>
     }
 }
-export default SingUp;
+export default SingIn;
