@@ -18,7 +18,7 @@ class Chat extends React.Component {
         xhr.onload = function () {
             let tempMessageList = [];
             const data = JSON.parse(xhr.response);
-            data.forEach(message => tempMessageListList.append(message));
+            data.forEach(message => tempMessageList.append(message));
             this.setState({
                 userId: this.state.userId,
                 chatId: this.state.chatId,
@@ -46,7 +46,7 @@ class Chat extends React.Component {
             chatId: this.state.chatId,
             message: this.state.currentMessage
         }));
-        this.messageList.append(<Message from="my" name={userName} messageText={this.state.currentMessage}/>);
+        this.messageList.append(<Message from="my" name={this.userName} messageText={this.state.currentMessage}/>);
         this.setState({
             userId: this.state.userId,
             chatId: this.state.chatId,
@@ -58,7 +58,7 @@ class Chat extends React.Component {
 
     componentDidMount() {
         this.getMessages();
-        this.messageList = messages.map(message => {
+        this.messageList = this.state.messageList.map(message => {
                 return <Message from={message.from == this.userId ? "my" : "from"} name={message.username}
                                 messageText={message.text}/>;
             }
