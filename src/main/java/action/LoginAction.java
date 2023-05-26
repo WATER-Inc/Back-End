@@ -30,6 +30,7 @@ public class LoginAction extends Action {
     public Action.Forward exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        System.out.println(username + " -- " + password);
         if (username != null && password != null) {
             UserService service = factory.getService(User.class);
             User user = service.getByUsernameAndPassword(username, password);
