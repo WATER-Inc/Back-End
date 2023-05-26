@@ -92,7 +92,6 @@ public class DispatcherServlet extends HttpServlet {
                 logger.debug(String.format("Request for URI \"%s\" id redirected to URI \"%s\"", requestedUri, redirectedUri));
                 response.sendRedirect(redirectedUri);
             } else {
-                //TODO
                 String jspPage;
                 if (forward != null) {
                     jspPage = forward.getForward();

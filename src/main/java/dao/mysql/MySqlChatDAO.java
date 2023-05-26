@@ -5,16 +5,20 @@ import dao.AbstractJDBCDao;
 import dao.DAOFactory;
 import dao.entity.ChatLink;
 import entity.Chat;
+import entity.Message;
+import entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
     private final static String selectQ = "SELECT * FROM water.chat";
     private final static String selectAllQ = "SELECT * FROM water.chat";
+    private final static String selectByUser = "SELECT * FROM water.chat WHERE water.chat.id IN (SELECT water.chat_user.chat_id FROM water.chat_user WHERE user_id = ?);";
     private final static String insertQ = "INSERT INTO water.chat (name) \n" + "VALUES (?);";
     private final static String updateQ = "UPDATE water.chat SET name=? WHERE id= ?;";
     private final static String deleteQ = "DELETE FROM water.chat WHERE id= ?;";
@@ -50,6 +54,8 @@ public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
     public String getDeleteQuery() {
         return deleteQ;
     }
+
+    public String getSelectByUser(){return selectByUser;}
 
     @Override
     public Chat create() throws PersistException {
@@ -97,6 +103,21 @@ public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
         } catch (Exception e) {
             throw new PersistException(e);
         }
+    }
+    public List<Chat> getByUser(final User user) throws PersistException {
+        String sql = getSelectByUser();
+        List<Chat> list = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, user.getId());
+            ResultSet rs = statement.executeQuery();
+            MySqlDaoFactory mySqlDaoFactory = new MySqlDaoFactory();
+            MySqlChatDAO chatDAO = (MySqlChatDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), Chat.class);
+            while (rs.next())
+                list.add(chatDAO.getByPrimaryKey(rs.getString("id")));
+        } catch (Exception e) {
+            throw new PersistException(e);
+        }
+        return list;
     }
 
 

@@ -3,6 +3,7 @@ package controller;
 
 import action.Action;
 import action.LoginAction;
+import action.LogoutAction;
 import action.MainAction;
 import org.apache.log4j.Logger;
 
@@ -19,9 +20,9 @@ public class ActionFromUriFilter implements Filter {
 
     static {
         actions.put("/", MainAction.class);
-//        actions.put("/index", MainAction.class);
+        actions.put("/index", MainAction.class);
         actions.put("/login", LoginAction.class);
-//        actions.put("/logout", LogoutAction.class);
+        actions.put("/logout", LogoutAction.class);
 //
 //        actions.put("/profile/edit", ProfileEditAction.class);
 //        actions.put("/profile/save", ProfileSaveAction.class);
