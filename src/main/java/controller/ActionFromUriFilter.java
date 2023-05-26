@@ -1,7 +1,9 @@
-package controler;
+package controller;
 
 
 import action.Action;
+import action.LoginAction;
+import action.MainAction;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
@@ -16,9 +18,9 @@ public class ActionFromUriFilter implements Filter {
     private static Map<String, Class<? extends Action>> actions = new ConcurrentHashMap<>();
 
     static {
-//        actions.put("/", MainAction.class);
+        actions.put("/", MainAction.class);
 //        actions.put("/index", MainAction.class);
-//        actions.put("/login", LoginAction.class);
+        actions.put("/login", LoginAction.class);
 //        actions.put("/logout", LogoutAction.class);
 //
 //        actions.put("/profile/edit", ProfileEditAction.class);
@@ -74,6 +76,8 @@ public class ActionFromUriFilter implements Filter {
             } else {
                 actionName = uri.substring(beginAction);
             }
+            logger.debug("ActionFromUriFilter Word!!!");
+            logger.debug(actionName);
             Class<? extends Action> actionClass = actions.get(actionName);
             try {
                 Action action = actionClass.newInstance();

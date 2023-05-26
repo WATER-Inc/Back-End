@@ -80,5 +80,15 @@ abstract public class Action {
             return attributes;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Action{" +
+                "allowRoles=" + allowRoles +
+                ", authorizedUser=" + authorizedUser +
+                ", name='" + name + '\'' +
+                ", factory=" + factory +
+                '}';
+    }
 }
 
