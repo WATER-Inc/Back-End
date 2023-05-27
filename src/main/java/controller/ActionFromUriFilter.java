@@ -61,12 +61,13 @@ public class ActionFromUriFilter implements Filter {
     }
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {}
+    public void init(FilterConfig filterConfig) throws ServletException {
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        if(request instanceof HttpServletRequest) {
-            HttpServletRequest httpRequest = (HttpServletRequest)request;
+        if (request instanceof HttpServletRequest) {
+            HttpServletRequest httpRequest = (HttpServletRequest) request;
             String contextPath = httpRequest.getContextPath();
             String uri = httpRequest.getRequestURI();
             logger.debug(String.format("Starting of processing of request for URI \"%s\"", uri));
@@ -74,27 +75,25 @@ public class ActionFromUriFilter implements Filter {
             int endAction = uri.lastIndexOf('.');
             String actionName;
 
-            if(endAction >= 0) {
+            if (endAction >= 0) {
                 logger.info("Send file: " + uri);
-                response.getWriter().write("Hello World!!!");
-                //request.getRequestDispatcher(uri).forward(request,response);
-                //actionName = uri.substring(beginAction, endAction);
+                actionName = uri.substring(beginAction, endAction);
             } else {
                 actionName = uri.substring(beginAction);
-                logger.debug("ActionFromUriFilter Word: " + actionName);
-                Class<Action> actionClass = (Class<Action>) actions.get(actionName);
-                try {
-                    Action action = actionClass.newInstance();
-                    action.setName(actionName);
-                    httpRequest.setAttribute("action", action);
-                    chain.doFilter(request, response);
-                } catch (
-                        InstantiationException | IllegalAccessException |
-                        NullPointerException e) {
-                    logger.error("It is impossible to create action handler object", e);
-                    httpRequest.setAttribute("error", String.format("Запрошенный адрес %s не может быть обработан сервером", uri));
-                    httpRequest.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
-                }
+            }
+            logger.debug("ActionFromUriFilter Word: " + actionName);
+            Class<Action> actionClass = (Class<Action>) actions.get(actionName);
+            try {
+                Action action = actionClass.newInstance();
+                action.setName(actionName);
+                httpRequest.setAttribute("action", action);
+                chain.doFilter(request, response);
+            } catch (
+                    InstantiationException | IllegalAccessException |
+                    NullPointerException e) {
+                logger.error("It is impossible to create action handler object", e);
+                httpRequest.setAttribute("error", String.format("Запрошенный адрес %s не может быть обработан сервером", uri));
+                httpRequest.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
             }
         } else {
             logger.error("It is impossible to use HTTP filter");
@@ -103,6 +102,7 @@ public class ActionFromUriFilter implements Filter {
     }
 
     @Override
-    public void destroy() {}
+    public void destroy() {
+    }
 }
 
