@@ -8,13 +8,10 @@ import service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 abstract public class Action {
-    private Set<Role> allowRoles = new HashSet<>();
+    private Set<Role> allowRoles = new HashSet<>(List.of(new Role[]{new Role("User")}));
     private User authorizedUser;
     private String name;
 

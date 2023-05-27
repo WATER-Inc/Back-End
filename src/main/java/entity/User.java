@@ -6,8 +6,9 @@ public class User extends Entity {
     private String id = null;
     private String username;
     private String passwordHash;
-    private final Role role = new Role("User");
+    private Role role = null;
 
+    private void setRole(Role role){this.role = role;}
     public Role getRole() {
         return role;
     }

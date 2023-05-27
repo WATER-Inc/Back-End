@@ -6,7 +6,7 @@
 
     <display-name>water</display-name>
     <welcome-file-list>
-        <welcome-file>/water.public.index.html</welcome-file>
+        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
     <servlet>
         <servlet-name>DispatcherServlet</servlet-name>

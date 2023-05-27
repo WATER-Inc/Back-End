@@ -73,25 +73,28 @@ public class ActionFromUriFilter implements Filter {
             int beginAction = contextPath.length();
             int endAction = uri.lastIndexOf('.');
             String actionName;
+
             if(endAction >= 0) {
-                actionName = uri.substring(beginAction, endAction);
+                logger.info("Send file: " + uri);
+                response.getWriter().write("Hello World!!!");
+                //request.getRequestDispatcher(uri).forward(request,response);
+                //actionName = uri.substring(beginAction, endAction);
             } else {
                 actionName = uri.substring(beginAction);
-            }
-            logger.debug("ActionFromUriFilter Word: " + actionName);
-            Class<Action> actionClass = (Class<Action>) actions.get(actionName);
-            try {
-                Action action = actionClass.newInstance();
-                action.setName(actionName);
-                httpRequest.setAttribute("action", action);
-                chain.doFilter(request, response);
-            }
-            catch (
-                    InstantiationException | IllegalAccessException |
-                    NullPointerException e) {
-                logger.error("It is impossible to create action handler object", e);
-                httpRequest.setAttribute("error", String.format("Запрошенный адрес %s не может быть обработан сервером", uri));
-                httpRequest.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
+                logger.debug("ActionFromUriFilter Word: " + actionName);
+                Class<Action> actionClass = (Class<Action>) actions.get(actionName);
+                try {
+                    Action action = actionClass.newInstance();
+                    action.setName(actionName);
+                    httpRequest.setAttribute("action", action);
+                    chain.doFilter(request, response);
+                } catch (
+                        InstantiationException | IllegalAccessException |
+                        NullPointerException e) {
+                    logger.error("It is impossible to create action handler object", e);
+                    httpRequest.setAttribute("error", String.format("Запрошенный адрес %s не может быть обработан сервером", uri));
+                    httpRequest.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
+                }
             }
         } else {
             logger.error("It is impossible to use HTTP filter");
