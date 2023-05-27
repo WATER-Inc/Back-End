@@ -81,14 +81,13 @@ public class ActionFromUriFilter implements Filter {
             logger.debug("ActionFromUriFilter Word: " + actionName);
             Class<Action> actionClass = (Class<Action>) actions.get(actionName);
             try {
-                //Action action = actionClass.newInstance();
-                Action action = new MainAction();
+                Action action = actionClass.newInstance();
                 action.setName(actionName);
                 httpRequest.setAttribute("action", action);
                 chain.doFilter(request, response);
             }
             catch (
-                    //InstantiationException | IllegalAccessException |
+                    InstantiationException | IllegalAccessException |
                     NullPointerException e) {
                 logger.error("It is impossible to create action handler object", e);
                 httpRequest.setAttribute("error", String.format("Запрошенный адрес %s не может быть обработан сервером", uri));
