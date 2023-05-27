@@ -3,8 +3,8 @@ package action;
 import java.io.Serializable;
 
 public class MenuItem implements Serializable {
-    private String url;
-    private String name;
+    private final String url;
+    private final String name;
 
     public MenuItem(String url, String name) {
         this.url = url;
@@ -18,5 +18,6 @@ public class MenuItem implements Serializable {
     public String getName() {
         return name;
     }
+
 }
 

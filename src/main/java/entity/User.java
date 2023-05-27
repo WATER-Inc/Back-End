@@ -6,6 +6,11 @@ public class User extends Entity {
     private String id = null;
     private String username;
     private String passwordHash;
+    private final Role role = new Role("User");
+
+    public Role getRole() {
+        return role;
+    }
     @Override
     public String getId() {
         return id;

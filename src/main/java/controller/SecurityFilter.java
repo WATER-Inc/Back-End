@@ -41,7 +41,7 @@ public class SecurityFilter implements Filter {
             boolean canExecute = allowRoles == null;
             if(user != null) {
                 userName = "\"" + user.getUsername() + "\" user";
-                //canExecute = canExecute || allowRoles.contains(user.getRole());//TODO
+                canExecute = canExecute || allowRoles.contains(user.getRole());
             }
             if(canExecute) {
                 chain.doFilter(request, response);

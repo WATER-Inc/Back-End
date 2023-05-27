@@ -10,16 +10,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 public class LoginAction extends Action {
     private static Logger logger = Logger.getLogger(String.valueOf(LoginAction.class));
 
-//    private static Map<Role, List<MenuItem>> menu = new ConcurrentHashMap<>();
-//
-//    static {
-//
-//    }
+    private static Map<Role, List<MenuItem>> menu = new ConcurrentHashMap<>();
+
+    static {
+//        menu.put(new Role("User"), new ArrayList<>(Arrays.asList(
+//                new MenuItem("/search/book/form.html", "поиск книг"),
+//                new MenuItem("/search/reader/form.html", "поиск читателей")
+//        )));
+//        menu.put(new Role("Admin"), new ArrayList<>(Arrays.asList(
+//                new MenuItem("/reader/list.html", "читатели"),
+//                new MenuItem("/user/list.html", "сотрудники")
+//        )));
+//        menu.put(new Role("Master"), new ArrayList<>(Arrays.asList(
+//                new MenuItem("/author/list.html", "авторы")
+//        )));
+    }
 
     @Override
     public Set<Role> getAllowRoles() {
