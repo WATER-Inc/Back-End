@@ -18,7 +18,7 @@ abstract public class Action {
     private User authorizedUser;
     private String name;
 
-    protected ServiceFactory factory;
+    protected static ServiceFactory factory = new ServiceFactory();
 
     public Set<Role> getAllowRoles() {
         return allowRoles;

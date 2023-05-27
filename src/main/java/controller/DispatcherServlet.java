@@ -25,7 +25,7 @@ public class DispatcherServlet extends HttpServlet {
     public static final Level LOG_LEVEL = Level.ALL;
     public static final String LOG_MESSAGE_FORMAT = "%n%d%n%p\t%C.%M:%L%n%m%n";
 
-    public static final String DB_DRIVER_CLASS = "com.mysql.jdbc.Driver";
+    public static final String DB_DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
     public static final String DB_URL = "jdbc:mysql://localhost:3306/water?useUnicode=true&characterEncoding=UTF-8";
     public static final String DB_USER = "root";
     public static final String DB_PASSWORD = "20November3;5.-65@1234";
