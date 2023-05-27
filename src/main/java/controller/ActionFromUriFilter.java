@@ -5,6 +5,7 @@ import action.Action;
 import action.LoginAction;
 import action.LogoutAction;
 import action.MainAction;
+import com.sun.tools.javac.Main;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
@@ -77,15 +78,18 @@ public class ActionFromUriFilter implements Filter {
             } else {
                 actionName = uri.substring(beginAction);
             }
-            logger.debug("ActionFromUriFilter Word!!!");
-            logger.debug(actionName);
-            Class<? extends Action> actionClass = actions.get(actionName);
+            logger.debug("ActionFromUriFilter Word: " + actionName);
+            Class<Action> actionClass = (Class<Action>) actions.get(actionName);
             try {
-                Action action = actionClass.newInstance();
+                //Action action = actionClass.newInstance();
+                Action action = new MainAction();
                 action.setName(actionName);
                 httpRequest.setAttribute("action", action);
                 chain.doFilter(request, response);
-            } catch (InstantiationException | IllegalAccessException | NullPointerException e) {
+            }
+            catch (
+                    //InstantiationException | IllegalAccessException |
+                    NullPointerException e) {
                 logger.error("It is impossible to create action handler object", e);
                 httpRequest.setAttribute("error", String.format("Запрошенный адрес %s не может быть обработан сервером", uri));
                 httpRequest.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);

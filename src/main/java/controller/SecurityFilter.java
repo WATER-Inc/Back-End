@@ -43,6 +43,7 @@ public class SecurityFilter implements Filter {
                 userName = "\"" + user.getUsername() + "\" user";
                 canExecute = canExecute || allowRoles.contains(user.getRole());
             }
+            System.out.println("CanExecute: " + canExecute);
             if(canExecute) {
                 chain.doFilter(request, response);
             } else {
@@ -50,6 +51,7 @@ public class SecurityFilter implements Filter {
                 if(session != null && action.getClass() != MainAction.class) {
                     session.setAttribute("SecurityFilterMessage", "Доступ запрещён");
                 }
+                System.out.println(httpRequest.getContextPath()+"/login.html");
                 httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.html");
             }
         } else {
