@@ -12,7 +12,7 @@ public abstract class AuthorizedUserAction extends Action {
     public AuthorizedUserAction() {
         super();
         try {
-            getAllowRoles().addAll((Collection<? extends Role>) Arrays.asList(factory.getService(Role.class).getAll()));
+            getAllowRoles().addAll(Arrays.asList((Role) factory.getService(Role.class).getAll()));
         } catch (PersistException e) {
             logger.error("Failed to get all roles.", e);
         }

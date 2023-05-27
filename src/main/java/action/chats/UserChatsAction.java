@@ -18,7 +18,7 @@ public class UserChatsAction extends ChatsAction {
         List<Chat> chats;
         ChatService service = factory.getService(Chat.class);
         chats = service.getByUser(getAuthorizedUser());
-        request.setAttribute("chats", chats);
+        // TODO send chats to response in JSON
         //TODO need to sort chats order by last message date;
         return forward;
     }
