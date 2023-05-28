@@ -4,7 +4,6 @@ import dao.PersistException;
 import dao.pool.ConnectionPool;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import service.Service;
 import service.ServiceFactory;
@@ -26,21 +25,19 @@ public abstract class ServiceTest<T> extends Assert {
         ConnectionPool.getInstance().init(DB_DRIVER_CLASS, DB_URL, DB_USER, DB_PASSWORD, DB_POOL_START_SIZE, DB_POOL_MAX_SIZE, DB_POOL_CHECK_CONNECTION_TIMEOUT);
     };
 
-    @DataProvider
-    public abstract Object[][] parseLocaleData();
 
-    @Test(dataProvider = "parseLocaleData")
-    public abstract void getByIdTest();
+    @Test
+    public abstract void getByIdTest() throws PersistException;
 
-    @Test(dataProvider = "parseLocaleData")
-    public abstract void getAllTest();
+    @Test
+    public abstract void getAllTest() throws PersistException;
 
-    @Test(dataProvider = "parseLocaleData")
-    public abstract void persistTest();
+    @Test
+    public abstract void persistTest() throws PersistException;
 
-    @Test(dataProvider = "parseLocaleData")
-    public abstract void deleteTest();
+    @Test
+    public abstract void deleteTest() throws PersistException;
 
-    @Test(dataProvider = "parseLocaleData")
-    public abstract void updateTest();
+    @Test
+    public abstract void updateTest() throws PersistException;
 }

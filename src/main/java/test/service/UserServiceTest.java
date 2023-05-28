@@ -3,8 +3,10 @@ package test.service;
 import dao.PersistException;
 import entity.User;
 import org.testng.annotations.BeforeTest;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import service.UserService;
+
+import java.util.List;
 
 @Test
 public class UserServiceTest extends ServiceTest<User> {
@@ -16,34 +18,78 @@ public class UserServiceTest extends ServiceTest<User> {
         service = factory.getService(User.class);
     }
 
-    @DataProvider
     @Override
-    public Object[][] parseLocaleData() {
-        return new Object[0][];
+    public void getByIdTest() throws PersistException {
+        User user = new User();
+        user.setUsername("johndoe");
+        user.setPasswordHash("password");
+        user = (User) service.persist(user);
+        User retrievedUser = (User) service.getById(user.getId());
+        service.delete(user);
+        assertEquals(user, retrievedUser);
     }
 
     @Override
-    public void getByIdTest() {
-
+    public void getAllTest() throws PersistException {
+        User user1 = new User();
+        user1.setUsername("johndoe");
+        user1.setPasswordHash("password");
+        user1 = (User) service.persist(user1);
+        User user2 = new User();
+        user2.setUsername("janedoe");
+        user2.setPasswordHash("password");
+        user2 = (User) service.persist(user2);
+        List<User> userList = (List<User>) service.getAll();
+        service.delete(user1);
+        service.delete(user2);
+        assertEquals(2, userList.size());
+        assertTrue(userList.contains(user1));
+        assertTrue(userList.contains(user2));
     }
 
     @Override
-    public void getAllTest() {
-
+    public void persistTest() throws PersistException {
+        User user = new User();
+        user.setUsername("johndoe");
+        user.setPasswordHash("password");
+        User persistedUser = (User) service.persist(user);
+        assertNotNull(persistedUser.getId());
+        User retrievedUser = (User) service.getById(persistedUser.getId());
+        service.delete(persistedUser);
+        assertEquals(persistedUser, retrievedUser);
     }
 
     @Override
-    public void persistTest() {
-
+    public void deleteTest() throws PersistException {
+        User user = new User();
+        user.setUsername("johndoe");
+        user.setPasswordHash("password");
+        user = (User) service.persist(user);
+        service.delete(user);
+        assertNull(service.getById(user.getId()));
     }
 
     @Override
-    public void deleteTest() {
-
+    public void updateTest() throws PersistException {
+        User user = new User();
+        user.setUsername("johndoe");
+        user.setPasswordHash("password");
+        user = (User) service.persist(user);
+        user.setPasswordHash("newpassword");
+        service.update(user);
+        User retrievedUser = (User) service.getById(user.getId());
+        service.delete(user);
+        assertEquals(user, retrievedUser);
     }
 
-    @Override
-    public void updateTest() {
-
+    @Test
+    public void getByUsernameAndPasswordTest() throws PersistException {
+        User user = new User();
+        user.setUsername("johndoe");
+        user.setPasswordHash("password");
+        user = (User) service.persist(user);
+        User retrievedUser = ((UserService) service).getByUsernameAndPassword("johndoe", "password");
+        service.delete(user);
+        assertEquals(user, retrievedUser);
     }
 }

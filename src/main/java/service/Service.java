@@ -31,7 +31,7 @@ public abstract class Service {
     }
 
     public void delete(Entity object) throws PersistException {
-        genericDAO.persist(object);
+        genericDAO.delete(object);
     }
 
     public void update(Entity object) throws PersistException {
