@@ -25,14 +25,14 @@ public class SendFileAction extends Action{
         contentType.put("jpg","image/jpeg");
         contentType.put("js","text/javascript");
         contentType.put("json","application/json");
-        contentType.put("svg","image/svg+xml");
+        contentType.put("svg","image/svg");
         contentType.put("png","image/jpeg");
     }
     @Override
     public Forward exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
         String uri = request.getRequestURI();
         logger.info("SendFile Action for: " + uri);
-        String fileType = uri.substring(uri.indexOf('.')+1);
+        String fileType = uri.substring(uri.lastIndexOf('.')+1);
 
         File file = new File("../webapps/" +  uri);
         if(!file.exists()){

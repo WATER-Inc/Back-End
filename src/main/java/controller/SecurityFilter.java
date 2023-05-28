@@ -40,7 +40,7 @@ public class SecurityFilter implements Filter {
                     session.removeAttribute("SecurityFilterMessage");
                 }
             }
-            boolean canExecute = action.getName().equals("sendfileAction") || action.getName().equals("loginAction");
+            boolean canExecute = action.getName().equals("sendfileAction") || action.getName().equals("loginAction") || action.getName().equals("registrationAction");
             if(user != null) {
                 userName = "\"" + user.getUsername() + "\" user";
                 logger.debug(userName);
