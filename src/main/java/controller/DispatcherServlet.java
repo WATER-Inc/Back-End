@@ -58,7 +58,11 @@ public class DispatcherServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        process(request, response);
+        // TODO differentiate recourse request and data request
+        logger.debug("Got url: " + request.getRequestURI());
+        response.setContentType("text/html");
+
+        //process(request, response);
     }
 
     @Override
