@@ -1,8 +1,8 @@
 import React from "react";
-import TextInput from "./components/textinput";
-import SubmitButton from "./components/submitButton";
 import wavesDesktop from "../resources/desktopSIngIn.svg";
 import wavesPhone from "../resources/phoneSingIn.svg";
+import arrow from "../resources/arrow.png";
+
 
 class SingUp extends React.Component {
     state = {
@@ -33,14 +33,22 @@ class SingUp extends React.Component {
         })
     }
 
+    formReset = () => {
+        document.getElementById("userName").value = "";
+        document.getElementById("password").value = "";
+        document.getElementById("password-dup").value = "";
+    }
     sendData = () => {
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST','https://localhost:8080/singup');
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.onreadystatechange = () => {
-            console.log(this);
-        }
-        xhr.send(JSON.stringify(this.state));
+        if(this.state.userPassword.localeCompare(this.state.userPasswordDup) === 0) {
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', `https://localhost:8080/water_war/register?username=${this.state.userName}&userpassword=${this.state.userPassword}`);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = () => {
+                console.log(this);
+            }
+            xhr.send();
+        }else alert("passwords don't match");
+        this.formReset();
     }
 
     componentDidMount() {
@@ -62,7 +70,7 @@ class SingUp extends React.Component {
 
     render() {
         return <div className="wrapper main-wrapper">
-            <img id="waves" src={wavesDesktop}/>
+            <img id="waves" src={wavesDesktop} alt="waves image"/>
             <div className="wrapper column-wrapper main-section">
                 <h3 className="water">WATER</h3>
                 <div className="wrapper column-wrapper input-section">
@@ -72,18 +80,15 @@ class SingUp extends React.Component {
                                onChange={this.handleUserPasswordInput}/>
                         <input id="password-dup" type="password" placeholder="Password"
                                onChange={this.handleUserPasswordDupInput}/>
-                        <div className="wrapper link-wrapper">
-                            <a className="forgot" href="/forgot-password">Forgot password?</a>
-                        </div>
                     </div>
                 </div>
                 <div className="wrapper row-wrapper submit-section">
                     <div className="wrapper column-wrapper sign-button-block">
                         <p className="link big-link">Sing Up</p>
-                        <a className="link small-link" href="/">Sing In</a>
+                        <a className="link small-link" href="./">Sing In</a>
                     </div>
                     <div className="submit-wrapper">
-                        <SubmitButton onClick={this.sendData}/>
+                        <button className="submit" onClick={this.sendData}><img src={arrow}/></button>
                     </div>
                 </div>
             </div>
