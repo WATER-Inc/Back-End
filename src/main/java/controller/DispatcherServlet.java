@@ -59,14 +59,13 @@ public class DispatcherServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         // TODO differentiate recourse request and data request
-        logger.debug("Got url: " + request.getRequestURI());
-        response.setContentType("text/html");
-
-        //process(request, response);
+        logger.debug("Get url: " + request.getRequestURI());
+        process(request, response);
     }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        logger.debug("Post url: " + request.getRequestURI());
         process(request, response);
     }
 
@@ -84,9 +83,11 @@ public class DispatcherServlet extends HttpServlet {
                     session.removeAttribute("redirectedData");
                 }
             }
+            logger.debug("Starting action execution");
             ActionManager actionManager = ActionManagerFactory.getManager(getFactory());
             Action.Forward forward = actionManager.execute(action, request, response);
             actionManager.close();
+
             if (session != null && forward != null && !forward.getAttributes().isEmpty()) {
                 session.setAttribute("redirectedData", forward.getAttributes());
             }
@@ -96,16 +97,16 @@ public class DispatcherServlet extends HttpServlet {
                 logger.debug(String.format("Request for URI \"%s\" id redirected to URI \"%s\"", requestedUri, redirectedUri));
                 response.sendRedirect(redirectedUri);
             } else {
-                String jspPage;
-                if (forward != null) {
-                    jspPage = forward.getForward();
-                }
-                else {
-                    jspPage = action.getName() + ".jsp";
-                }
-                jspPage = "/WEB-INF/jsp" + jspPage;
-                logger.debug(String.format("Request for URI \"%s\" is forwarded to JSP \"%s\"", requestedUri, jspPage));
-                getServletContext().getRequestDispatcher(jspPage).forward(request, response);
+//                String jspPage;
+//                if (forward != null) {
+//                    jspPage = forward.getForward();
+//                }
+//                else {
+//                    jspPage = action.getName() + ".jsp";
+//                }
+//                jspPage = "/WEB-INF/jsp" + jspPage;
+//                logger.debug(String.format("Request for URI \"%s\" is forwarded to JSP \"%s\"", requestedUri, jspPage));
+//                getServletContext().getRequestDispatcher(jspPage).forward(request, response);
             }
         } catch (PersistException e) {
             logger.error("It is impossible to process request", e);

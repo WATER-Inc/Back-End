@@ -76,6 +76,9 @@ abstract public class Action {
         public Map<String, Object> getAttributes() {
             return attributes;
         }
+        public void setAttribute(String attributeName,Object attributeValue){
+            this.attributes.put(attributeName,attributeValue);
+        }
     }
 
     @Override

@@ -40,7 +40,7 @@ public class SecurityFilter implements Filter {
                     session.removeAttribute("SecurityFilterMessage");
                 }
             }
-            boolean canExecute = action.getName().equals("/login") || allowRoles == null;
+            boolean canExecute = action.getName().equals("sendfileAction") || action.getName().equals("loginAction");
             if(user != null) {
                 userName = "\"" + user.getUsername() + "\" user";
                 logger.debug(userName);
@@ -54,7 +54,7 @@ public class SecurityFilter implements Filter {
                 if(session != null && action.getClass() != MainAction.class) {
                     session.setAttribute("SecurityFilterMessage", "Доступ запрещён");
                 }
-                httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.html");
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/");
             }
         } else {
             logger.error("It is impossible to use HTTP filter");

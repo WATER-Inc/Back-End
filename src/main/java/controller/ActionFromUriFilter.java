@@ -22,10 +22,11 @@ public class ActionFromUriFilter implements Filter {
         actions.put("chatsAction", ChatsAction.class);
         actions.put("chatAction", ChatAction.class);
         actions.put("registrationAction", RegistrationAction.class);
-        actions.put("error", ErrorAction.class);
-        actions.put("sendfile", SendFileAction.class);
+        actions.put("errorAction", ErrorAction.class);
+        actions.put("sendfileAction", SendFileAction.class);
 
         actionName.put("/","loginAction");
+        actionName.put("/login","loginAction");
         actionName.put("/register","registrationAction");
         actionName.put("/chats","chatsAction");
         actionName.put("/chat","chatAction");
@@ -68,13 +69,13 @@ public class ActionFromUriFilter implements Filter {
     private static String getActionName(String uri,String contextPath){
         logger.debug("Processing action| uri: " + uri + "; contextPath: " + contextPath);
         if(!contextPath.equals("/water_war"))
-            return "error";
+            return "errorAction";
         if(uri.lastIndexOf('.') >=0)
-            return "sendfile";
+            return "sendfileAction";
         String actionPath = uri.substring(contextPath.length());
         String action = actionName.get(actionPath);
         if(action == null)
-            return "error";
+            return "errorAction";
         return action;
     }
     @Override

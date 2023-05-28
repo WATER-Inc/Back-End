@@ -40,4 +40,14 @@ public class UserService extends Service {
         else
             throw new PersistException("Incorrect Password");
     }
+
+    public User getByUsername(String username) throws PersistException{
+        User user = null;
+        try{
+            user = ((MySqlUserDAO) genericDAO).getByUsername(username);
+        }catch (PersistException ex){
+            throw new PersistException("Incorrect Username");
+        }
+        return user;
+    }
 }
