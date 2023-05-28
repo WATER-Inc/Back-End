@@ -16,7 +16,7 @@ import service.UserService;
 
 import java.util.List;
 
-
+@Test(groups = {"service"})
 public class ChatServiceTest extends ServiceTest<Chat> {
 
     private UserService userService;
@@ -24,7 +24,7 @@ public class ChatServiceTest extends ServiceTest<Chat> {
     private User testUser;
     private Role testRole;
 
-    @BeforeClass
+    @BeforeClass(groups = {"service"})
     @Override
     public void init() throws PersistException {
         super.init();
@@ -40,7 +40,7 @@ public class ChatServiceTest extends ServiceTest<Chat> {
         testRole = roleService.persist(testRole);
     }
 
-    @AfterTest
+    @AfterTest(groups = {"service"})
     public void tearDown() throws PersistException {
         userService.delete(testUser);
         roleService.delete(testRole);
@@ -116,7 +116,7 @@ public class ChatServiceTest extends ServiceTest<Chat> {
         assertEquals(chat, retrievedChat);
     }
 
-    @Test
+    @Test(groups = {"service"})
     public void getByUserTest() throws PersistException {
         Chat chat1 = new Chat();
         chat1.setName("Test Chat 1");
@@ -136,7 +136,7 @@ public class ChatServiceTest extends ServiceTest<Chat> {
         assertTrue(chatList.contains(chat2));
     }
 
-    @Test
+    @Test(groups = {"service"})
     public void addUserTest() throws PersistException {
         Chat chat = new Chat();
         chat.setName("Test Chat");

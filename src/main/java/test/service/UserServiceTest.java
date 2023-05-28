@@ -8,10 +8,10 @@ import service.UserService;
 
 import java.util.List;
 
-@Test
+@Test(groups = {"service"})
 public class UserServiceTest extends ServiceTest<User> {
 
-    @BeforeTest
+    @BeforeTest(groups = {"service"})
     @Override
     public void init() throws PersistException {
         super.init();
@@ -82,7 +82,7 @@ public class UserServiceTest extends ServiceTest<User> {
         assertEquals(user, retrievedUser);
     }
 
-    @Test
+    @Test(groups = {"service"})
     public void getByUsernameAndPasswordTest() throws PersistException {
         User user = new User();
         user.setUsername("johndoe");

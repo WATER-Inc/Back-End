@@ -20,24 +20,24 @@ public abstract class ServiceTest<T> extends Assert {
     public static final int DB_POOL_START_SIZE = 10;
     public static final int DB_POOL_MAX_SIZE = 1000;
     public static final int DB_POOL_CHECK_CONNECTION_TIMEOUT = 0;
-    @BeforeTest
+    @BeforeTest(groups = {"service"})
     public void init() throws PersistException {
         ConnectionPool.getInstance().init(DB_DRIVER_CLASS, DB_URL, DB_USER, DB_PASSWORD, DB_POOL_START_SIZE, DB_POOL_MAX_SIZE, DB_POOL_CHECK_CONNECTION_TIMEOUT);
     };
 
 
-    @Test
+    @Test(groups = {"service"})
     public abstract void getByIdTest() throws PersistException;
 
-    @Test
+    @Test(groups = {"service"})
     public abstract void getAllTest() throws PersistException;
 
-    @Test
+    @Test(groups = {"service"})
     public abstract void persistTest() throws PersistException;
 
-    @Test
+    @Test(groups = {"service"})
     public abstract void deleteTest() throws PersistException;
 
-    @Test
+    @Test(groups = {"service"})
     public abstract void updateTest() throws PersistException;
 }

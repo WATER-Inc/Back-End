@@ -8,10 +8,10 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-@Test
+@Test(groups = {"service"})
 public class RoleServiceTest extends ServiceTest<Role> {
 
-    @BeforeTest
+    @BeforeTest(groups = {"service"})
     @Override
     public void init() throws PersistException {
         super.init();

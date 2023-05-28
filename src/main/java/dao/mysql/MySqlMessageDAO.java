@@ -19,7 +19,7 @@ public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
     private final static String selectQ = "SELECT * FROM water.messages";
     private final static String selectAllQ = "SELECT * FROM water.messages";
     private final static String insertQ = "INSERT INTO water.messages (sender_id, chat_id, content, created_date) \n" +
-            "VALUES (?);";
+            "VALUES (?, ?, ?, ?);";
     private final static String selectByUser = "SELECT messages.id FROM water.messages WHERE messages.sender_id = ?;";
     private final static String selectByChat = "SELECT messages.id FROM water.messages WHERE messages.chat_id = ?;";
     private final static String updateQ = "UPDATE water.messages SET content=? WHERE id= ?;";
@@ -113,6 +113,7 @@ public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
     protected void prepareStatementForUpdate(PreparedStatement statement, Message object) throws PersistException {
         try {
             statement.setString(1, object.getContent());
+            statement.setString(2, object.getId());
         } catch (Exception e) {
             throw new PersistException(e);
         }
