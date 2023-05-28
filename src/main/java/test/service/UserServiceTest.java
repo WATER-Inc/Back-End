@@ -1,17 +1,18 @@
 package test.service;
 
+import dao.PersistException;
 import entity.User;
-import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import service.ServiceFactory;
 
+@Test
 public class UserServiceTest extends ServiceTest<User> {
 
     @BeforeTest
     @Override
-    public void init() {
+    public void init() throws PersistException {
+        super.init();
         service = factory.getService(User.class);
     }
 
