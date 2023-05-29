@@ -8,6 +8,8 @@ import service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class RegistrationAction extends Action{
     final private static Logger logger = Logger.getLogger(String.valueOf(RegistrationAction.class));
@@ -22,15 +24,21 @@ public class RegistrationAction extends Action{
             if (user != null) {
                 request.setAttribute("message", "Пользователь уже существует!");
                 logger.info(String.format("user \"%s\" unsuccessfully tried to register in from %s (%s:%s)", username, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
-                return new Forward("/register.html");
+                try {
+                    PrintWriter writer =  response.getWriter();
+                    writer.println();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                return null;
             }
             user = new User();
             user.setUsername(username);
             user.setPasswordHash(password);
             service.persist(user);
             logger.info(String.format("user \"%s\" is registered in from %s (%s:%s)", username, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
-            return new Forward("/login");
+            return null;
         }
-        return new Forward("/register.html");
+        return null;
     }
 }

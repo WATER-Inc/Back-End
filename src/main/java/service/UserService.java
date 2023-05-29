@@ -1,14 +1,17 @@
 package service;
 
+import controller.DispatcherServlet;
 import dao.PersistException;
 import dao.mysql.MySqlUserDAO;
 import entity.Entity;
 import entity.User;
+import org.apache.log4j.Logger;
 import validator.IncorrectFormDataException;
 
 import java.util.List;
 
 public class UserService extends Service {
+    public static Logger logger = Logger.getLogger(String.valueOf(UserService.class));
     public UserService() throws PersistException {
         super(User.class);
     }
