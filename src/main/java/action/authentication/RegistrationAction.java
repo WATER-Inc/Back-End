@@ -15,7 +15,7 @@ public class RegistrationAction extends Action {
     final private static Logger logger = Logger.getLogger(String.valueOf(RegistrationAction.class));
 
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
+    public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         logger.debug("Trying to register with: [Username: " + username + "; Password: " + password + "]");
@@ -32,7 +32,7 @@ public class RegistrationAction extends Action {
                 }
                 request.setAttribute("message", "Пользователь уже существует!");
                 logger.info(String.format("user \"%s\" unsuccessfully tried to register in from %s (%s:%s)", username, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
-                return new Forward("/register.html");
+                return;
             }
             user = new User();
             user.setUsername(username);
@@ -44,8 +44,8 @@ public class RegistrationAction extends Action {
                 throw new RuntimeException(e);
             }
             logger.info(String.format("user \"%s\" is registered in from %s (%s:%s)", username, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
-            return new Forward("/login");
+            return;
         }
-        return new Forward("/register.html");
+        return;
     }
 }

@@ -29,7 +29,7 @@ public class SendFileAction extends Action{
         contentType.put("png","image/jpeg");
     }
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
+    public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
         String uri = request.getRequestURI();
         logger.info("SendFile Action for: " + uri);
         String fileType = uri.substring(uri.lastIndexOf('.')+1);
@@ -37,7 +37,7 @@ public class SendFileAction extends Action{
         File file = new File("../webapps/" +  uri);
         if(!file.exists()){
             // TODO file not found
-            return new Forward("/error");
+            return;
         }
         try {
             logger.info("Sending File: " +  file.getCanonicalPath());
@@ -61,6 +61,6 @@ public class SendFileAction extends Action{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return;
     }
 }

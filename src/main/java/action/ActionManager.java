@@ -13,9 +13,9 @@ public class ActionManager {
         this.factory = factory;
     }
 
-    public Action.Forward execute(Action action, HttpServletRequest request, HttpServletResponse response) throws PersistException {
+    public void execute(Action action, HttpServletRequest request, HttpServletResponse response) throws PersistException {
         action.setFactory(factory);
-        return action.exec(request, response);
+        return;
     }
 
     public void close(){

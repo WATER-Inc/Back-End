@@ -1,6 +1,5 @@
 package action.chats;
 
-import action.authentication.LoginAction;
 import action.sender.Sender;
 import dao.PersistException;
 import entity.Chat;
@@ -19,7 +18,7 @@ public class UserCreateChat extends ChatsAction {
     private static Logger logger = Logger.getLogger(String.valueOf(UserCreateChat.class));
 
     @Override
-    public Forward exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
+    public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
         String chatName = request.getParameter("chatName");
         logger.debug("Trying to create chat: [ChatName: " + chatName + "]");
         if (chatName != null) {
@@ -40,12 +39,12 @@ public class UserCreateChat extends ChatsAction {
             if (chat == null) {
                 request.setAttribute("message", "Чат уже существует");
                 logger.info(String.format("user \"%s\" unsuccessfully tried to create chat (%s) in form %s (%s:%s)", getAuthorizedUser().getUsername(), chatName, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
-                return new Forward("/login.html");
+                return;
             }
             HttpSession session = request.getSession();
             logger.info(String.format("user \"%s\" created chat (%s) in from %s (%s:%s)", getAuthorizedUser().getUsername(), chatName, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
-            return new Forward("/chats");
+            return;
         }
-        return new Forward("/login.html");
+        return;
     }
 }
