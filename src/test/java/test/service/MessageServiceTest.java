@@ -1,7 +1,7 @@
 package test.service;
 
 import dao.PersistException;
-import dao.entity.Participants;
+import entity.auxiliary.Participants;
 import entity.Chat;
 import entity.Message;
 import entity.Role;

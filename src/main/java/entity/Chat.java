@@ -1,6 +1,6 @@
 package entity;
 
-import dao.entity.Participants;
+import entity.auxiliary.Participants;
 
 import java.util.Objects;
 

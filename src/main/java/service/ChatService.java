@@ -1,8 +1,8 @@
 package service;
 
 import dao.PersistException;
-import dao.entity.ChatLink;
-import dao.entity.Participants;
+import entity.auxiliary.ChatLink;
+import entity.auxiliary.Participants;
 import dao.mysql.MySqlChatDAO;
 import dao.mysql.MySqlChatLinkDAO;
 import entity.Chat;

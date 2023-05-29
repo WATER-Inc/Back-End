@@ -4,7 +4,7 @@ package dao.mysql;
 import dao.DAOFactory;
 import dao.GenericDAO;
 import dao.PersistException;
-import dao.entity.ChatLink;
+import entity.auxiliary.ChatLink;
 import dao.pool.ConnectionPool;
 import entity.Message;
 import entity.Role;
@@ -12,8 +12,6 @@ import entity.Chat;
 import entity.User;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 

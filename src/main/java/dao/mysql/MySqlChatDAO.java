@@ -3,9 +3,8 @@ package dao.mysql;
 import dao.PersistException;
 import dao.AbstractJDBCDao;
 import dao.DAOFactory;
-import dao.entity.ChatLink;
+import entity.auxiliary.ChatLink;
 import entity.Chat;
-import entity.Message;
 import entity.User;
 
 import java.sql.Connection;
