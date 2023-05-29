@@ -1,14 +1,11 @@
 package action;
 
+import action.authentication.LoginAction;
 import dao.PersistException;
 import entity.Role;
 import org.apache.log4j.Logger;
 import service.RoleService;
 import service.ServiceFactory;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 
 public abstract class AuthorizedUserAction extends Action {
     private static Logger logger = Logger.getLogger(String.valueOf(LoginAction.class));

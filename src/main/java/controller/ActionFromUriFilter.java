@@ -2,7 +2,10 @@ package controller;
 
 
 import action.*;
-import com.sun.tools.javac.Main;
+import action.authentication.LoginAction;
+import action.authentication.RegistrationAction;
+import action.chat.ChatAction;
+import action.chats.ChatsAction;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;

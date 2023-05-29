@@ -40,6 +40,7 @@ public class DispatcherServlet extends HttpServlet {
 
     public void init() {
         try {
+//            PropertyConfigurator.configure("log4j.properties");
             Logger root = Logger.getRootLogger();
             Layout layout = new PatternLayout(LOG_MESSAGE_FORMAT);
             root.addAppender(new FileAppender(layout, LOG_FILE_NAME, true));
@@ -90,23 +91,6 @@ public class DispatcherServlet extends HttpServlet {
 
             if (session != null && forward != null && !forward.getAttributes().isEmpty()) {
                 session.setAttribute("redirectedData", forward.getAttributes());
-            }
-            String requestedUri = request.getRequestURI();
-            if (forward != null && forward.isRedirect()) {
-                String redirectedUri = request.getContextPath() + forward.getForward();
-                logger.debug(String.format("Request for URI \"%s\" id redirected to URI \"%s\"", requestedUri, redirectedUri));
-                response.sendRedirect(redirectedUri);
-            } else {
-//                String jspPage;
-//                if (forward != null) {
-//                    jspPage = forward.getForward();
-//                }
-//                else {
-//                    jspPage = action.getName() + ".jsp";
-//                }
-//                jspPage = "/WEB-INF/jsp" + jspPage;
-//                logger.debug(String.format("Request for URI \"%s\" is forwarded to JSP \"%s\"", requestedUri, jspPage));
-//                getServletContext().getRequestDispatcher(jspPage).forward(request, response);
             }
         } catch (PersistException e) {
             logger.error("It is impossible to process request", e);

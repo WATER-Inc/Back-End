@@ -1,5 +1,6 @@
-package action;
+package action.authentication;
 
+import action.Action;
 import action.sender.UserSender;
 import dao.PersistException;
 import entity.User;
@@ -8,10 +9,9 @@ import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class RegistrationAction extends Action{
+public class RegistrationAction extends Action {
     final private static Logger logger = Logger.getLogger(String.valueOf(RegistrationAction.class));
 
     @Override

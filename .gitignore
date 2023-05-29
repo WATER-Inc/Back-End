@@ -7,7 +7,6 @@ target/
 .mvn
 mvnw.cmd
 mvnw
-pom.xml
 
 ### IntelliJ IDEA ###
 .idea/misc.xml

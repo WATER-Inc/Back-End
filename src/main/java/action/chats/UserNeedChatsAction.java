@@ -3,7 +3,6 @@ package action.chats;
 import action.Action;
 import dao.PersistException;
 import entity.Chat;
-import entity.User;
 import service.ChatService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
-public class UserChatsAction extends ChatsAction {
+public class UserNeedChatsAction extends ChatsAction {
     @Override
     public Action.Forward exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
         Forward forward = new Forward("/chats/chats.jsp", false);
