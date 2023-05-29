@@ -25,10 +25,12 @@ public class SecurityFilter implements Filter {
             HttpServletRequest httpRequest = (HttpServletRequest)request;
             HttpServletResponse httpResponse = (HttpServletResponse)response;
             Action action = (Action)httpRequest.getAttribute("action");
+            logger.debug(action);
             Set<Role> allowRoles = action.getAllowRoles();
             String userName = "unauthorized user";
             HttpSession session = httpRequest.getSession(false);
             User user = null;
+            logger.debug(session);
             if(session != null) {
                 user = (User)session.getAttribute("authorizedUser");
                 action.setAuthorizedUser(user);
@@ -38,11 +40,13 @@ public class SecurityFilter implements Filter {
                     session.removeAttribute("SecurityFilterMessage");
                 }
             }
-            boolean canExecute = allowRoles == null;
+            boolean canExecute = action.getName().equals("sendfileAction") || action.getName().equals("loginAction") || action.getName().equals("registrationAction");
             if(user != null) {
                 userName = "\"" + user.getUsername() + "\" user";
+                logger.debug(userName);
                 canExecute = canExecute || allowRoles.contains(user.getRole());
             }
+            logger.debug("CanExecute:" + canExecute);
             if(canExecute) {
                 chain.doFilter(request, response);
             } else {
@@ -50,7 +54,7 @@ public class SecurityFilter implements Filter {
                 if(session != null && action.getClass() != MainAction.class) {
                     session.setAttribute("SecurityFilterMessage", "Доступ запрещён");
                 }
-                httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.html");
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/");
             }
         } else {
             logger.error("It is impossible to use HTTP filter");

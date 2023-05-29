@@ -1,10 +1,8 @@
 package controller;
 
 
-import action.Action;
-import action.LoginAction;
-import action.LogoutAction;
-import action.MainAction;
+import action.*;
+import com.sun.tools.javac.Main;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
@@ -17,12 +15,21 @@ public class ActionFromUriFilter implements Filter {
     private static Logger logger = Logger.getLogger(ActionFromUriFilter.class);
 
     private static Map<String, Class<? extends Action>> actions = new ConcurrentHashMap<>();
+    private static Map<String,String> actionName = new ConcurrentHashMap<>();
 
     static {
-        actions.put("/", MainAction.class);
-        actions.put("/index", MainAction.class);
-        actions.put("/login", LoginAction.class);
-        actions.put("/logout", LogoutAction.class);
+        actions.put("loginAction", LoginAction.class);
+        actions.put("chatsAction", ChatsAction.class);
+        actions.put("chatAction", ChatAction.class);
+        actions.put("registrationAction", RegistrationAction.class);
+        actions.put("errorAction", ErrorAction.class);
+        actions.put("sendfileAction", SendFileAction.class);
+
+        actionName.put("/","loginAction");
+        actionName.put("/login","loginAction");
+        actionName.put("/register","registrationAction");
+        actionName.put("/chats","chatsAction");
+        actionName.put("/chat","chatAction");
 //
 //        actions.put("/profile/edit", ProfileEditAction.class);
 //        actions.put("/profile/save", ProfileSaveAction.class);
@@ -59,33 +66,45 @@ public class ActionFromUriFilter implements Filter {
 //        actions.put("/author/book/return", ReturnBookAction.class);
     }
 
+    private static String getActionName(String uri,String contextPath){
+        logger.debug("Processing action| uri: " + uri + "; contextPath: " + contextPath);
+        if(!contextPath.equals("/water_war"))
+            return "errorAction";
+        if(uri.lastIndexOf('.') >=0)
+            return "sendfileAction";
+        String actionPath = uri.substring(contextPath.length());
+        String action = actionName.get(actionPath);
+        if(action == null)
+            return "errorAction";
+        return action;
+    }
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {}
+    public void init(FilterConfig filterConfig) throws ServletException {
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        if(request instanceof HttpServletRequest) {
-            HttpServletRequest httpRequest = (HttpServletRequest)request;
+        if (request instanceof HttpServletRequest) {
+            HttpServletRequest httpRequest = (HttpServletRequest) request;
             String contextPath = httpRequest.getContextPath();
             String uri = httpRequest.getRequestURI();
-            logger.debug(String.format("Starting of processing of request for URI \"%s\"", uri));
-            int beginAction = contextPath.length();
-            int endAction = uri.lastIndexOf('.');
             String actionName;
-            if(endAction >= 0) {
-                actionName = uri.substring(beginAction, endAction);
-            } else {
-                actionName = uri.substring(beginAction);
-            }
-            logger.debug("ActionFromUriFilter Word!!!");
-            logger.debug(actionName);
-            Class<? extends Action> actionClass = actions.get(actionName);
+
+            logger.debug(String.format("Starting of processing of request for URI \"%s\"", uri));
+
+            actionName = getActionName(uri,contextPath);
+
+            logger.debug("ActionFromUriFilter Word: " + actionName);
+
+            Class<Action> actionClass = (Class<Action>) actions.get(actionName);
             try {
                 Action action = actionClass.newInstance();
                 action.setName(actionName);
-                httpRequest.setAttribute("action", action);
+                request.setAttribute("action", action);
                 chain.doFilter(request, response);
-            } catch (InstantiationException | IllegalAccessException | NullPointerException e) {
+            } catch (
+                    InstantiationException | IllegalAccessException |
+                    NullPointerException e) {
                 logger.error("It is impossible to create action handler object", e);
                 httpRequest.setAttribute("error", String.format("Запрошенный адрес %s не может быть обработан сервером", uri));
                 httpRequest.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
@@ -97,6 +116,7 @@ public class ActionFromUriFilter implements Filter {
     }
 
     @Override
-    public void destroy() {}
+    public void destroy() {
+    }
 }
 
