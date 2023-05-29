@@ -1,7 +1,7 @@
 package action.authentication;
 
 import action.Action;
-import action.sender.UserSender;
+import action.sender.Sender;
 import dao.PersistException;
 import entity.User;
 import org.apache.log4j.Logger;
@@ -21,10 +21,12 @@ public class RegistrationAction extends Action {
         logger.debug("Trying to register with: [Username: " + username + "; Password: " + password + "]");
         if (username != null && password != null) {
             UserService service = factory.getService(User.class);
-            User user = service.getByUsername(username);
+            User user = new User();
+            user.setUsername(username);
+            user = service.persist(user);
             if (user != null) {
                 try {
-                    UserSender.sendUser(response, null);
+                    Sender.sendObject(response, null);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -37,7 +39,7 @@ public class RegistrationAction extends Action {
             user.setPasswordHash(password);
             service.persist(user);
             try {
-                UserSender.sendUser(response, user);
+                Sender.sendObject(response, user);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

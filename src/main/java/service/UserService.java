@@ -1,12 +1,15 @@
 package service;
 
 import dao.PersistException;
+import dao.mysql.MySqlChatDAO;
 import dao.mysql.MySqlUserDAO;
+import entity.Chat;
 import entity.Entity;
 import entity.User;
 import validator.IncorrectFormDataException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserService extends Service {
     public UserService() throws PersistException {
@@ -41,11 +44,11 @@ public class UserService extends Service {
             throw new PersistException("Incorrect Password");
     }
 
-    public User getByUsername(String username) throws PersistException{
+    public User getByUsername(String username) throws PersistException {
         User user = null;
-        try{
+        try {
             user = ((MySqlUserDAO) genericDAO).getByUsername(username);
-        }catch (PersistException ex){
+        } catch (PersistException ex) {
             throw new PersistException("Incorrect Username");
         }
         return user;

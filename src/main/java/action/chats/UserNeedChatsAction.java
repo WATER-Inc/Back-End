@@ -1,12 +1,14 @@
 package action.chats;
 
 import action.Action;
+import action.sender.Sender;
 import dao.PersistException;
 import entity.Chat;
 import service.ChatService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -17,8 +19,11 @@ public class UserNeedChatsAction extends ChatsAction {
         List<Chat> chats;
         ChatService service = factory.getService(Chat.class);
         chats = service.getByUser(getAuthorizedUser());
-        // TODO send chats to response in JSON
-        //TODO need to sort chats order by last message date;
+        try {
+            Sender.sendObject(response, chats);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return forward;
     }
 }

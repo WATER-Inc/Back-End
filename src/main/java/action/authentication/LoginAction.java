@@ -2,7 +2,7 @@ package action.authentication;
 
 
 import action.Action;
-import action.sender.UserSender;
+import action.sender.Sender;
 import dao.PersistException;
 import entity.User;
 import org.apache.log4j.Logger;
@@ -25,7 +25,7 @@ public class LoginAction extends Action {
             UserService service = factory.getService(User.class);
             User user = service.getByUsernameAndPassword(username, password);
             try {
-                UserSender.sendUser(response, user);
+                Sender.sendObject(response, user);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
