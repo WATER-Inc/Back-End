@@ -1,6 +1,8 @@
 package action;
 
 
+import action.sender.UserSender;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.PersistException;
 import entity.Role;
 import entity.User;
@@ -10,6 +12,7 @@ import service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,6 +27,11 @@ public class LoginAction extends Action {
         if (username != null && password != null) {
             UserService service = factory.getService(User.class);
             User user = service.getByUsernameAndPassword(username, password);
+            try {
+                UserSender.sendUser(response, user);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             if (user == null) {
                 request.setAttribute("message", "Имя пользователя или пароль не опознанны");
                 logger.info(String.format("user \"%s\" unsuccessfully tried to log in from %s (%s:%s)", username, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
