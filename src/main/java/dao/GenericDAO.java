@@ -1,5 +1,7 @@
 package dao;
 
+import entity.Identified;
+
 import java.io.Serializable;
 import java.util.List;
 

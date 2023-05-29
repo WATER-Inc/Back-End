@@ -1,6 +1,6 @@
 package dao.entity;
 
-import dao.Identified;
+import entity.Identified;
 
 public class ChatLink implements Identified<String> {
     private String id;

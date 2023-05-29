@@ -1,5 +1,7 @@
 package dao;
 
+import entity.Identified;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -67,8 +69,6 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
 
     protected Connection connection;
 
-    private Set<ManyToOne> relations = new HashSet<ManyToOne>();
-
     @Override
     public T getByPrimaryKey(String key) throws PersistException {
         List<T> list;
@@ -106,8 +106,6 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
         if (object.getId() != null) {
             throw new PersistException("Object is already persist.");
         }
-        // Сохраняем зависимости
-        saveDependences(object);
 
         T persistInstance;
         // Добавляем запись
@@ -138,8 +136,6 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
 
     @Override
     public void update(T object) throws PersistException {
-        // Сохраняем зависимости
-        saveDependences(object);
 
         String sql = getUpdateQuery();
         try (PreparedStatement statement = connection.prepareStatement(sql);) {
@@ -176,21 +172,4 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
         this.connection = connection;
     }
 
-    private void saveDependences(Identified owner) throws PersistException {
-        for (ManyToOne m : relations) {
-            try {
-                if (m.getDependence(owner) == null) {
-                    continue;
-                }
-                if (m.getDependence(owner).getId() == null) {
-                    Identified depend = m.persistDependence(owner, connection);
-                    m.setDependence(owner, depend);
-                } else {
-                    m.updateDependence(owner, connection);
-                }
-            } catch (Exception e) {
-                throw new PersistException("Exception on save dependence in relation " + m + ".", e);
-            }
-        }
-    }
 }

@@ -1,7 +1,5 @@
 package entity;
 
-import dao.Identified;
-
 import java.sql.Date;
 import java.util.Objects;
 
