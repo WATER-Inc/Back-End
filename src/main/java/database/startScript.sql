@@ -1,7 +1,7 @@
 CREATE TABLE user(
-                      id INT PRIMARY KEY AUTO_INCREMENT,
-                      username VARCHAR(64) UNIQUE,
-                      password_hash VARCHAR(128)
+                     id INT PRIMARY KEY AUTO_INCREMENT,
+                     username VARCHAR(64) UNIQUE,
+                     password_hash VARCHAR(128)
 );
 CREATE TABLE role(
                      id INT PRIMARY KEY AUTO_INCREMENT,
@@ -12,14 +12,13 @@ CREATE TABLE chat(
                      name VARCHAR(64)
 );
 
-
 CREATE TABLE chat_user(
                           id INT PRIMARY KEY AUTO_INCREMENT,
                           chat_id INT,
                           user_id INT,
                           role_id INT,
-                          FOREIGN KEY (chat_id) REFERENCES chat (id),
-                          FOREIGN KEY (user_id) REFERENCES user (id),
+                          FOREIGN KEY (chat_id) REFERENCES chat (id) ON DELETE CASCADE,
+                          FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE,
                           FOREIGN KEY (role_id) REFERENCES role (id)
 );
 
@@ -31,7 +30,6 @@ CREATE TABLE messages(
                          chat_id INT,
                          content VARCHAR(140),
                          created_date DATE,
-                         FOREIGN KEY (sender_id) REFERENCES user (id),
+                         FOREIGN KEY (sender_id) REFERENCES user (id) ON DELETE CASCADE,
                          FOREIGN KEY (chat_id) REFERENCES chat (id) ON DELETE CASCADE
 );
-

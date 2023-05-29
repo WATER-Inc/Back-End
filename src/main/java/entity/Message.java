@@ -3,6 +3,7 @@ package entity;
 import dao.Identified;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class Message extends Entity {
     private String id;
@@ -10,6 +11,20 @@ public class Message extends Entity {
     private Chat chat;
     private String content;
     private Date date;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Message message = (Message) o;
+        return Objects.equals(id, message.id) && Objects.equals(sender, message.sender) && Objects.equals(chat, message.chat) && Objects.equals(content, message.content) && Objects.equals(date, message.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, sender, chat, content, date);
+    }
+
     @Override
     public String getId() {
         return id;
