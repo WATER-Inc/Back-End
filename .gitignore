@@ -1,12 +1,5 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
-.class
-.log
-.lock
-.idea
-.mvn
-mvnw.cmd
-mvnw
 
 ### IntelliJ IDEA ###
 .idea/misc.xml
