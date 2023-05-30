@@ -30,54 +30,17 @@ public class ActionFromUriFilter implements Filter {
         actions.put("errorAction", ErrorAction.class);
         actions.put("sendfileAction", SendFileAction.class);
 
-<<<<<<< HEAD
         actionName.put("/","loginAction");
         actionName.put("/login","loginAction");
         actionName.put("/register","registrationAction");
         actionName.put("/chats","chatsAction");
         actionName.put("/chat","chatAction");
-=======
         actionName.put("/", "loginAction");
         actionName.put("/login", "loginAction");
         actionName.put("/logout", "logoutAction");
         actionName.put("/register", "registrationAction");
         actionName.put("/chats", "chatsAction");
         actionName.put("/chat", "chatAction");
-//
-//        actions.put("/profile/edit", ProfileEditAction.class);
-//        actions.put("/profile/save", ProfileSaveAction.class);
-//
-//        actions.put("/reader/list", ReaderListAction.class);
-//        actions.put("/reader/edit", ReaderEditAction.class);
-//        actions.put("/reader/save", ReaderSaveAction.class);
-//        actions.put("/reader/delete", ReaderDeleteAction.class);
-//
-//        actions.put("/user/list", UserListAction.class);
-//        actions.put("/user/edit", UserEditAction.class);
-//        actions.put("/user/save", UserSaveAction.class);
-//        actions.put("/user/delete", UserDeleteAction.class);
-//
-//        actions.put("/author/list", AuthorListAction.class);
-//        actions.put("/author/edit", AuthorEditAction.class);
-//        actions.put("/author/save", AuthorSaveAction.class);
-//        actions.put("/author/delete", AuthorDeleteAction.class);
-//
-//        actions.put("/author/book/list", BookListAction.class);
-//        actions.put("/author/book/edit", BookEditAction.class);
-//        actions.put("/author/book/save", BookSaveAction.class);
-//        actions.put("/author/book/delete", BookDeleteAction.class);
-//
-//        actions.put("/search/book/form", SearchBookFormAction.class);
-//        actions.put("/search/book/result", SearchBookResultAction.class);
-//        actions.put("/author/book/usages", BookUsageListAction.class);
-//
-//        actions.put("/search/reader/form", SearchReaderFormAction.class);
-//        actions.put("/search/reader/result", SearchReaderResultAction.class);
-//        actions.put("/reader/usages", ReaderUsageListAction.class);
-//
-//        actions.put("/author/book/deliver", DeliverBookAction.class);
-//        actions.put("/author/book/return", ReturnBookAction.class);
->>>>>>> f10cf42c58b08206a8fb2882d756accf8fcf1912
     }
 
     private static String getActionName(String uri, String contextPath) {
