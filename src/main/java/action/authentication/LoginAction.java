@@ -19,11 +19,15 @@ public class LoginAction extends Action {
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
         String username = request.getParameter("username");
-        String password = request.getParameter("userpassword");
+        String password = request.getParameter("password");
         logger.debug("Trying to login with: [Username: " + username + "; Password: " + password + "]");
         if (username != null && password != null) {
             UserService service = factory.getService(User.class);
-            User user = service.getByUsernameAndPassword(username, password);
+            User user = null;
+            try {
+                user = service.getByUsernameAndPassword(username, password);
+            } catch (PersistException e) {
+            }
             try {
                 Sender.sendObject(response, user);
             } catch (IOException e) {
@@ -34,6 +38,7 @@ public class LoginAction extends Action {
                 logger.info(String.format("user \"%s\" unsuccessfully tried to log in from %s (%s:%s)", username, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
                 return;
             }
+            request.setAttribute("aba", "ada");
             HttpSession session = request.getSession();
             session.setAttribute("authorizedUser", user);
             logger.info(String.format("user \"%s\" is logged in from %s (%s:%s)", username, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));

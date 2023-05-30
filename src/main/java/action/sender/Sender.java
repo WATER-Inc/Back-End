@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Stack;
 
 public class Sender {
@@ -17,7 +18,11 @@ public class Sender {
         logger.debug("Send JSON: " + json);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(json);
+        PrintWriter writer = response.getWriter();
+        writer.print(json);
+        writer.flush();
+        writer.close();
+
         logger.debug(response.getHeaderNames());
     }
 }

@@ -38,7 +38,7 @@ public class UserService extends Service {
         } catch (PersistException exception) {
             throw new PersistException("Incorrect Username");
         }
-        if (user.getPasswordHash().equals(password))
+        if (user != null && user.getPasswordHash().equals(password))
             return user;
         else
             throw new PersistException("Incorrect Password");
