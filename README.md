@@ -36,4 +36,7 @@
 ![use-case-diagram.png](src%2FDocumentary%2Fuse-case-diagram.png)
 
 # Диаграммы последовательностей
+![seq_diagram_2.png](src%2FDocumentary%2Fseq_diagram_2.png)
+
 ![seq_diagram_1.png](src%2FDocumentary%2Fseq_diagram_1.png)
+
