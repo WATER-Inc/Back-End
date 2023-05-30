@@ -35,22 +35,21 @@ public class UserService extends Service {
         User user = null;
         try {
             user = ((MySqlUserDAO) genericDAO).getByUsername(username);
+            if (user!= null && user.getPasswordHash().equals(password))
+                return user;
+            return null;
         } catch (PersistException exception) {
-            throw new PersistException("Incorrect Username");
+            return null;
         }
-        if (user.getPasswordHash().equals(password))
-            return user;
-        else
-            throw new PersistException("Incorrect Password");
     }
 
     public User getByUsername(String username) throws PersistException {
         User user = null;
         try {
             user = ((MySqlUserDAO) genericDAO).getByUsername(username);
+            return user;
         } catch (PersistException ex) {
-            throw new PersistException("Incorrect Username");
+            return null;
         }
-        return user;
     }
 }

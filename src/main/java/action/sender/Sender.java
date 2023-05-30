@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Stack;
 
 public class Sender {
@@ -15,9 +16,16 @@ public class Sender {
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(object);
         logger.debug("Send JSON: " + json);
+        PrintWriter out = response.getWriter();
+        response.setHeader("Access-Control-Allow-Origin","*");
+        response.setHeader("Access-Control-Allow-Methods","GET, PUT, POST");
+        response.setHeader("Access-Control-Allow-Headers","Content-Type, Authorization");
+        // Access-Control-Allow-Headers
+        response.setHeader("Access-Control-Allow-Credentials","true");
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(json);
+        out.println(json);
+        out.close();
         logger.debug(response.getHeaderNames());
     }
 }
