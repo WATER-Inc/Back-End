@@ -40,21 +40,20 @@ public class RegistrationAction extends Action {
             UserService service = factory.getService(User.class);
             User user = new User();
             user.setUsername(username);
-            user = service.persist(user);
-            if (user != null) {
+            user.setPasswordHash(password);
+            try {
+                user = service.persist(user);
+            } catch (PersistException e) {
+
                 try {
                     Sender.sendObject(response, null);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
                 }
                 request.setAttribute("message", "Пользователь уже существует!");
                 logger.info(String.format("user \"%s\" unsuccessfully tried to register in from %s (%s:%s)", username, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
                 return;
             }
-            user = new User();
-            user.setUsername(username);
-            user.setPasswordHash(password);
-            service.persist(user);
             try {
                 Sender.sendObject(response, user);
             } catch (IOException e) {
