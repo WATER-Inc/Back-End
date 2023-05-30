@@ -7,6 +7,7 @@ import action.authentication.LogoutAction;
 import action.authentication.RegistrationAction;
 import action.chat.ChatAction;
 import action.chats.ChatsAction;
+import action.chats.UserNeedChatsAction;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
@@ -22,7 +23,7 @@ public class ActionFromUriFilter implements Filter {
     private static Map<String, String> actionName = new ConcurrentHashMap<>();
 
     static {
-        actions.put("chatsAction", ChatsAction.class);
+        actions.put("chatsAction", UserNeedChatsAction.class);
         actions.put("chatAction", ChatAction.class);
         actions.put("loginAction", LoginAction.class);
         actions.put("logoutAction", LogoutAction.class);

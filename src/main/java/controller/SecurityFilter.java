@@ -53,6 +53,7 @@ public class SecurityFilter implements Filter {
                 logger.debug(userName);
                 canExecute = canExecute || allowRoles.contains(user.getRole());
             }
+            logger.debug("|" + user + "|");
             logger.debug("CanExecute:" + canExecute);
 
             if (canExecute) {
