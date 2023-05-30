@@ -22,33 +22,26 @@ public class ActionFromUriFilter implements Filter {
     private static Map<String, String> actionName = new ConcurrentHashMap<>();
 
     static {
-        actions.put("loginAction", LoginAction.class);
-        actions.put("logoutAction", LogoutAction.class);
         actions.put("chatsAction", ChatsAction.class);
         actions.put("chatAction", ChatAction.class);
+        actions.put("loginAction", LoginAction.class);
+        actions.put("logoutAction", LogoutAction.class);
         actions.put("registrationAction", RegistrationAction.class);
         actions.put("errorAction", ErrorAction.class);
-        actions.put("sendfileAction", SendFileAction.class);
 
         actionName.put("/","loginAction");
-        actionName.put("/login","loginAction");
-        actionName.put("/register","registrationAction");
-        actionName.put("/chats","chatsAction");
-        actionName.put("/chat","chatAction");
-        actionName.put("/", "loginAction");
+        actionName.put("/chat", "chatAction");
+        actionName.put("/chats", "chatsAction");
         actionName.put("/login", "loginAction");
         actionName.put("/logout", "logoutAction");
         actionName.put("/register", "registrationAction");
-        actionName.put("/chats", "chatsAction");
-        actionName.put("/chat", "chatAction");
+
     }
 
     private static String getActionName(String uri, String contextPath) {
         logger.debug("Processing action| uri: " + uri + "; contextPath: " + contextPath);
         if (!contextPath.equals("/water_war"))
             return "errorAction";
-        if (uri.lastIndexOf('.') >= 0)
-            return "sendfileAction";
         String actionPath = uri.substring(contextPath.length());
         String action = actionName.get(actionPath);
         if (action == null)
