@@ -33,6 +33,11 @@ public class RegistrationAction extends Action {
             passwordNode = jsonNode.get("userpassword");
         }
         if (usernameNode == null || passwordNode == null) {
+            try {
+                Sender.sendObject(response, null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             logger.info("Get failed");
             return;
             // todo process request body without username & userpassword
