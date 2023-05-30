@@ -19,16 +19,20 @@ public class RegistrationAction extends Action {
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
         JsonNode jsonNode = null;
-        try{
+        try {
             jsonNode = Parser.parseRequest(request);
-        }catch (IOException e){
+        } catch (IOException e) {
             logger.debug("Request had no content");
             return;
             // todo process request with no body
         }
-        JsonNode usernameNode = jsonNode.get("username");
-        JsonNode passwordNode = jsonNode.get("userpassword");
-        if(usernameNode == null || passwordNode == null){
+        JsonNode usernameNode = null;
+        JsonNode passwordNode = null;
+        if (jsonNode != null) {
+            usernameNode = jsonNode.get("username");
+            passwordNode = jsonNode.get("userpassword");
+        }
+        if (usernameNode == null || passwordNode == null) {
             logger.info("Get failed");
             return;
             // todo process request body without username & userpassword
