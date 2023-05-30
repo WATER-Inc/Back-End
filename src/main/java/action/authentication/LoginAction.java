@@ -2,6 +2,7 @@ package action.authentication;
 
 
 import action.Action;
+import action.parser.Parser;
 import action.sender.Sender;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,29 +20,13 @@ import java.io.IOException;
 public class LoginAction extends Action {
     private static Logger logger = Logger.getLogger(String.valueOf(LoginAction.class));
 
-    private JsonNode parseRequest(HttpServletRequest request) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        BufferedReader reader = null;
-        try {
-            reader = request.getReader();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line).append('\n');
-            }
-            reader.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readTree(sb.toString());
-    }
 
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
 
         JsonNode jsonNode = null;
         try{
-            jsonNode = parseRequest(request);
+            jsonNode = Parser.parseRequest(request);
         }catch (IOException e){
             logger.debug("Request had no content");
             return;

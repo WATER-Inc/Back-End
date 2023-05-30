@@ -1,7 +1,9 @@
 package action.authentication;
 
 import action.Action;
+import action.parser.Parser;
 import action.sender.Sender;
+import com.fasterxml.jackson.databind.JsonNode;
 import dao.PersistException;
 import entity.User;
 import org.apache.log4j.Logger;
@@ -16,8 +18,23 @@ public class RegistrationAction extends Action {
 
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        JsonNode jsonNode = null;
+        try{
+            jsonNode = Parser.parseRequest(request);
+        }catch (IOException e){
+            logger.debug("Request had no content");
+            return;
+            // todo process request with no body
+        }
+        JsonNode usernameNode = jsonNode.get("username");
+        JsonNode passwordNode = jsonNode.get("userpassword");
+        if(usernameNode == null || passwordNode == null){
+            logger.info("Get failed");
+            return;
+            // todo process request body without username & userpassword
+        }
+        String username = usernameNode.asText();
+        String password = passwordNode.asText();
         logger.debug("Trying to register with: [Username: " + username + "; Password: " + password + "]");
         if (username != null && password != null) {
             UserService service = factory.getService(User.class);
