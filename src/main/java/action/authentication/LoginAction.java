@@ -23,21 +23,28 @@ public class LoginAction extends Action {
 
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
-
         JsonNode jsonNode = null;
-        try{
+        try {
             jsonNode = Parser.parseRequest(request);
-        }catch (IOException e){
+        } catch (IOException e) {
             logger.debug("Request had no content");
             return;
             // todo process request with no body
         }
-
-        JsonNode usernameNode = jsonNode.get("username");
-        JsonNode passwordNode = jsonNode.get("userpassword");
-        if(usernameNode == null || passwordNode == null){
+        JsonNode usernameNode = null;
+        JsonNode passwordNode = null;
+        if (jsonNode != null) {
+            usernameNode = jsonNode.get("username");
+            passwordNode = jsonNode.get("userpassword");
+        }
+        if (usernameNode == null || passwordNode == null) {
+            try {
+                Sender.sendObject(response, null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             logger.info("Get failed");
-           return;
+            return;
             // todo process request body without username & userpassword
         }
         String username = usernameNode.asText();
@@ -50,7 +57,6 @@ public class LoginAction extends Action {
             if (user == null) {
                 request.setAttribute("message", "Имя пользователя или пароль не опознанны");
                 logger.info(String.format("user \"%s\" unsuccessfully tried to log in from %s (%s:%s)", username, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
-                return;
             }
             try {
                 Sender.sendObject(response, user);
