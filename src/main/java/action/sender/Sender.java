@@ -24,8 +24,16 @@ public class Sender {
         response.setHeader("Access-Control-Allow-Credentials","true");
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+<<<<<<< HEAD
         out.println(json);
         out.close();
+=======
+        PrintWriter writer = response.getWriter();
+        writer.print(json);
+        writer.flush();
+        writer.close();
+
+>>>>>>> f10cf42c58b08206a8fb2882d756accf8fcf1912
         logger.debug(response.getHeaderNames());
     }
 }

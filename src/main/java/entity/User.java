@@ -8,12 +8,23 @@ public class User extends Entity {
     private String passwordHash;
     private final Role role = new Role("User");
 
+    public static enum Default{
+        USER("User", "User"),
+        ADMIN("Admin", "Admin");
+        User user;
+        private Default(String username, String passwordHash){
+            user = new User();
+            user.setUsername(username);
+            user.setPasswordHash(passwordHash);
+        }
+        public User getUser(){return user;}
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(username, user.username) && Objects.equals(passwordHash, user.passwordHash) && Objects.equals(role, user.role);
+        return Objects.equals(username, user.username) && Objects.equals(passwordHash, user.passwordHash);
     }
 
 
