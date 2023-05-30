@@ -86,7 +86,9 @@ public class DispatcherServlet extends HttpServlet {
             }
             logger.debug("Starting action execution");
             ActionManager actionManager = ActionManagerFactory.getManager(getFactory());
+            actionManager.execute(action, request, response);
             actionManager.close();
+
         } catch (PersistException e) {
             logger.error("It is impossible to process request", e);
             request.setAttribute("error", "Ошибка обработки данных");

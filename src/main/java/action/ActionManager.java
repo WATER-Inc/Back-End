@@ -15,10 +15,11 @@ public class ActionManager {
 
     public void execute(Action action, HttpServletRequest request, HttpServletResponse response) throws PersistException {
         action.setFactory(factory);
+        action.exec(request, response);
         return;
     }
 
-    public void close(){
+    public void close() {
         //TODO
     }
 }
