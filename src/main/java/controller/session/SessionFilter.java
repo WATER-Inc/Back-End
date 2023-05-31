@@ -1,5 +1,7 @@
 package controller.session;
 
+import org.apache.log4j.Logger;
+
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -7,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 public class SessionFilter implements Filter {
+    Logger logger = Logger.getLogger(String.valueOf(SessionFilter.class));
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {}
 
@@ -20,10 +23,9 @@ public class SessionFilter implements Filter {
 
         // Если идентификатор сессии не найден в куки, создаем новую сессию
         if (sessionId == null) {
-            HttpSession session = request.getSession(true);
+            HttpSession session = request.getSession();
             session.setMaxInactiveInterval(1800); // Таймаут сессии в секундах (здесь - 30 минут)
             sessionId = session.getId();
-            saveSessionIdToCookie(sessionId, response);
         }
 
         // Связываем текущий поток выполнения сессией
@@ -48,18 +50,12 @@ public class SessionFilter implements Filter {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("sessionId")) {
+                if (cookie.getName().equals("JSESSIONID")) {
+                    logger.info("Got session " + cookie.getValue());
                     return cookie.getValue();
                 }
             }
         }
         return null;
-    }
-
-    private void saveSessionIdToCookie(String sessionId, HttpServletResponse response) {
-        Cookie cookie = new Cookie("sessionId", sessionId);
-        cookie.setMaxAge(1800); // Срок жизни куки в секундах (здесь - 30 минут)
-        cookie.setPath("/");
-        response.addCookie(cookie);
     }
 }
