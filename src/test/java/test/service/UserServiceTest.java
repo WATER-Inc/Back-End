@@ -17,7 +17,7 @@ public class UserServiceTest extends ServiceTest<User> {
         super.init();
         service = factory.getService(User.class);
     }
-    @Test(groups = {"service"})
+
     @Override
     public void getByIdTest() throws PersistException {
         User user = new User();
@@ -28,7 +28,7 @@ public class UserServiceTest extends ServiceTest<User> {
         service.delete(user);
         assertEquals(user, retrievedUser);
     }
-    @Test(groups = {"service"})
+
     @Override
     public void getAllTest() throws PersistException {
         User user1 = new User();
@@ -46,7 +46,7 @@ public class UserServiceTest extends ServiceTest<User> {
         assertTrue(userList.contains(user1));
         assertTrue(userList.contains(user2));
     }
-    @Test(groups = {"service"})
+
     @Override
     public void persistTest() throws PersistException {
         User user = new User();
@@ -58,7 +58,7 @@ public class UserServiceTest extends ServiceTest<User> {
         service.delete(persistedUser);
         assertEquals(persistedUser, retrievedUser);
     }
-    @Test(groups = {"service"})
+
     @Override
     public void deleteTest() throws PersistException {
         User user = new User();
@@ -68,7 +68,7 @@ public class UserServiceTest extends ServiceTest<User> {
         service.delete(user);
         assertNull(service.getById(user.getId()));
     }
-    @Test(groups = {"service"})
+
     @Override
     public void updateTest() throws PersistException {
         User user = new User();
