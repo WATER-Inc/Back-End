@@ -46,7 +46,7 @@ public class MessageServiceTest extends ServiceTest<Message> {
         userService.delete(testUser);
         chatService.delete(testChat);
     }
-
+    @Test(groups = {"service"})
     @Override
     public void getByIdTest() throws PersistException {
         Message message = new Message();
@@ -59,7 +59,7 @@ public class MessageServiceTest extends ServiceTest<Message> {
         service.delete(message);
         assertNotNull(retrievedMessage);
     }
-
+    @Test(groups = {"service"})
     @Override
     public void getAllTest() throws PersistException {
         Message message1 = new Message();
@@ -81,7 +81,7 @@ public class MessageServiceTest extends ServiceTest<Message> {
         assertTrue(messages.contains(message1));
         assertTrue(messages.contains(message2));
     }
-
+    @Test(groups = {"service"})
     @Override
     public void persistTest() throws PersistException {
         Message message = new Message();
@@ -95,7 +95,7 @@ public class MessageServiceTest extends ServiceTest<Message> {
         assertEquals(message, retrievedMessage);
 
     }
-
+    @Test(groups = {"service"})
     @Override
     public void deleteTest() throws PersistException {
         Message message = new Message();
@@ -108,7 +108,7 @@ public class MessageServiceTest extends ServiceTest<Message> {
         Message retrievedMessage = (Message) service.getById(message.getId());
         assertNull(retrievedMessage);
     }
-
+    @Test(groups = {"service"})
     @Override
     public void updateTest() throws PersistException {
         Message message = new Message();
