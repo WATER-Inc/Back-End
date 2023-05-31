@@ -1,7 +1,6 @@
 package action.chats;
 
 import action.sender.Sender;
-import controller.session.SessionManager;
 import dao.PersistException;
 import entity.Chat;
 import entity.Role;
@@ -43,7 +42,7 @@ public class UserCreateChat extends ChatsAction {
                 logger.info(String.format("user \"%s\" unsuccessfully tried to create chat (%s) in form %s (%s:%s)", getAuthorizedUser().getUsername(), chatName, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
                 return;
             }
-            HttpSession session = SessionManager.getSession();
+            HttpSession session = request.getSession();
             logger.info(session.getAttribute("authorizedUser"));
             logger.info(String.format("user \"%s\" created chat (%s) in from %s (%s:%s)", getAuthorizedUser().getUsername(), chatName, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
             return;

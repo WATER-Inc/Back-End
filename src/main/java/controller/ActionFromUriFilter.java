@@ -18,10 +18,10 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ActionFromUriFilter implements Filter {
-    private static Logger logger = LogManager.getLogger(ActionFromUriFilter.class);
+    private static final Logger logger = LogManager.getLogger(ActionFromUriFilter.class);
 
-    private static Map<String, Class<? extends Action>> actions = new ConcurrentHashMap<>();
-    private static Map<String, String> actionName = new ConcurrentHashMap<>();
+    private static final Map<String, Class<? extends Action>> actions = new ConcurrentHashMap<>();
+    private static final Map<String, String> actionName = new ConcurrentHashMap<>();
 
     static {
         actions.put("chatsAction", UserNeedChatsAction.class);
@@ -58,11 +58,12 @@ public class ActionFromUriFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         if (request instanceof HttpServletRequest) {
+
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             String contextPath = httpRequest.getContextPath();
             String uri = httpRequest.getRequestURI();
             String actionName;
-
+            logger.info("Session Id:" + httpRequest.getSession().getId());
             logger.debug(String.format("Starting of processing of request for URI \"%s\"", uri));
 
             actionName = getActionName(uri, contextPath);
