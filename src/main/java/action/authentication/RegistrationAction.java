@@ -6,7 +6,8 @@ import action.sender.Sender;
 import com.fasterxml.jackson.databind.JsonNode;
 import dao.PersistException;
 import entity.User;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class RegistrationAction extends Action {
-    final private static Logger logger = Logger.getLogger(String.valueOf(RegistrationAction.class));
+    final private static Logger logger = LogManager.getLogger(String.valueOf(RegistrationAction.class));
 
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {

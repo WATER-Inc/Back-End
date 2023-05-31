@@ -4,13 +4,14 @@ import action.AuthorizedUserAction;
 import controller.session.SessionManager;
 import dao.PersistException;
 import entity.User;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class LogoutAction extends AuthorizedUserAction {
-    private static Logger logger = Logger.getLogger(LogoutAction.class);
+    private static Logger logger = LogManager.getLogger(LogoutAction.class);
 
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {

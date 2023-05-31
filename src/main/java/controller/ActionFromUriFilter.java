@@ -8,7 +8,8 @@ import action.authentication.RegistrationAction;
 import action.chat.ChatAction;
 import action.chats.ChatsAction;
 import action.chats.UserNeedChatsAction;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ActionFromUriFilter implements Filter {
-    private static Logger logger = Logger.getLogger(ActionFromUriFilter.class);
+    private static Logger logger = LogManager.getLogger(ActionFromUriFilter.class);
 
     private static Map<String, Class<? extends Action>> actions = new ConcurrentHashMap<>();
     private static Map<String, String> actionName = new ConcurrentHashMap<>();

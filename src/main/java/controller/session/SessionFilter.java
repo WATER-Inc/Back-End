@@ -1,6 +1,7 @@
 package controller.session;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 public class SessionFilter implements Filter {
-    private static Logger logger = Logger.getLogger(SessionFilter.class);
+    private static Logger logger = LogManager.getLogger(SessionFilter.class);
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {}
 
