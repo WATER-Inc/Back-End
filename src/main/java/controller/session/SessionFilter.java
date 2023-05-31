@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 public class SessionFilter implements Filter {
-    Logger logger = Logger.getLogger(String.valueOf(SessionFilter.class));
+    private static Logger logger = Logger.getLogger(SessionFilter.class);
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {}
 
@@ -20,14 +20,15 @@ public class SessionFilter implements Filter {
 
         // Получаем идентификатор сессии из куки
         String sessionId = getSessionIdFromCookie(request);
-
+        logger.debug(sessionId);
         // Если идентификатор сессии не найден в куки, создаем новую сессию
         if (sessionId == null) {
             HttpSession session = request.getSession();
             session.setMaxInactiveInterval(1800); // Таймаут сессии в секундах (здесь - 30 минут)
             sessionId = session.getId();
+            //saveSessionIdToCookie(sessionId, response);
         }
-
+        logger.debug(sessionId);
         // Связываем текущий поток выполнения сессией
         HttpSession session = request.getSession(false);
         if (session != null && session.getId().equals(sessionId)) {

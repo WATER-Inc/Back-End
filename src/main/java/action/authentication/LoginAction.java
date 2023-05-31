@@ -67,6 +67,7 @@ public class LoginAction extends Action {
             HttpSession session = SessionManager.getSession();
             if(session!= null)
                 session.setAttribute("authorizedUser", user);
+            logger.debug(SessionManager.getSession());
             logger.info(String.format("user \"%s\" is logged in from %s (%s:%s)", username, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
         }
     }
