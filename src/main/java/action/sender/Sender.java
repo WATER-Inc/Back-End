@@ -1,5 +1,6 @@
 package action.sender;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import controller.DispatcherServlet;
 import org.apache.log4j.Logger;
@@ -14,12 +15,13 @@ public class Sender {
 
     public static void sendObject(HttpServletResponse response, Object object) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
+//        JsonNode node = mapper.
         String json = mapper.writeValueAsString(object);
         logger.debug("Send JSON: " + json);
         PrintWriter out = response.getWriter();
-        response.setHeader("Access-Control-Allow-Origin","*");
+        response.setHeader("Access-Control-Allow-Origin","http://localhost:3000");
         response.setHeader("Access-Control-Allow-Methods","GET, PUT, POST");
-        response.setHeader("Access-Control-Allow-Headers","Content-Type, Authorization");
+        response.setHeader("Access-Control-Allow-Headers","Content-Type, *");
         response.setHeader("Access-Control-Allow-Credentials","true");
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

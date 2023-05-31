@@ -20,7 +20,7 @@ public class SessionFilter implements Filter {
 
         // Если идентификатор сессии не найден в куки, создаем новую сессию
         if (sessionId == null) {
-            HttpSession session = request.getSession();
+            HttpSession session = request.getSession(true);
             session.setMaxInactiveInterval(1800); // Таймаут сессии в секундах (здесь - 30 минут)
             sessionId = session.getId();
             saveSessionIdToCookie(sessionId, response);
