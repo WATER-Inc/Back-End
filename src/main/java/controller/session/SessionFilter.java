@@ -22,10 +22,11 @@ public class SessionFilter implements Filter {
         String sessionId = getSessionIdFromCookie(request);
         logger.debug(sessionId);
         // Если идентификатор сессии не найден в куки, создаем новую сессию
-        if (sessionId == null) {
+        if (sessionId == null || SessionManager.getSession() == null) {
             HttpSession session = request.getSession();
             session.setMaxInactiveInterval(1800); // Таймаут сессии в секундах (здесь - 30 минут)
             sessionId = session.getId();
+            logger.info("Create new Session: " + sessionId);
             //saveSessionIdToCookie(sessionId, response);
         }
         logger.debug(sessionId);
@@ -34,7 +35,7 @@ public class SessionFilter implements Filter {
         if (session != null && session.getId().equals(sessionId)) {
             SessionManager.bindSession(session);
         }
-
+//        response.addHeader("Set-Cookie", "JSESSIONID=" + sessionId + "; Secure; SameSite=Lax");
         try {
             // Передаем запрос дальше в цепочку фильтров и сервлетов
             filterChain.doFilter(servletRequest, servletResponse);

@@ -51,7 +51,7 @@ public class LoginAction extends Action {
         String username = usernameNode.asText();
         String password = passwordNode.asText();
 
-        if (username!=null && password!=null) {
+        if (username != null && password != null) {
             logger.debug("Trying to login with: [Username: " + username + "; Password: " + password + "]");
             UserService service = factory.getService(User.class);
             User user = service.getByUsernameAndPassword(username, password);
@@ -65,7 +65,8 @@ public class LoginAction extends Action {
                 throw new RuntimeException(e);
             }
             HttpSession session = SessionManager.getSession();
-            if(session!= null)
+            logger.debug("|" + session + "|");
+            if (session != null)
                 session.setAttribute("authorizedUser", user);
             logger.debug(SessionManager.getSession());
             logger.info(String.format("user \"%s\" is logged in from %s (%s:%s)", username, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
