@@ -23,10 +23,6 @@ import java.util.Map;
 @WebServlet(name = "Servlet", value = "/Servlet")
 public class DispatcherServlet extends HttpServlet {
     private static final Logger logger = LogManager.getLogger(String.valueOf(DispatcherServlet.class));
-    public static final String LOG_FILE_NAME = "log.txt";
-    public static final Level LOG_LEVEL = Level.ALL;
-    public static final String LOG_MESSAGE_FORMAT = "%n%d%n%p\t%C.%M:%L%n%m%n";
-
     public static final String DB_DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
     public static final String DB_URL = "jdbc:mysql://localhost:3306/water?useUnicode=true&characterEncoding=UTF-8";
     public static final String DB_USER = "root";
@@ -42,9 +38,7 @@ public class DispatcherServlet extends HttpServlet {
 
     public void init() {
         try {
-            // PropertyConfigurator.configure("log4j.properties");
-           // PropertyConfigurator.configure("log4j.info");
-            logger.info("Started...");
+            logger.debug("Started...");
             ConnectionPool.getInstance().init(DB_DRIVER_CLASS, DB_URL, DB_USER, DB_PASSWORD, DB_POOL_START_SIZE, DB_POOL_MAX_SIZE, DB_POOL_CHECK_CONNECTION_TIMEOUT);
         } catch (PersistException e) {
             logger.error("It is impossible to initialize application", e);
