@@ -17,7 +17,7 @@ public class RoleServiceTest extends ServiceTest<Role> {
         super.init();
         service = factory.getService(Role.class);
     }
-
+    @Test(groups = {"service"})
     @Override
     public void getByIdTest() throws PersistException {
         Role role = new Role("test");
@@ -26,7 +26,7 @@ public class RoleServiceTest extends ServiceTest<Role> {
         service.delete(role);
         assertEquals(role, retrievedRole);
     }
-
+    @Test(groups = {"service"})
     @Override
     public void getAllTest() throws PersistException {
         Role role1 = new Role("test1");
@@ -40,7 +40,7 @@ public class RoleServiceTest extends ServiceTest<Role> {
         assertTrue(roleList.contains(role1));
         assertTrue(roleList.contains(role2));
     }
-
+    @Test(groups = {"service"})
     @Override
     public void persistTest() throws PersistException {
         Role role = new Role("test");
@@ -50,7 +50,7 @@ public class RoleServiceTest extends ServiceTest<Role> {
         service.delete(persistedRole);
         assertEquals(persistedRole, retrievedRole);
     }
-
+    @Test(groups = {"service"})
     @Override
     public void deleteTest() throws PersistException {
         Role role = new Role("test");
@@ -58,7 +58,7 @@ public class RoleServiceTest extends ServiceTest<Role> {
         service.delete(role);
         assertNull(service.getById(role.getId()));
     }
-
+    @Test(groups = {"service"})
     @Override
     public void updateTest() throws PersistException {
         Role role = new Role("test");

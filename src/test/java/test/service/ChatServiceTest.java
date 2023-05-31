@@ -45,7 +45,7 @@ public class ChatServiceTest extends ServiceTest<Chat> {
         userService.delete(testUser);
         roleService.delete(testRole);
     }
-
+    @Test(groups = {"service"})
     @Override
     public void getByIdTest() throws PersistException {
         Chat chat = new Chat();
@@ -57,7 +57,7 @@ public class ChatServiceTest extends ServiceTest<Chat> {
         service.delete(chat);
         assertEquals(chat, retrievedChat);
     }
-
+    @Test(groups = {"service"})
     @Override
     public void getAllTest() throws PersistException {
         Chat chat1 = new Chat();
@@ -77,7 +77,7 @@ public class ChatServiceTest extends ServiceTest<Chat> {
         assertTrue(chatList.contains(chat1));
         assertTrue(chatList.contains(chat2));
     }
-
+    @Test(groups = {"service"})
     @Override
     public void persistTest() throws PersistException {
         Chat chat = new Chat();
@@ -90,7 +90,7 @@ public class ChatServiceTest extends ServiceTest<Chat> {
         service.delete(persistedChat);
         assertEquals(persistedChat, retrievedChat);
     }
-
+    @Test(groups = {"service"})
     @Override
     public void deleteTest() throws PersistException {
         Chat chat = new Chat();
@@ -101,7 +101,7 @@ public class ChatServiceTest extends ServiceTest<Chat> {
         service.delete(chat);
         assertNull(service.getById(chat.getId()));
     }
-
+    @Test(groups = {"service"})
     @Override
     public void updateTest() throws PersistException {
         Chat chat = new Chat();
