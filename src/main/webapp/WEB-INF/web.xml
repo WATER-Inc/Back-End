@@ -25,6 +25,14 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <filter>
+        <filter-name>SessionFilter</filter-name>
+        <filter-class>controller.session.SessionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SessionFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
         <filter-name>ActionFromUriFilter</filter-name>
         <filter-class>controller.ActionFromUriFilter</filter-class>
     </filter>

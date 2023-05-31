@@ -3,6 +3,7 @@ package controller;
 import action.Action;
 import action.ActionManager;
 import action.ActionManagerFactory;
+import controller.session.SessionManager;
 import dao.PersistException;
 import dao.pool.ConnectionPool;
 import org.apache.log4j.*;
@@ -73,7 +74,7 @@ public class DispatcherServlet extends HttpServlet {
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Action action = (Action) request.getAttribute("action");
         try {
-            HttpSession session = request.getSession(false);
+            HttpSession session = SessionManager.getSession();
             if (session != null) {
                 @SuppressWarnings("unchecked")
                 Map<String, Object> attributes = (Map<String, Object>) session.getAttribute("redirectedData");

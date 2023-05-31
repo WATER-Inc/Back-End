@@ -1,6 +1,7 @@
 package action.authentication;
 
 import action.AuthorizedUserAction;
+import controller.session.SessionManager;
 import dao.PersistException;
 import entity.User;
 import org.apache.log4j.Logger;
@@ -15,7 +16,6 @@ public class LogoutAction extends AuthorizedUserAction {
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
         User user = getAuthorizedUser();
         logger.info(String.format("user \"%s\" is logged out", user.getUsername()));
-        request.getSession(false).invalidate();
-        return;
+        SessionManager.getSession().invalidate();
     }
 }

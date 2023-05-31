@@ -6,6 +6,7 @@ import action.parser.Parser;
 import action.sender.Sender;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import controller.session.SessionManager;
 import dao.PersistException;
 import entity.User;
 import org.apache.log4j.Logger;
@@ -63,7 +64,7 @@ public class LoginAction extends Action {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            HttpSession session = request.getSession();
+            HttpSession session = SessionManager.getSession();
             session.setAttribute("authorizedUser", user);
             logger.info(String.format("user \"%s\" is logged in from %s (%s:%s)", username, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
         }

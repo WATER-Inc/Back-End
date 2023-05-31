@@ -2,6 +2,7 @@ package controller;
 
 
 import action.*;
+import controller.session.SessionManager;
 import entity.Role;
 import entity.User;
 import org.apache.log4j.Logger;
@@ -34,7 +35,7 @@ public class SecurityFilter implements Filter {
             logger.debug(action);
             Set<Role> allowRoles = action.getAllowRoles();
             String userName = "unauthorized user";
-            HttpSession session = httpRequest.getSession(false);
+            HttpSession session = SessionManager.getSession();
             User user = null;
             logger.debug(session);
             if (session != null) {
