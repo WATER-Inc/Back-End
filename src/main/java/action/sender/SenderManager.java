@@ -1,22 +1,22 @@
 package action.sender;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import controller.DispatcherServlet;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Stack;
+import java.util.Map;
 
-public class Sender {
-    private static Logger logger = LogManager.getLogger(String.valueOf(Sender.class));
+public class SenderManager {
+    private static Logger logger = LogManager.getLogger(String.valueOf(SenderManager.class));
+    private static Map<Object, Class<Object>> senders;
+    static{
 
+    }
     public static void sendObject(HttpServletResponse response, Object object) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-//        JsonNode node = mapper.
         String json = mapper.writeValueAsString(object);
         logger.debug("Send JSON: " + json);
         PrintWriter out = response.getWriter();

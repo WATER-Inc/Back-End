@@ -1,6 +1,6 @@
 package action.chats;
 
-import action.sender.Sender;
+import action.sender.SenderManager;
 import dao.PersistException;
 import entity.Chat;
 import entity.Role;
@@ -33,7 +33,7 @@ public class UserCreateChat extends ChatsAction {
             chat.setParticipants(participants);
             chat = (Chat) factory.getService(Chat.class).persist(chat);
             try {
-                Sender.sendObject(response, chat);
+                SenderManager.sendObject(response, chat);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

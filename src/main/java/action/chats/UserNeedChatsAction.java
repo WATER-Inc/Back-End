@@ -1,6 +1,6 @@
 package action.chats;
 
-import action.sender.Sender;
+import action.sender.SenderManager;
 import dao.PersistException;
 import entity.Chat;
 import service.ChatService;
@@ -18,7 +18,7 @@ public class UserNeedChatsAction extends ChatsAction {
         ChatService service = factory.getService(Chat.class);
         chats = service.getByUser(getAuthorizedUser());
         try {
-            Sender.sendObject(response, chats);
+            SenderManager.sendObject(response, chats);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -2,7 +2,7 @@ package action.authentication;
 
 import action.Action;
 import action.parser.Parser;
-import action.sender.Sender;
+import action.sender.SenderManager;
 import com.fasterxml.jackson.databind.JsonNode;
 import dao.PersistException;
 import entity.User;
@@ -35,7 +35,7 @@ public class RegistrationAction extends Action {
         }
         if (usernameNode == null || passwordNode == null) {
             try {
-                Sender.sendObject(response, null);
+                SenderManager.sendObject(response, null);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -56,7 +56,7 @@ public class RegistrationAction extends Action {
             } catch (PersistException e) {
 
                 try {
-                    Sender.sendObject(response, null);
+                    SenderManager.sendObject(response, null);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -65,7 +65,7 @@ public class RegistrationAction extends Action {
                 return;
             }
             try {
-                Sender.sendObject(response, user);
+                SenderManager.sendObject(response, user);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

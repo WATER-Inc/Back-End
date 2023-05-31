@@ -1,5 +1,6 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import entity.auxiliary.Participants;
 
 import java.util.Objects;
@@ -7,6 +8,7 @@ import java.util.Objects;
 public class Chat extends Entity {
     private String id;
     private String name;
+    @JsonIgnore
     private Participants participants;
 
     @Override

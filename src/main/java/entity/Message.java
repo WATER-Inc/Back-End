@@ -1,10 +1,13 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Date;
 import java.util.Objects;
 
 public class Message extends Entity {
     private String id;
+    @JsonIgnore
     private User sender;
     private Chat chat;
     private String content;

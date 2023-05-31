@@ -3,9 +3,8 @@ package action.authentication;
 
 import action.Action;
 import action.parser.Parser;
-import action.sender.Sender;
+import action.sender.SenderManager;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.PersistException;
 import entity.User;
 import org.apache.logging.log4j.LogManager;
@@ -15,7 +14,6 @@ import service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
 import java.io.IOException;
 
 public class LoginAction extends Action {
@@ -40,7 +38,7 @@ public class LoginAction extends Action {
         }
         if (usernameNode == null || passwordNode == null) {
             try {
-                Sender.sendObject(response, null);
+                SenderManager.sendObject(response, null);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -60,7 +58,7 @@ public class LoginAction extends Action {
                 logger.info(String.format("user \"%s\" unsuccessfully tried to log in from %s (%s:%s)", username, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
             }
             try {
-                Sender.sendObject(response, user);
+                SenderManager.sendObject(response, user);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
