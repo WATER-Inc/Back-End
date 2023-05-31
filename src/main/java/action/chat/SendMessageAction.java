@@ -2,7 +2,8 @@ package action.chat;
 
 import dao.PersistException;
 import entity.Message;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import service.MessageService;
 import validator.IncorrectFormDataException;
 import validator.Validator;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class SendMessageAction extends ChatAction{
-    private static Logger logger = Logger.getLogger(SendMessageAction.class);
+    private static Logger logger = LogManager.getLogger(SendMessageAction.class);
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
         try {

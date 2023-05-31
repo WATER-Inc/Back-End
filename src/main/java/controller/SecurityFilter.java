@@ -5,7 +5,8 @@ import action.*;
 import controller.session.SessionManager;
 import entity.Role;
 import entity.User;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +16,7 @@ import java.io.IOException;
 import java.util.Set;
 
 public class SecurityFilter implements Filter {
-    private static Logger logger = Logger.getLogger(SecurityFilter.class);
+    private static Logger logger = LogManager.getLogger(SecurityFilter.class);
     private static User mode = User.Default.ADMIN.getUser();
 
     @Override

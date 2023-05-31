@@ -7,7 +7,8 @@ import entity.Chat;
 import entity.Role;
 import entity.User;
 import entity.auxiliary.Participants;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class UserCreateChat extends ChatsAction {
-    private static Logger logger = Logger.getLogger(String.valueOf(UserCreateChat.class));
+    private static Logger logger = LogManager.getLogger(String.valueOf(UserCreateChat.class));
 
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {

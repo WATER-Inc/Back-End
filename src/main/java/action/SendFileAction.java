@@ -2,7 +2,8 @@ package action;
 
 import controller.DispatcherServlet;
 import dao.PersistException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SendFileAction extends Action{
-    private static Logger logger = Logger.getLogger(String.valueOf(DispatcherServlet.class));
+    private static Logger logger = LogManager.getLogger(String.valueOf(DispatcherServlet.class));
     final private static Integer BUFFER_SIZE = 4096;
     private static Map<String,String> contentType = new HashMap<>();
 
