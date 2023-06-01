@@ -1,8 +1,11 @@
 package service;
 
 import dao.PersistException;
+import dao.mysql.MySqlMessageDAO;
+import entity.Chat;
 import entity.Entity;
 import entity.Message;
+import entity.User;
 
 import java.util.List;
 
@@ -26,5 +29,11 @@ public class MessageService extends Service {
         return (Message) super.persist(object);
     }
 
+    public List<Message> getMessages(Chat chat) throws PersistException {
+        return ((MySqlMessageDAO) genericDAO).getMessages(chat);
+    }
 
+    public List<Message> getMessages(User user) throws PersistException {
+        return ((MySqlMessageDAO) genericDAO).getMessages(user);
+    }
 }
