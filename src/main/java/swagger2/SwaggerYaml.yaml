@@ -108,17 +108,19 @@ paths:
       tags:
         - chats
       requestBody:
-        description: JSON object containing user ID
+        description: JSON object containing an array of chat IDs
         required: true
         content:
           application/json:
             schema:
               type: object
               properties:
-                id:
-                  type: integer
+                chatIds:
+                  type: array
+                  items:
+                    type: integer
               required:
-                - id
+                - chatIds
       responses:
         "999":
           description: Error on client side
