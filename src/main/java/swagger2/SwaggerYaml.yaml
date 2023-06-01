@@ -9,6 +9,8 @@ servers:
 paths:
   /login:
     post:
+      tags:
+        - login
       requestBody:
         content:
           application/json:
@@ -86,7 +88,7 @@ paths:
       security:
         - cors: [ ]
   /logout:
-    get:
+    post:
       summary: LogOut user
       tags:
         - getters
