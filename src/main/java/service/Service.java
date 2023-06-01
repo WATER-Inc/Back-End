@@ -1,20 +1,28 @@
 package service;
 
+import controller.DispatcherServlet;
 import dao.GenericDAO;
 import dao.PersistException;
 import dao.mysql.MySqlDaoFactory;
 import entity.Entity;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public abstract class Service {
+    private static final Logger logger = LogManager.getLogger(String.valueOf(Service.class));
     protected static MySqlDaoFactory daoFactory = new MySqlDaoFactory();
+    protected Connection connection = null;
     protected GenericDAO genericDAO;
     protected Class<? extends Entity> entityClass;
 
     protected Service(Class<? extends Entity> entityClass) throws PersistException {
         this.entityClass = entityClass;
-        genericDAO = daoFactory.getDao(daoFactory.getConnection(), entityClass);
+        connection = daoFactory.getConnection();
+        genericDAO = daoFactory.getDao(connection, entityClass);
     }
 
     public Entity getById(String id) throws PersistException {
@@ -36,6 +44,5 @@ public abstract class Service {
     public void update(Entity object) throws PersistException {
         genericDAO.update(object);
     }
-
 
 }

@@ -44,7 +44,7 @@ public class ChatService extends Service {
         chatLink.setUserId(user.getId());
         chatLink.setRoleId(role.getId());
         chatLink.setChatId(chat.getId());
-        daoFactory.getDao(daoFactory.getConnection(), ChatLink.class).persist(chatLink);
+        daoFactory.getDao(connection, ChatLink.class).persist(chatLink);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ChatService extends Service {
     }
 
     public void addUsers(Chat chat) throws PersistException {
-        MySqlChatLinkDAO mySqlChatLinkDAO = (MySqlChatLinkDAO) daoFactory.getDao(daoFactory.getConnection(), ChatLink.class);
+        MySqlChatLinkDAO mySqlChatLinkDAO = (MySqlChatLinkDAO) daoFactory.getDao(connection, ChatLink.class);
         Participants participants = chat.getParticipants();
         List<User> users = participants.getUsers();
         List<Role> roles = participants.getRoles();
