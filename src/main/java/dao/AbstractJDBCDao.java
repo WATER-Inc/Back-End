@@ -1,11 +1,13 @@
 package dao;
 
 import dao.pool.ConnectionPool;
+import dao.pool.PooledConnection;
 import entity.Identified;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -68,7 +70,7 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
 
     private DAOFactory<Connection> parentFactory;
 
-    protected Connection connection;
+    protected PooledConnection connection;
 
     @Override
     public T getByPrimaryKey(String key) throws PersistException {
@@ -170,7 +172,21 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
 
     public AbstractJDBCDao(DAOFactory<Connection> parentFactory, Connection connection) {
         this.parentFactory = parentFactory;
-        this.connection = connection;
+        this.connection = (PooledConnection) connection;
+    }
+    @Override
+    protected void finalize() throws Throwable {
+        try {
+            super.finalize();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    //logger.error("Error closing connection", e);
+                }
+            }
+        }
     }
 
 }

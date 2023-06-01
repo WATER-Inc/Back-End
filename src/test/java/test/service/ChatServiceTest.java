@@ -1,6 +1,7 @@
 package test.service;
 
 import dao.PersistException;
+import dao.pool.ConnectionPool;
 import entity.auxiliary.ChatLink;
 import entity.auxiliary.Participants;
 import dao.mysql.MySqlDaoFactory;
@@ -14,6 +15,7 @@ import service.ChatService;
 import service.RoleService;
 import service.UserService;
 
+import java.sql.Connection;
 import java.util.List;
 
 @Test(groups = {"service"})
@@ -150,7 +152,7 @@ public class ChatServiceTest extends ServiceTest<Chat> {
         ((ChatService) service).addUser(chat, user, testRole);
         Chat retrievedChat = (Chat) service.getById(chat.getId());
         MySqlDaoFactory mySqlDaoFactory = new MySqlDaoFactory();
-        List<ChatLink> chatLinks = mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), ChatLink.class).getAll();
+        List<ChatLink> chatLinks = mySqlDaoFactory.getDao(ConnectionPool.getInstance().getConnection(), ChatLink.class).getAll();
         userService.delete(user);
         service.delete(chat);
         assertEquals(2, retrievedChat.getParticipants().getUsers().size());

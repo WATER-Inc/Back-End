@@ -23,9 +23,6 @@ public class MySqlDaoFactory implements DAOFactory<Connection> {
     private String driver = "com.mysql.jdbc.Driver";//Имя драйвера
     private Map<Class, DAOFactory.DaoCreator> creators;
 
-    public Connection getConnection() throws PersistException {
-        return ConnectionPool.getInstance().getConnection();
-    }
 
     @Override
     public GenericDAO getDao(Connection connection, Class dtoClass) throws PersistException {

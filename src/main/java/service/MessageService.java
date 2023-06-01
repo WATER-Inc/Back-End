@@ -30,10 +30,13 @@ public class MessageService extends Service {
     }
 
     public List<Message> getMessages(Chat chat) throws PersistException {
-        return ((MySqlMessageDAO) genericDAO).getMessages(chat);
+        return ((MySqlMessageDAO)genericDAO).getMessages(chat);
     }
-
     public List<Message> getMessages(User user) throws PersistException {
-        return ((MySqlMessageDAO) genericDAO).getMessages(user);
+        return ((MySqlMessageDAO)genericDAO).getMessages(user);
+    }
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
     }
 }

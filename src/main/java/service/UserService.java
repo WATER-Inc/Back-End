@@ -52,4 +52,8 @@ public class UserService extends Service {
             return null;
         }
     }
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
 }

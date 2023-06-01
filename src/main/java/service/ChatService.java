@@ -10,6 +10,7 @@ import entity.Entity;
 import entity.Role;
 import entity.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class ChatService extends Service {
@@ -64,5 +65,9 @@ public class ChatService extends Service {
             link.setRoleId(roles.get(i).getId());
             mySqlChatLinkDAO.persist(link);
         }
+    }
+    @Override
+    protected void finalize() throws Throwable {
+            super.finalize();
     }
 }

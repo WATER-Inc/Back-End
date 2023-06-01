@@ -26,4 +26,8 @@ public class RoleService extends Service {
     public Role persist(Entity object) throws PersistException {
         return (Role) super.persist(object);
     }
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
 }

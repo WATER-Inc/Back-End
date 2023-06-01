@@ -26,7 +26,7 @@ final public class ConnectionPool {
 
     private ConnectionPool() {}
 
-    public synchronized Connection getConnection() throws PersistException {
+    public synchronized PooledConnection getConnection() throws PersistException {
         PooledConnection connection = null;
         while(connection == null) {
             try {

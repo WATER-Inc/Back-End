@@ -4,6 +4,8 @@ import controller.DispatcherServlet;
 import dao.GenericDAO;
 import dao.PersistException;
 import dao.mysql.MySqlDaoFactory;
+import dao.pool.ConnectionPool;
+import dao.pool.PooledConnection;
 import entity.Entity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,13 +17,13 @@ import java.util.List;
 public abstract class Service {
     private static final Logger logger = LogManager.getLogger(String.valueOf(Service.class));
     protected static MySqlDaoFactory daoFactory = new MySqlDaoFactory();
-    protected Connection connection = null;
+    protected PooledConnection connection = null;
     protected GenericDAO genericDAO;
     protected Class<? extends Entity> entityClass;
 
     protected Service(Class<? extends Entity> entityClass) throws PersistException {
         this.entityClass = entityClass;
-        connection = daoFactory.getConnection();
+        connection = (PooledConnection) ConnectionPool.getInstance().getConnection();
         genericDAO = daoFactory.getDao(connection, entityClass);
     }
 
@@ -49,6 +51,7 @@ public abstract class Service {
         try {
             super.finalize();
         } finally {
+            System.out.println(this.getClass() + " Finalize");
             if (connection != null) {
                 try {
                     connection.close();
