@@ -28,7 +28,7 @@ public class DispatcherServlet extends HttpServlet {
     public static final String DB_PASSWORD = "20November3;5.-65@1234";
     public static final int DB_POOL_START_SIZE = 100;
     public static final int DB_POOL_MAX_SIZE = 1000;
-    public static final int DB_POOL_CHECK_CONNECTION_TIMEOUT = 0;
+    public static final int DB_POOL_CHECK_CONNECTION_TIMEOUT = 100;
 
     public DispatcherServlet() {
         super();

@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 public class ToChatAction extends ChatAction{
     private static Logger logger = LogManager.getLogger(SendMessageAction.class);
@@ -33,9 +34,14 @@ public class ToChatAction extends ChatAction{
             // todo process request with no body
         }
         JsonNode chatIdNode = null;
-        if (jsonNode != null) {
-            chatIdNode = jsonNode.get("chatid");
+        if (jsonNode == null) {
+            try {
+                SenderManager.sendObject(response, null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
+        chatIdNode = jsonNode.get("chatId");
         if(chatIdNode == null){
             try {
                 SenderManager.sendObject(response, null);
@@ -48,13 +54,13 @@ public class ToChatAction extends ChatAction{
             MessageService Mservice = factory.getService(Message.class);
             ChatService Cservice = factory.getService(Chat.class);
             Chat chat = Cservice.getById(chatId);
-            
+            List<Message> messageList = null;
             if(chat == null){
                 request.setAttribute("message", "Чата не существует");
                 logger.info(String.format("unsuccessfully tried to get chat %s %s (%s:%s)", chatId, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
-            }
+            }else messageList = Mservice.getMessages(chat);
             try {
-                SenderManager.sendObject(response, chat);
+                SenderManager.sendObject(response, messageList);
                 logger.info(String.format("chat \"%s\" is sent "),chatId);
             } catch (IOException e) {
                 throw new RuntimeException(e);

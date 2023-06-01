@@ -5,6 +5,7 @@ import action.*;
 import action.authentication.LoginAction;
 import action.authentication.LogoutAction;
 import action.authentication.RegistrationAction;
+import action.chat.SendMessageAction;
 import action.chat.ToChatAction;
 import action.chats.UserNeedChatsAction;
 import org.apache.logging.log4j.LogManager;
@@ -27,6 +28,7 @@ public class ActionFromUriFilter implements Filter {
         actions.put("chatAction", ToChatAction.class);
         actions.put("loginAction", LoginAction.class);
         actions.put("logoutAction", LogoutAction.class);
+        actions.put("messageAction", SendMessageAction.class);
         actions.put("registrationAction", RegistrationAction.class);
         actions.put("errorAction", ErrorAction.class);
 
@@ -35,6 +37,7 @@ public class ActionFromUriFilter implements Filter {
         actionName.put("/chats", "chatsAction");
         actionName.put("/login", "loginAction");
         actionName.put("/logout", "logoutAction");
+        actionName.put("/message","messageAction");
         actionName.put("/register", "registrationAction");
 
     }
