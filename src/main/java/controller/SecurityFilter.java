@@ -37,9 +37,10 @@ public class SecurityFilter implements Filter {
             String userName = "unauthorized user";
             HttpSession session = httpRequest.getSession();
             User user = null;
-            logger.debug(session);
+            logger.debug(session.getId());
             if (session != null) {
                 user = (User) session.getAttribute("authorizedUser");
+                logger.debug(user);
                 action.setAuthorizedUser(user);
                 String errorMessage = (String) session.getAttribute("SecurityFilterMessage");
                 if (errorMessage != null) {
@@ -47,12 +48,10 @@ public class SecurityFilter implements Filter {
                     session.removeAttribute("SecurityFilterMessage");
                 }
             }
-
-            boolean canExecute = action.getName().equals("sendfileAction") || action.getName().equals("loginAction") || action.getName().equals("registrationAction");
+            logger.debug("AuthorizedUser: " + user);
+            boolean canExecute = action.getName().equals("loginAction") || action.getName().equals("registrationAction");
             if (user != null) {
-                userName = "\"" + user.getUsername() + "\" user";
-                logger.debug(userName);
-                canExecute = canExecute || allowRoles.contains(user.getRole());
+                canExecute = canExecute || action.getAuthorizedUser() != null;
             }
             logger.debug("|" + user + "|");
             logger.debug("CanExecute:" + canExecute);

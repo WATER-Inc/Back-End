@@ -3,6 +3,8 @@ package action.chats;
 import action.sender.SenderManager;
 import dao.PersistException;
 import entity.Chat;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import service.ChatService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,11 +14,14 @@ import java.util.List;
 
 
 public class UserNeedChatsAction extends ChatsAction {
+    private static Logger logger = LogManager.getLogger(String.valueOf(UserNeedChatsAction.class));
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
         List<Chat> chats;
         ChatService service = factory.getService(Chat.class);
         chats = service.getByUser(getAuthorizedUser());
+        logger.debug("Chats: " + getAuthorizedUser());
+
         try {
             SenderManager.sendObject(response, chats);
         } catch (IOException e) {
