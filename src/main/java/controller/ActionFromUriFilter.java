@@ -5,8 +5,7 @@ import action.*;
 import action.authentication.LoginAction;
 import action.authentication.LogoutAction;
 import action.authentication.RegistrationAction;
-import action.chat.ChatAction;
-import action.chats.ChatsAction;
+import action.chat.ToChatAction;
 import action.chats.UserNeedChatsAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,7 +24,7 @@ public class ActionFromUriFilter implements Filter {
 
     static {
         actions.put("chatsAction", UserNeedChatsAction.class);
-        actions.put("chatAction", ChatAction.class);
+        actions.put("chatAction", ToChatAction.class);
         actions.put("loginAction", LoginAction.class);
         actions.put("logoutAction", LogoutAction.class);
         actions.put("registrationAction", RegistrationAction.class);
@@ -71,6 +70,8 @@ public class ActionFromUriFilter implements Filter {
             logger.debug("ActionFromUriFilter Word: " + actionName);
 
             Class<Action> actionClass = (Class<Action>) actions.get(actionName);
+
+            logger.debug(actionClass);
             try {
                 Action action = actionClass.newInstance();
                 action.setName(actionName);
