@@ -44,5 +44,18 @@ public abstract class Service {
     public void update(Entity object) throws PersistException {
         genericDAO.update(object);
     }
-
+    @Override
+    protected void finalize() throws Throwable {
+        try {
+            super.finalize();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    logger.error("Error closing connection", e);
+                }
+            }
+        }
+    }
 }
