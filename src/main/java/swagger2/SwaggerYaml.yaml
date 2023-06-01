@@ -1,17 +1,25 @@
 openapi: 3.0.3
 info:
-  title: PC
+  title: WATER
   version: 1.0.0
-  description: The `PC` class represents a personal computer and contains various components such as a PC case, cooler, CPU, SSD, HDD, RAM, motherboard, power supply, and GPU. It provides methods to set and get each component, as well as accessors for the unique identifier  and the user ID associated with the PC. This class serves as a blueprint for creating PC objects and is used in a PC building application.
-servers:
-  - url: http://localhost:8080/water_war/docs
+  description: WATER
+  servers:
+  - url: http://localhost:8080/water_war
     description: Server
 paths:
-  /getId:
-    get:
-      summary: Id get method
+  /login:
+    post:
+      summary: LogIn User
       tags:
         - getters
+      requestBody:
+        required: true
+        description: User to logIn
+        content:
+          application/json:
+            schema:
+              type: string
+              example: null
       responses:
         "999":
           description: error on client side
@@ -20,8 +28,8 @@ paths:
           content:
             application/json:
               schema:
-                type: integer
-                example: 0
+                type: string
+                example: null
   /getCooler:
     get:
       summary: Cooler get method

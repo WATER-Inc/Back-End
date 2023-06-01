@@ -22,7 +22,6 @@ public class MySqlDaoFactory implements DAOFactory<Connection> {
     private String url = "jdbc:mysql://localhost:3306/water";//URL адрес
     private String driver = "com.mysql.jdbc.Driver";//Имя драйвера
     private Map<Class, DAOFactory.DaoCreator> creators;
-    private ConnectionPool connectionPool;
 
     public Connection getConnection() throws PersistException {
         return ConnectionPool.getInstance().getConnection();
@@ -70,4 +69,5 @@ public class MySqlDaoFactory implements DAOFactory<Connection> {
             }
         });
     }
+
 }
