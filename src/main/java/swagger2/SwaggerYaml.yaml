@@ -53,22 +53,38 @@ paths:
       summary: Login
       description: Logs in a user with a username and password.
   /register:
-    get:
+    post:
       summary: Register user
       tags:
-        - getters
+        - register
+      requestBody:
+        description: JSON object containing user data
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                name:
+                  type: string
+                password:
+                  type: string
+              required:
+                - username
+                - password
       responses:
         "999":
-          description: error on client side
+          description: Error on client side
         "200":
-          description: Register user
+          description: User registered successfully
           content:
             application/json:
               schema:
-                type: string
-                example: null
+                $ref: '#/components/schemas/User'
       security:
-        - cors: []
+        - cors: [ ]
   /logout:
     get:
       summary: LogOut user
