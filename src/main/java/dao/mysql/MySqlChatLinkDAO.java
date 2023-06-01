@@ -115,8 +115,8 @@ public class MySqlChatLinkDAO extends AbstractJDBCDao<ChatLink, String> {
             statement.setString(1, chat.getId());
             ResultSet rs = statement.executeQuery();
             MySqlDaoFactory mySqlDaoFactory = new MySqlDaoFactory();
-            MySqlRoleDAO roleDAO = (MySqlRoleDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), Role.class);
-            MySqlUserDAO userDAO = (MySqlUserDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), User.class);
+            MySqlRoleDAO roleDAO = (MySqlRoleDAO) mySqlDaoFactory.getDao(connection, Role.class);
+            MySqlUserDAO userDAO = (MySqlUserDAO) mySqlDaoFactory.getDao(connection, User.class);
             while (rs.next())
                 participants.addUser(userDAO.getByPrimaryKey(rs.getString("user_id")), roleDAO.getByPrimaryKey(rs.getString("role_id")));
         } catch (Exception e) {
@@ -132,7 +132,7 @@ public class MySqlChatLinkDAO extends AbstractJDBCDao<ChatLink, String> {
             statement.setString(1, user.getId());
             ResultSet rs = statement.executeQuery();
             MySqlDaoFactory mySqlDaoFactory = new MySqlDaoFactory();
-            MySqlChatDAO chatDAO = (MySqlChatDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), Chat.class);
+            MySqlChatDAO chatDAO = (MySqlChatDAO) mySqlDaoFactory.getDao(connection, Chat.class);
             while (rs.next())
                 list.add(chatDAO.getByPrimaryKey(rs.getString("chat_id")));
         } catch (Exception e) {

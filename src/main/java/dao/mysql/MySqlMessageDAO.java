@@ -84,8 +84,8 @@ public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
                 String SenderId = rs.getString("sender_id");
                 String ChatId = rs.getString("chat_id");
                 MySqlDaoFactory mySqlDaoFactory = new MySqlDaoFactory();
-                MySqlUserDAO userDAO = (MySqlUserDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), User.class);
-                MySqlChatDAO chatDAO = (MySqlChatDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), Chat.class);
+                MySqlUserDAO userDAO = (MySqlUserDAO) mySqlDaoFactory.getDao(connection, User.class);
+                MySqlChatDAO chatDAO = (MySqlChatDAO) mySqlDaoFactory.getDao(connection, Chat.class);
                 Message.setSender(userDAO.getByPrimaryKey(SenderId));
                 Message.setChat(chatDAO.getByPrimaryKey(ChatId));
                 Message.setContent(rs.getString("content"));
@@ -126,7 +126,7 @@ public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
             statement.setString(1, chat.getId());
             ResultSet rs = statement.executeQuery();
             MySqlDaoFactory mySqlDaoFactory = new MySqlDaoFactory();
-            MySqlMessageDAO messageDAO = (MySqlMessageDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), Message.class);
+            MySqlMessageDAO messageDAO = (MySqlMessageDAO) mySqlDaoFactory.getDao(connection, Message.class);
             while (rs.next())
                 list.add(messageDAO.getByPrimaryKey(rs.getString("id")));
         } catch (Exception e) {
@@ -141,7 +141,7 @@ public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
             statement.setString(1, user.getId());
             ResultSet rs = statement.executeQuery();
             MySqlDaoFactory mySqlDaoFactory = new MySqlDaoFactory();
-            MySqlMessageDAO messageDAO = (MySqlMessageDAO) mySqlDaoFactory.getDao(mySqlDaoFactory.getConnection(), Message.class);
+            MySqlMessageDAO messageDAO = (MySqlMessageDAO) mySqlDaoFactory.getDao(connection, Message.class);
             while (rs.next())
                 list.add(messageDAO.getByPrimaryKey(rs.getString("id")));
         } catch (Exception e) {

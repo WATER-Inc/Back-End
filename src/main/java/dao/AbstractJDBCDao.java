@@ -1,5 +1,6 @@
 package dao;
 
+import dao.pool.ConnectionPool;
 import entity.Identified;
 
 import java.sql.Connection;
