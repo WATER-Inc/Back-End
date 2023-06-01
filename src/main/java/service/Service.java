@@ -8,12 +8,11 @@ import entity.Entity;
 import java.util.List;
 
 public abstract class Service {
-    protected static MySqlDaoFactory daoFactory;
+    protected static MySqlDaoFactory daoFactory = new MySqlDaoFactory();
     protected GenericDAO genericDAO;
     protected Class<? extends Entity> entityClass;
 
     protected Service(Class<? extends Entity> entityClass) throws PersistException {
-        daoFactory = new MySqlDaoFactory();
         this.entityClass = entityClass;
         genericDAO = daoFactory.getDao(daoFactory.getConnection(), entityClass);
     }

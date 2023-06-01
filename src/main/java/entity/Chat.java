@@ -8,7 +8,6 @@ import java.util.Objects;
 public class Chat extends Entity {
     private String id;
     private String name;
-    @JsonIgnore
     private Participants participants;
 
     @Override

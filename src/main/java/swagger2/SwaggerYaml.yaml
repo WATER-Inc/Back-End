@@ -1,0 +1,147 @@
+openapi: 3.0.3
+info:
+  title: PC
+  version: 1.0.0
+  description: The `PC` class represents a personal computer and contains various components such as a PC case, cooler, CPU, SSD, HDD, RAM, motherboard, power supply, and GPU. It provides methods to set and get each component, as well as accessors for the unique identifier  and the user ID associated with the PC. This class serves as a blueprint for creating PC objects and is used in a PC building application.
+servers:
+  - url: http://localhost:8
+    description: Server
+paths:
+  /getId:
+    get:
+      summary: Id get method
+      tags:
+        - getters
+      responses:
+        "999":
+          description: error on client side
+        "200":
+          description: successful receipt of id
+          content:
+            application/json:
+              schema:
+                type: integer
+                example: 0
+  /getCooler:
+    get:
+      summary: Cooler get method
+      tags:
+        - getters
+      responses:
+        "999":
+          description: error on client side
+        "200":
+          description: successful receipt of cooler
+          content:
+            application/json:
+              schema:
+                type: object
+                example: null
+  /getCpu:
+    get:
+      summary: CPU get method
+      tags:
+        - getters
+      responses:
+        "999":
+          description: error on client side
+        "200":
+          description: successful receipt of CPU
+          content:
+            application/json:
+              schema:
+                type: object
+                example: null
+  /getSSD:
+    get:
+      summary: SSD get method
+      tags:
+        - getters
+      responses:
+        "999":
+          description: error on client side
+        "200":
+          description: successful receipt of SSD
+          content:
+            application/json:
+              schema:
+                type: object
+                example: null
+  /getHDD:
+    get:
+      summary: HDD get method
+      tags:
+        - getters
+      responses:
+        "999":
+          description: error on client side
+        "200":
+          description: successful receipt of HDD
+          content:
+            application/json:
+              schema:
+                type: object
+                example: null
+  /getMotherboard:
+    get:
+      summary: Motherboard get method
+      tags:
+        -   getters
+      responses:
+        "999":
+          description: error on client side
+        "200":
+          description: successful receipt of motherboard
+          content:
+            application/json:
+              schema:
+                type: object
+                example: null
+  /getPowerSupply:
+    get:
+      summary: Powersupply get method
+      tags:
+        - getters
+      responses:
+        "999":
+          description: error on client side
+        "200":
+          description: successful receipt of powersupply
+          content:
+            application/json:
+              schema:
+                type: object
+                example: null
+  /getUserId:
+    get:
+      summary: User id get method
+      tags:
+        - getters
+      responses:
+        "999":
+          description: error on client side
+        "200":
+          description: successful receipt of user id
+          content:
+            application/json:
+              schema:
+                type: integer
+                example: 0
+  /setId:
+    post:
+      summary: Id set method
+      tags:
+        - setters
+      requestBody:
+        required: true
+        description: id to set, watch example
+        content:
+          application/json:
+            schema:
+              type: integer
+              example: {id: 2}
+      responses:
+        "999":
+          description: error on client side
+        "200":
+          description: empty

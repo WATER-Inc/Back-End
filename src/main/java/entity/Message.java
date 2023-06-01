@@ -7,7 +7,6 @@ import java.util.Objects;
 
 public class Message extends Entity {
     private String id;
-    @JsonIgnore
     private User sender;
     private Chat chat;
     private String content;
