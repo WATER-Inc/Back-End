@@ -1,0 +1,3 @@
+16:00:23.611 [main] DEBUG dao.pool.ConnectionPool - 
+Log: ConnectionPoolgetConnectionessage: Connection was received from pool. Current pool size: 1 used connections; 9 free connection
+

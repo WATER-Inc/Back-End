@@ -5,6 +5,7 @@ import dao.pool.ConnectionPool;
 import entity.User;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import service.Service;
 import service.ServiceFactory;
@@ -95,14 +96,22 @@ public class UserServiceTest extends ServiceTest<User> {
         assertEquals(user, retrievedUser);
     }
 
-    @Test(groups = {"service"})
-    public void getByUsernameAndPasswordTest() throws PersistException {
+    @Test(groups = {"service"}, dataProvider = "userData")
+    public void getByUsernameAndPasswordTest(String username, String password, boolean expectedResult) throws PersistException {
         User user = new User();
         user.setUsername("johndoe");
         user.setPasswordHash("password");
         user = (User) service.persist(user);
-        User retrievedUser = ((UserService) service).getByUsernameAndPassword("johndoe", "password");
+        User retrievedUser = ((UserService) service).getByUsernameAndPassword(username, password);
         service.delete(user);
-        assertEquals(user, retrievedUser);
+        assertEquals(expectedResult, retrievedUser != null);
+    }
+    @DataProvider(name = "userData")
+    public Object[][] userData() {
+        return new Object[][] {
+                {"johndoe", "password", true},
+                {"janedoe", "password", false},
+                {"johndoe", "wrongpassword", false}
+        };
     }
 }
