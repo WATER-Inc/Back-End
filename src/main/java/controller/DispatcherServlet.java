@@ -17,23 +17,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Map;
 
-@WebServlet(name = "Servlet", value = "/Servlet")
 public class DispatcherServlet extends HttpServlet {
     private static final Logger logger = LogManager.getLogger(String.valueOf(DispatcherServlet.class));
     public static final String DB_DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
     public static final String DB_URL = "jdbc:mysql://localhost:3306/water?useUnicode=true&characterEncoding=UTF-8";
     public static final String DB_USER = "root";
     public static final String DB_PASSWORD = "20November3;5.-65@1234";
-    public static final int DB_POOL_START_SIZE = 100;
+    public static final int DB_POOL_START_SIZE = 10;
     public static final int DB_POOL_MAX_SIZE = 1000;
     public static final int DB_POOL_CHECK_CONNECTION_TIMEOUT = 100;
 
-    public DispatcherServlet() {
-        super();
-        init();
-    }
 
     public void init() {
         try {
@@ -64,6 +60,7 @@ public class DispatcherServlet extends HttpServlet {
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Action action = (Action) request.getAttribute("action");
+        ActionManager actionManager = null;
         try {
             HttpSession session = request.getSession();
             if (session != null) {
@@ -77,14 +74,22 @@ public class DispatcherServlet extends HttpServlet {
                 }
             }
             logger.debug("Starting action execution");
-            ActionManager actionManager = ActionManagerFactory.getManager(getFactory());
+            actionManager = ActionManagerFactory.getManager(getFactory());
             actionManager.execute(action, request, response);
-            actionManager.close();
 
         } catch (PersistException e) {
             logger.error("It is impossible to process request", e);
             request.setAttribute("error", "Ошибка обработки данных");
             getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
+        }
+        finally {
+            if(actionManager != null) {
+                try {
+                    actionManager.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 }

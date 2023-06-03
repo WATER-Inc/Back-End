@@ -18,6 +18,10 @@ import java.io.IOException;
 public class UserCreateChat extends ChatsAction {
     private static Logger logger = LogManager.getLogger(String.valueOf(UserCreateChat.class));
 
+    public UserCreateChat() throws PersistException {
+        super();
+    }
+
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
         String chatName = request.getParameter("chatName");

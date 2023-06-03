@@ -11,9 +11,8 @@ import service.ServiceFactory;
 public abstract class AuthorizedUserAction extends Action {
     private static Logger logger = LogManager.getLogger(String.valueOf(LoginAction.class));
 
-    public AuthorizedUserAction() {
+    public AuthorizedUserAction() throws PersistException {
         super();
-        factory = new ServiceFactory();//TODO
         try {
             getAllowRoles().addAll(((RoleService) factory.getService(Role.class)).getAll());
         } catch (PersistException e) {

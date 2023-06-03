@@ -4,6 +4,7 @@ package dao.mysql;
 import dao.DAOFactory;
 import dao.GenericDAO;
 import dao.PersistException;
+import dao.pool.PooledConnection;
 import entity.auxiliary.ChatLink;
 import dao.pool.ConnectionPool;
 import entity.Message;
@@ -12,20 +13,21 @@ import entity.Chat;
 import entity.User;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MySqlDaoFactory implements DAOFactory<Connection> {
 
-    private String user = "root";//Логин пользователя
-    private String password = "20November3;5.-65@1234";//Пароль пользователя//TODO need to add password
-    private String url = "jdbc:mysql://localhost:3306/water";//URL адрес
-    private String driver = "com.mysql.jdbc.Driver";//Имя драйвера
     private Map<Class, DAOFactory.DaoCreator> creators;
 
+    public PooledConnection getConnection() {
+        return connection;
+    }
 
+    private PooledConnection connection;
     @Override
-    public GenericDAO getDao(Connection connection, Class dtoClass) throws PersistException {
+    public GenericDAO getDao(Class dtoClass) throws PersistException {
         DAOFactory.DaoCreator creator = creators.get(dtoClass);
         if (creator == null) {
             throw new PersistException("Dao object for " + dtoClass + " not found.");
@@ -33,7 +35,8 @@ public class MySqlDaoFactory implements DAOFactory<Connection> {
         return creator.create(connection);
     }
 
-    public MySqlDaoFactory() {
+    public MySqlDaoFactory() throws PersistException {
+        connection = ConnectionPool.getInstance().getConnection();
         creators = new HashMap<Class, DAOFactory.DaoCreator>();
         creators.put(User.class, new DaoCreator<Connection>() {
             @Override
@@ -66,5 +69,7 @@ public class MySqlDaoFactory implements DAOFactory<Connection> {
             }
         });
     }
-
+    public void close() throws SQLException {
+        connection.close();
+    }
 }

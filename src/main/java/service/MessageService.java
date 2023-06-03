@@ -1,6 +1,7 @@
 package service;
 
 import dao.PersistException;
+import dao.mysql.MySqlDaoFactory;
 import dao.mysql.MySqlMessageDAO;
 import entity.Chat;
 import entity.Entity;
@@ -10,8 +11,8 @@ import entity.User;
 import java.util.List;
 
 public class MessageService extends Service {
-    public MessageService() throws PersistException {
-        super(Message.class);
+    public MessageService(MySqlDaoFactory factory) throws PersistException {
+        super(Message.class, factory);
     }
 
     @Override
@@ -30,11 +31,13 @@ public class MessageService extends Service {
     }
 
     public List<Message> getMessages(Chat chat) throws PersistException {
-        return ((MySqlMessageDAO)genericDAO).getMessages(chat);
+        return ((MySqlMessageDAO) genericDAO).getMessages(chat);
     }
+
     public List<Message> getMessages(User user) throws PersistException {
-        return ((MySqlMessageDAO)genericDAO).getMessages(user);
+        return ((MySqlMessageDAO) genericDAO).getMessages(user);
     }
+
     @Override
     protected void finalize() throws Throwable {
         super.finalize();

@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 public class LogoutAction extends AuthorizedUserAction {
     private static Logger logger = LogManager.getLogger(LogoutAction.class);
 
+    public LogoutAction() throws PersistException {
+        super();
+    }
+
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
         User user = getAuthorizedUser();

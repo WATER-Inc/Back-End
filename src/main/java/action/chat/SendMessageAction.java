@@ -24,6 +24,10 @@ import java.sql.Date;
 public class SendMessageAction extends ChatAction {
     private static Logger logger = LogManager.getLogger(SendMessageAction.class);
 
+    public SendMessageAction() throws PersistException {
+        super();
+    }
+
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
         JsonNode jsonNode = null;

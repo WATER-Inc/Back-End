@@ -2,6 +2,7 @@ package service;
 
 import dao.PersistException;
 import dao.mysql.MySqlChatDAO;
+import dao.mysql.MySqlDaoFactory;
 import dao.mysql.MySqlUserDAO;
 import entity.Chat;
 import entity.Entity;
@@ -12,8 +13,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserService extends Service {
-    public UserService() throws PersistException {
-        super(User.class);
+    public UserService(MySqlDaoFactory factory) throws PersistException {
+        super(User.class, factory);
     }
 
     @Override

@@ -16,17 +16,22 @@ import java.util.List;
 
 public abstract class Service {
     private static final Logger logger = LogManager.getLogger(String.valueOf(Service.class));
-    protected static MySqlDaoFactory daoFactory = new MySqlDaoFactory();
+
+    public void setDaoFactory(MySqlDaoFactory daoFactory) {
+        this.daoFactory = daoFactory;
+    }
+
+    protected MySqlDaoFactory daoFactory;
     protected PooledConnection connection = null;
     protected GenericDAO genericDAO;
     protected Class<? extends Entity> entityClass;
 
-    protected Service(Class<? extends Entity> entityClass) throws PersistException {
+    protected Service(Class<? extends Entity> entityClass, MySqlDaoFactory factory) throws PersistException {
+        this.daoFactory = factory;
         this.entityClass = entityClass;
-        connection = (PooledConnection) ConnectionPool.getInstance().getConnection();
-        genericDAO = daoFactory.getDao(connection, entityClass);
+        connection = daoFactory.getConnection();
+        genericDAO = daoFactory.getDao(entityClass);
     }
-
     public Entity getById(String id) throws PersistException {
         return (Entity) genericDAO.getByPrimaryKey(id);
     }
@@ -46,19 +51,5 @@ public abstract class Service {
     public void update(Entity object) throws PersistException {
         genericDAO.update(object);
     }
-    @Override
-    protected void finalize() throws Throwable {
-        try {
-            super.finalize();
-        } finally {
-            System.out.println(this.getClass() + " Finalize");
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    logger.error("Error closing connection", e);
-                }
-            }
-        }
-    }
+
 }

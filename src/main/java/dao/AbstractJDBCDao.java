@@ -68,7 +68,7 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
      */
     protected abstract void prepareStatementForUpdate(PreparedStatement statement, T object) throws PersistException;
 
-    private DAOFactory<Connection> parentFactory;
+    protected DAOFactory<Connection> parentFactory;
 
     protected PooledConnection connection;
 
@@ -173,20 +173,6 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
     public AbstractJDBCDao(DAOFactory<Connection> parentFactory, Connection connection) {
         this.parentFactory = parentFactory;
         this.connection = (PooledConnection) connection;
-    }
-    @Override
-    protected void finalize() throws Throwable {
-        try {
-            super.finalize();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    //logger.error("Error closing connection", e);
-                }
-            }
-        }
     }
 
 }

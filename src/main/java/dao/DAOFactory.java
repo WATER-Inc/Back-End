@@ -7,5 +7,5 @@ public interface DAOFactory<Connection> {
     }
 
     /** Возвращает объект для управления персистентным состоянием объекта */
-    public GenericDAO getDao(Connection connection, Class dtoClass) throws PersistException;
+    public GenericDAO getDao(Class dtoClass) throws PersistException;
 }

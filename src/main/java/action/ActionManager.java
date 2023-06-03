@@ -5,6 +5,7 @@ import service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 
 public class ActionManager {
     private ServiceFactory factory;
@@ -19,7 +20,7 @@ public class ActionManager {
         return;
     }
 
-    public void close() {
-        //TODO
+    public void close() throws SQLException {
+        factory.close();
     }
 }

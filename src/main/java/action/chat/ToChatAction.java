@@ -23,6 +23,11 @@ import java.util.List;
 
 public class ToChatAction extends ChatAction{
     private static Logger logger = LogManager.getLogger(SendMessageAction.class);
+
+    public ToChatAction() throws PersistException {
+        super();
+    }
+
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
         JsonNode jsonNode =null;
@@ -61,7 +66,7 @@ public class ToChatAction extends ChatAction{
             }else messageList = Mservice.getMessages(chat);
             try {
                 SenderManager.sendObject(response, messageList);
-                logger.info(String.format("chat \"%s\" is sent "),chatId);
+                logger.info(String.format("chat \"%s\" is sent ", chatId));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
