@@ -1,17 +1,13 @@
 package service;
 
-import controller.DispatcherServlet;
 import dao.GenericDAO;
 import dao.PersistException;
 import dao.mysql.MySqlDaoFactory;
-import dao.pool.ConnectionPool;
 import dao.pool.PooledConnection;
 import entity.Entity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 public abstract class Service {

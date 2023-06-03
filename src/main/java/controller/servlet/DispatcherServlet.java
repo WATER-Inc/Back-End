@@ -1,17 +1,14 @@
-package controller;
+package controller.servlet;
 
 import action.Action;
 import action.ActionManager;
 import action.ActionManagerFactory;
 import dao.PersistException;
-import dao.pool.ConnectionPool;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.ServiceFactory;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,24 +19,6 @@ import java.util.Map;
 
 public class DispatcherServlet extends HttpServlet {
     private static final Logger logger = LogManager.getLogger(String.valueOf(DispatcherServlet.class));
-    public static final String DB_DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
-    public static final String DB_URL = "jdbc:mysql://localhost:3306/water?useUnicode=true&characterEncoding=UTF-8";
-    public static final String DB_USER = "root";
-    public static final String DB_PASSWORD = "20November3;5.-65@1234";
-    public static final int DB_POOL_START_SIZE = 10;
-    public static final int DB_POOL_MAX_SIZE = 1000;
-    public static final int DB_POOL_CHECK_CONNECTION_TIMEOUT = 100;
-
-
-    public void init() {
-        try {
-            logger.debug("Started...");
-            ConnectionPool.getInstance().init(DB_DRIVER_CLASS, DB_URL, DB_USER, DB_PASSWORD, DB_POOL_START_SIZE, DB_POOL_MAX_SIZE, DB_POOL_CHECK_CONNECTION_TIMEOUT);
-        } catch (PersistException e) {
-            logger.error("It is impossible to initialize application", e);
-            destroy();
-        }
-    }
 
     public ServiceFactory getFactory() throws PersistException {
         return new ServiceFactory();

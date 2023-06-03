@@ -3,14 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-
+    <listener>
+        <listener-class>controller.listener.ContextListener</listener-class>
+    </listener>
     <display-name>water</display-name>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
     <servlet>
         <servlet-name>DispatcherServlet</servlet-name>
-        <servlet-class>controller.DispatcherServlet</servlet-class>
+        <servlet-class>controller.servlet.DispatcherServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>
@@ -18,7 +20,7 @@
     </servlet-mapping>
     <filter>
         <filter-name>EncodingFilter</filter-name>
-        <filter-class>controller.EncodingFilter</filter-class>
+        <filter-class>controller.filter.EncodingFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>EncodingFilter</filter-name>
@@ -26,7 +28,7 @@
     </filter-mapping>
     <filter>
         <filter-name>ActionFromUriFilter</filter-name>
-        <filter-class>controller.ActionFromUriFilter</filter-class>
+        <filter-class>controller.filter.ActionFromUriFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>ActionFromUriFilter</filter-name>
@@ -34,7 +36,7 @@
     </filter-mapping>
     <filter>
         <filter-name>SecurityFilter</filter-name>
-        <filter-class>controller.SecurityFilter</filter-class>
+        <filter-class>controller.filter.SecurityFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>SecurityFilter</filter-name>

@@ -1,6 +1,6 @@
 package action;
 
-import controller.DispatcherServlet;
+import controller.servlet.DispatcherServlet;
 import dao.PersistException;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
