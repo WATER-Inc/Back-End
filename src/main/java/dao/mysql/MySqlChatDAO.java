@@ -74,8 +74,6 @@ public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
                 PersistChat chat = new PersistChat();
                 chat.setId(rs.getString("id"));
                 chat.setName(rs.getString("name"));
-                MySqlChatLinkDAO chatLinkDAO = (MySqlChatLinkDAO) parentFactory.getDao(ChatLink.class);
-                chat.setParticipants(chatLinkDAO.getParticipants(chat));
                 result.add(chat);
             }
         } catch (Exception e) {

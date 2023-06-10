@@ -30,7 +30,11 @@ public class ChatService extends Service {
 
     @Override
     public List<Chat> getAll() throws PersistException {
-        return (List<Chat>) super.getAll();
+        List<Chat> chats = (List<Chat>) super.getAll();
+        MySqlChatLinkDAO chatLinkDAO = (MySqlChatLinkDAO) daoFactory.getDao(ChatLink.class);
+        for (Chat chat : chats)
+            chat.setParticipants(chatLinkDAO.getParticipants(chat));
+        return chats;
     }
 
     @Override
@@ -68,8 +72,4 @@ public class ChatService extends Service {
         }
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-    }
 }

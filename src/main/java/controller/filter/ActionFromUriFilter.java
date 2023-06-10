@@ -6,7 +6,7 @@ import action.authentication.LoginAction;
 import action.authentication.LogoutAction;
 import action.authentication.RegistrationAction;
 import action.chat.SendMessageAction;
-import action.chat.ToChatAction;
+import action.chat.GetChatMessagesAction;
 import action.chats.UserNeedChatsAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,7 +25,7 @@ public class ActionFromUriFilter implements Filter {
 
     static {
         actions.put("chatsAction", UserNeedChatsAction.class);
-        actions.put("chatAction", ToChatAction.class);
+        actions.put("chatAction", GetChatMessagesAction.class);
         actions.put("loginAction", LoginAction.class);
         actions.put("logoutAction", LogoutAction.class);
         actions.put("messageAction", SendMessageAction.class);

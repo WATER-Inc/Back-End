@@ -8,6 +8,7 @@ import entity.Entity;
 import entity.Message;
 import entity.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MessageService extends Service {
@@ -22,7 +23,15 @@ public class MessageService extends Service {
 
     @Override
     public List<Message> getAll() throws PersistException {
-        return (List<Message>) super.getAll();
+        List<Message> messages = (List<Message>) super.getAll();
+        ServiceFactory factory = new ServiceFactory(daoFactory);
+        UserService userService = factory.getService(User.class);
+        ChatService chatService = factory.getService(Chat.class);
+        for (Message message : messages) {
+            message.setSender(userService.getById(message.getSender().getId()));
+            message.setChat(chatService.getById(message.getChat().getId()));
+        }
+        return messages;
     }
 
     @Override
@@ -30,16 +39,21 @@ public class MessageService extends Service {
         return (Message) super.persist(object);
     }
 
+    protected List<Message> getById(List<Message> messagesId) throws PersistException {
+        List<Message> messages = new ArrayList<>();
+        ServiceFactory factory = new ServiceFactory(daoFactory);
+        MessageService service = factory.getService(Message.class);
+        for (int i = 0; i < messagesId.size(); ++i)
+            messages.add(service.getById(messagesId.get(i).getId()));
+        return messages;
+    }
+
     public List<Message> getMessages(Chat chat) throws PersistException {
-        return ((MySqlMessageDAO) genericDAO).getMessages(chat);
+        return getById(((MySqlMessageDAO) genericDAO).getMessages(chat));
     }
 
     public List<Message> getMessages(User user) throws PersistException {
-        return ((MySqlMessageDAO) genericDAO).getMessages(user);
+        return getById(((MySqlMessageDAO) genericDAO).getMessages(user));
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-    }
 }

@@ -83,10 +83,12 @@ public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
                 Message.setId(rs.getString("id"));
                 String SenderId = rs.getString("sender_id");
                 String ChatId = rs.getString("chat_id");
-                MySqlUserDAO userDAO = (MySqlUserDAO) parentFactory.getDao(User.class);
-                MySqlChatDAO chatDAO = (MySqlChatDAO) parentFactory.getDao(Chat.class);
-                Message.setSender(userDAO.getByPrimaryKey(SenderId));
-                Message.setChat(chatDAO.getByPrimaryKey(ChatId));
+                User sender = new User();
+                sender.setId(SenderId);
+                Message.setSender(sender);
+                Chat chat = new Chat();
+                chat.setId(ChatId);
+                Message.setChat(chat);
                 Message.setContent(rs.getString("content"));
                 result.add(Message);
             }
@@ -124,9 +126,11 @@ public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, chat.getId());
             ResultSet rs = statement.executeQuery();
-            MySqlMessageDAO messageDAO = (MySqlMessageDAO) parentFactory.getDao(Message.class);
-            while (rs.next())
-                list.add(messageDAO.getByPrimaryKey(rs.getString("id")));
+            while (rs.next()) {
+                Message message = new Message();
+                message.setId(rs.getString("id"));
+                list.add(message);
+            }
         } catch (Exception e) {
             throw new PersistException(e);
         }
@@ -138,9 +142,11 @@ public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, user.getId());
             ResultSet rs = statement.executeQuery();
-            MySqlMessageDAO messageDAO = (MySqlMessageDAO) parentFactory.getDao(Message.class);
-            while (rs.next())
-                list.add(messageDAO.getByPrimaryKey(rs.getString("id")));
+            while (rs.next()) {
+                Message message = new Message();
+                message.setId(rs.getString("id"));
+                list.add(message);
+            }
         } catch (Exception e) {
             throw new PersistException(e);
         }

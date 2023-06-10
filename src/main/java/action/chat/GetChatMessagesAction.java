@@ -1,6 +1,5 @@
 package action.chat;
 
-import action.Action;
 import action.parser.Parser;
 import action.sender.SenderManager;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -11,20 +10,16 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import service.ChatService;
 import service.MessageService;
-import validator.IncorrectFormDataException;
-import validator.Validator;
-import validator.ValidatorFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-public class ToChatAction extends ChatAction{
+public class GetChatMessagesAction extends ChatAction{
     private static Logger logger = LogManager.getLogger(SendMessageAction.class);
 
-    public ToChatAction() throws PersistException {
+    public GetChatMessagesAction() throws PersistException {
         super();
     }
 
