@@ -2,7 +2,12 @@ package entity;
 
 import dao.Identified;
 
+<<<<<<< Updated upstream
 import java.sql.Date;
+=======
+import java.util.Date;
+import java.util.Objects;
+>>>>>>> Stashed changes
 
 public class Message extends Entity {
     private String id;

@@ -11,7 +11,9 @@ import entity.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -89,6 +91,11 @@ public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
                 Message.setSender(userDAO.getByPrimaryKey(SenderId));
                 Message.setChat(chatDAO.getByPrimaryKey(ChatId));
                 Message.setContent(rs.getString("content"));
+                try {
+                    Message.setDate(new Date(rs.getString("created_date")));
+                } catch (SQLException e) {
+                    System.out.println("Error");
+                }
                 result.add(Message);
             }
         } catch (Exception e) {
