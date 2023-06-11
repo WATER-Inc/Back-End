@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class GetChatMessagesAction extends ChatAction{
+    private static Logger logger = LogManager.getLogger(SendMessageAction.class);
 
     public GetChatMessagesAction() throws PersistException {
         super();
