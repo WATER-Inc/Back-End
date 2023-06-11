@@ -90,6 +90,7 @@ public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
                 chat.setId(ChatId);
                 Message.setChat(chat);
                 Message.setContent(rs.getString("content"));
+                Message.setDate(new java.util.Date(rs.getDate("created_date").getTime()));
                 result.add(Message);
             }
         } catch (Exception e) {

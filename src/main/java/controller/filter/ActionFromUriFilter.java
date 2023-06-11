@@ -12,11 +12,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
+@WebFilter(asyncSupported = true)
 public class ActionFromUriFilter implements Filter {
     private static final Logger logger = LogManager.getLogger(ActionFromUriFilter.class);
 

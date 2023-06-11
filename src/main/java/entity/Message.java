@@ -2,7 +2,7 @@ package entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 
 public class Message extends Entity {
