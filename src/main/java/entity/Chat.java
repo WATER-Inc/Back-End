@@ -3,11 +3,22 @@ package entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import entity.auxiliary.Participants;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class Chat extends Entity {
     private String id;
     private String name;
+
+    public Date getLastMessageDate() {
+        return lastMessageDate;
+    }
+
+    public void setLastMessageDate(Date lastMessageDate) {
+        this.lastMessageDate = lastMessageDate;
+    }
+
+    private Date lastMessageDate;
     @JsonIgnore
     private Participants participants;
 
