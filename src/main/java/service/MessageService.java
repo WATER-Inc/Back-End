@@ -18,7 +18,11 @@ public class MessageService extends Service {
 
     @Override
     public Message getById(String id) throws PersistException {
-        return (Message) super.getById(id);
+        Message message = (Message) super.getById(id);
+        ServiceFactory factory = new ServiceFactory(daoFactory);
+        message.setChat((Chat) factory.getService(Chat.class).getById(message.getChat().getId()));
+        message.setSender((User) factory.getService(User.class).getById(message.getSender().getId()));
+        return message;
     }
 
     @Override
@@ -41,10 +45,8 @@ public class MessageService extends Service {
 
     protected List<Message> getById(List<Message> messagesId) throws PersistException {
         List<Message> messages = new ArrayList<>();
-        ServiceFactory factory = new ServiceFactory(daoFactory);
-        MessageService service = factory.getService(Message.class);
         for (int i = 0; i < messagesId.size(); ++i)
-            messages.add(service.getById(messagesId.get(i).getId()));
+            messages.add(getById(messagesId.get(i).getId()));
         return messages;
     }
 
