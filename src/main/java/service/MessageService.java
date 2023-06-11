@@ -20,7 +20,7 @@ public class MessageService extends Service {
     public Message getById(String id) throws PersistException {
         Message message = (Message) super.getById(id);
         ServiceFactory factory = new ServiceFactory(daoFactory);
-        message.setChat((Chat) factory.getService(Chat.class).getById(message.getChat().getId()));
+//        message.setChat((Chat) factory.getService(Chat.class).getById(message.getChat().getId()));//TODO recursive send
         message.setSender((User) factory.getService(User.class).getById(message.getSender().getId()));
         return message;
     }
@@ -43,7 +43,7 @@ public class MessageService extends Service {
         return (Message) super.persist(object);
     }
 
-    protected List<Message> getById(List<Message> messagesId) throws PersistException {
+    protected List<Message> getListById(List<Message> messagesId) throws PersistException {
         List<Message> messages = new ArrayList<>();
         for (int i = 0; i < messagesId.size(); ++i)
             messages.add(getById(messagesId.get(i).getId()));
@@ -51,11 +51,11 @@ public class MessageService extends Service {
     }
 
     public List<Message> getMessages(Chat chat) throws PersistException {
-        return getById(((MySqlMessageDAO) genericDAO).getMessages(chat));
+        return getListById(((MySqlMessageDAO) genericDAO).getMessages(chat));
     }
 
     public List<Message> getMessages(User user) throws PersistException {
-        return getById(((MySqlMessageDAO) genericDAO).getMessages(user));
+        return getListById(((MySqlMessageDAO) genericDAO).getMessages(user));
     }
 
 }
