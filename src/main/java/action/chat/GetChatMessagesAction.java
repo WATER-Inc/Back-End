@@ -26,7 +26,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class GetChatMessagesAction extends ChatAction {
-    private static Logger logger = LogManager.getLogger(SendMessageAction.class);
     private Lock lock = new ReentrantLock();
 
     public GetChatMessagesAction() throws PersistException {
@@ -50,7 +49,7 @@ public class GetChatMessagesAction extends ChatAction {
         if (chat == null) {
             request.setAttribute("message", "Чата не существует");
             logger.info(String.format("unsuccessfully tried to get chat %s %s (%s:%s)", chat, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
-        } else
+        } else {
             synchronized (asyncContext) {
                 try {
                     List<Message> messageList = null;
@@ -69,6 +68,7 @@ public class GetChatMessagesAction extends ChatAction {
                     logger.error("Error while getting chat messages", e);
                 }
             }
+        }
     }
 }
 

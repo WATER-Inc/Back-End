@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.Date;
 
 public class SendMessageAction extends ChatAction {
-    private static Logger logger = LogManager.getLogger(SendMessageAction.class);
 
     public SendMessageAction() throws PersistException {
         super();

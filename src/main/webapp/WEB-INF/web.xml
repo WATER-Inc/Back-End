@@ -13,6 +13,7 @@
     <servlet>
         <servlet-name>DispatcherServlet</servlet-name>
         <servlet-class>controller.servlet.DispatcherServlet</servlet-class>
+        <async-supported>true</async-supported>
     </servlet>
     <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>
@@ -21,6 +22,7 @@
     <filter>
         <filter-name>EncodingFilter</filter-name>
         <filter-class>controller.filter.EncodingFilter</filter-class>
+        <async-supported>true</async-supported>
     </filter>
     <filter-mapping>
         <filter-name>EncodingFilter</filter-name>
@@ -29,6 +31,7 @@
     <filter>
         <filter-name>ActionFromUriFilter</filter-name>
         <filter-class>controller.filter.ActionFromUriFilter</filter-class>
+        <async-supported>true</async-supported>
     </filter>
     <filter-mapping>
         <filter-name>ActionFromUriFilter</filter-name>
@@ -37,6 +40,7 @@
     <filter>
         <filter-name>SecurityFilter</filter-name>
         <filter-class>controller.filter.SecurityFilter</filter-class>
+        <async-supported>true</async-supported>
     </filter>
     <filter-mapping>
         <filter-name>SecurityFilter</filter-name>
