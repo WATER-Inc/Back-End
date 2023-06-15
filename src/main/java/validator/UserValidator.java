@@ -1,37 +1,40 @@
 package validator;
 
+import action.parser.Parser;
+import action.sender.SenderManager;
+import com.fasterxml.jackson.databind.JsonNode;
 import entity.User;
+import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 public class UserValidator implements Validator<User> {
     @Override
     public User validate(HttpServletRequest request) throws IncorrectFormDataException {
+        JsonNode jsonNode = null;
+        try {
+            jsonNode = Parser.parseRequest(request);
+        } catch (IOException e) {
+            return null;
+            // todo process request with no body
+        }
+        JsonNode usernameNode = null;
+        JsonNode passwordNode = null;
+        if (jsonNode != null) {
+            usernameNode = jsonNode.get("username");
+            passwordNode = jsonNode.get("userpassword");
+        }
+        if (usernameNode == null || passwordNode == null) {
+            return null;
+            // todo process request body without username & userpassword
+        }
+        String username = usernameNode.asText();
+        String password = passwordNode.asText();
         User user = new User();
-        String parameter = request.getParameter("id");
-        if (parameter != null && !parameter.isEmpty()) {
-            try {
-                user.setId(parameter);
-            } catch (NumberFormatException e) {
-                throw new IncorrectFormDataException("id", parameter);
-            }
-        }
-        parameter = request.getParameter("username");
-        if (parameter != null && !parameter.isEmpty()) {
-            try {
-                user.setUsername(parameter);
-            } catch (NumberFormatException e) {
-                throw new IncorrectFormDataException("username", parameter);
-            }
-        }
-        parameter = request.getParameter("passwordHash");
-        if (parameter != null && !parameter.isEmpty()) {
-            try {
-                user.setPasswordHash(parameter);
-            } catch (NumberFormatException e) {
-                throw new IncorrectFormDataException("passwordHash", parameter);
-            }
-        }
+        user.setUsername(username);
+        user.setPasswordHash(password);
         return user;
     }
 }

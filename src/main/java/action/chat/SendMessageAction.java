@@ -19,7 +19,7 @@ import validator.ValidatorFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Date;
+import java.util.Date;
 
 public class SendMessageAction extends ChatAction {
     private static Logger logger = LogManager.getLogger(SendMessageAction.class);
@@ -30,65 +30,33 @@ public class SendMessageAction extends ChatAction {
 
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
-        JsonNode jsonNode = null;
+        Message message = null;
         try {
-            jsonNode = Parser.parseRequest(request);
-        } catch (IOException e) {
-            logger.debug("Request had no content");
-            return;
-            // todo process request with no body
+            message = ValidatorFactory.createValidator(Message.class).validate(request);
+        } catch (IncorrectFormDataException ignored) {
         }
-        JsonNode userIdNode = null;
-        JsonNode chatIdNode = null;
-        JsonNode messageNode = null;
-
-        if (jsonNode == null) {
+        MessageService Mservice = factory.getService(Message.class);
+        ChatService Cservice = factory.getService(Chat.class);
+        UserService Uservice = factory.getService(User.class);
+        Chat chat = Cservice.getById(message.getChat().getId());
+        User user = Uservice.getById(message.getSender().getId());
+        if (chat != null && user != null) {
+            message.setSender(user);
+            message.setChat(chat);
+            if(message.getDate() == null)
+                message.setDate(new Date(System.currentTimeMillis()));
+            message = Mservice.persist(message);
+            logger.debug(message);
             try {
-                SenderManager.sendObject(response, null);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        chatIdNode = jsonNode.get("chatId");
-        userIdNode = jsonNode.get("userId");
-        messageNode = jsonNode.get("message");
-        if (chatIdNode == null || userIdNode == null || messageNode == null) {
-            try {
-                SenderManager.sendObject(response, null);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        String messageText = messageNode.asText();
-        String chatId = chatIdNode.asText();
-        String userId = userIdNode.asText();
-        logger.debug(userId + " " + chatId + " " + messageText);
-        if (messageText != null && chatId != null && userId != null) {
-            MessageService Mservice = factory.getService(Message.class);
-            ChatService Cservice = factory.getService(Chat.class);
-            UserService Uservice = factory.getService(User.class);
-            Chat chat = Cservice.getById(chatId);
-            User user = Uservice.getById(userId);
-            if(chat != null && user != null){
-                Message message = new Message();
-                message.setContent(messageNode.asText());
-                message.setSender(user);
-                message.setChat(chat);
-                message.setDate(new Date(2023,11,20));
-                message = Mservice.persist(message);
-                logger.debug(message);
-                try {
-                    SenderManager.sendObject(response, message);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-            try {
-                SenderManager.sendObject(response, null);
+                SenderManager.sendObject(response, message);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         }
-        return;
+        try {
+            SenderManager.sendObject(response, null);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

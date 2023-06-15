@@ -9,7 +9,9 @@ import entity.Message;
 import entity.User;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MessageService extends Service {
     public MessageService(MySqlDaoFactory factory) throws PersistException {
@@ -52,6 +54,14 @@ public class MessageService extends Service {
 
     public List<Message> getMessages(Chat chat) throws PersistException {
         return getListById(((MySqlMessageDAO) genericDAO).getMessages(chat));
+    }
+
+    public List<Message> getMessages(Chat chat, Date date) throws PersistException {
+        //TODO create SQL function
+        if (date == null)
+            return getMessages(chat);
+        else
+            return getMessages(chat).stream().filter(message -> message.getDate().after(date)).collect(Collectors.toList());
     }
 
     public List<Message> getMessages(User user) throws PersistException {
