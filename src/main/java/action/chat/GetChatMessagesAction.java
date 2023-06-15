@@ -13,15 +13,21 @@ import service.MessageService;
 import validator.IncorrectFormDataException;
 import validator.ValidatorFactory;
 
+import javax.servlet.AsyncContext;
+import javax.servlet.AsyncEvent;
+import javax.servlet.AsyncListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class GetChatMessagesAction extends ChatAction {
     private static Logger logger = LogManager.getLogger(SendMessageAction.class);
+    private Lock lock = new ReentrantLock();
 
     public GetChatMessagesAction() throws PersistException {
         super();
@@ -34,24 +40,35 @@ public class GetChatMessagesAction extends ChatAction {
             chat = Objects.requireNonNull(ValidatorFactory.createValidator(Chat.class)).validate(request);
         } catch (IncorrectFormDataException ignored) {
         }
-
         MessageService Mservice = factory.getService(Message.class);
         ChatService Cservice = factory.getService(Chat.class);
-        List<Message> messageList = null;
+        AsyncContext asyncContext = request.startAsync();
+        asyncContext.setTimeout(0);//TODO
+        ChatAction.map.get(chat.getId()).add(asyncContext);
+        Date date = chat.getLastMessageDate();
+        chat = Cservice.getById(chat.getId());
         if (chat == null) {
             request.setAttribute("message", "Чата не существует");
             logger.info(String.format("unsuccessfully tried to get chat %s %s (%s:%s)", chat, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
-        } else {
-            Date date = chat.getLastMessageDate();
-            chat = Cservice.getById(chat.getId());
-            messageList = Mservice.getMessages(chat, date);
-        }
-        try {
-            SenderManager.sendObject(response, messageList);
-            logger.info(String.format("chat \"%s\" is sent ", chat));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        } else
+            synchronized (asyncContext) {
+                try {
+                    List<Message> messageList = null;
+                    while (messageList == null || messageList.isEmpty()) {
+                        messageList = Mservice.getMessages(chat, date);
+                        if (!messageList.isEmpty()) {
+                            logger.info(String.format("chat \"%s\" is sent ", chat));
+                            SenderManager.sendObject(response, messageList);
+                            asyncContext.complete();
+                            break;
+                        } else {
+                            asyncContext.wait(1000);//TODO update time
+                        }
+                    }
+                } catch (Exception e) {
+                    logger.error("Error while getting chat messages", e);
+                }
+            }
     }
 }
 

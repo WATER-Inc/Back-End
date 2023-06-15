@@ -43,20 +43,25 @@ public class SendMessageAction extends ChatAction {
         if (chat != null && user != null) {
             message.setSender(user);
             message.setChat(chat);
-            if(message.getDate() == null)
+            if (message.getDate() == null)
                 message.setDate(new Date(System.currentTimeMillis()));
             message = Mservice.persist(message);
             logger.debug(message);
             try {
                 SenderManager.sendObject(response, message);
+                map.get(chat.getId()).stream().forEach(asyncContext -> {
+                    synchronized (asyncContext) {
+                        asyncContext.notifyAll();
+                    }
+                });
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-        }
-        try {
-            SenderManager.sendObject(response, null);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
+        } else
+            try {
+                SenderManager.sendObject(response, null);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
     }
 }
