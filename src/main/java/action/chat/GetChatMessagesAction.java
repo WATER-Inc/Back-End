@@ -41,7 +41,7 @@ public class GetChatMessagesAction extends ChatAction {
         }
         MessageService Mservice = factory.getService(Message.class);
         ChatService Cservice = factory.getService(Chat.class);
-        AsyncContext asyncContext = request.startAsync();
+        AsyncContext asyncContext = request.startAsync(request, response);
         asyncContext.setTimeout(0);//TODO
         ChatAction.map.get(chat.getId()).add(asyncContext);
         Date date = chat.getLastMessageDate();

@@ -26,12 +26,14 @@ public class UserValidator implements Validator<User> {
             usernameNode = jsonNode.get("username");
             passwordNode = jsonNode.get("userpassword");
         }
-        if (usernameNode == null || passwordNode == null) {
+        if (usernameNode == null) {
             return null;
-            // todo process request body without username & userpassword
+            // TODO process request body without username & userpassword
         }
         String username = usernameNode.asText();
-        String password = passwordNode.asText();
+        String password = null;
+        if (passwordNode != null)
+            password = passwordNode.asText();
         User user = new User();
         user.setUsername(username);
         user.setPasswordHash(password);

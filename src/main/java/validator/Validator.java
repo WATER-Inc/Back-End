@@ -4,6 +4,6 @@ import entity.Entity;
 
 import javax.servlet.http.HttpServletRequest;
 
-public interface Validator<Type extends Entity> {
+public interface Validator<Type> {
     Type validate(HttpServletRequest request) throws IncorrectFormDataException;
 }

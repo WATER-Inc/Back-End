@@ -14,7 +14,6 @@ import java.util.List;
 
 
 public class UserNeedChatsAction extends ChatsAction {
-    private static Logger logger = LogManager.getLogger(String.valueOf(UserNeedChatsAction.class));
 
     public UserNeedChatsAction() throws PersistException {
         super();
