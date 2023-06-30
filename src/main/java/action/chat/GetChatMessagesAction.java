@@ -61,7 +61,6 @@ public class GetChatMessagesAction extends ChatAction {
                         if (!messageList.isEmpty()) {
                             logger.info(String.format("chat \"%s\" is sent ", chat));
                             logger.info("Sending" + messageList.toString());
-                            SenderManager.sendObject(response, chat.getLastMessageDate());
                             SenderManager.sendObject(response, messageList);
                             asyncContext.complete();
                             break;
