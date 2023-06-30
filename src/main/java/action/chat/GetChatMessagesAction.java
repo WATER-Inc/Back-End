@@ -52,12 +52,16 @@ public class GetChatMessagesAction extends ChatAction {
         } else {
             synchronized (asyncContext) {
                 try {
+                    //wait(10000);
+                    asyncContext.wait(1000);
+                    logger.debug("Start wait");
                     List<Message> messageList = null;
                     while (messageList == null || messageList.isEmpty()) {
                         messageList = Mservice.getMessages(chat, date);
                         if (!messageList.isEmpty()) {
                             logger.info(String.format("chat \"%s\" is sent ", chat));
                             logger.info("Sending" + messageList.toString());
+                            SenderManager.sendObject(response, chat.getLastMessageDate());
                             SenderManager.sendObject(response, messageList);
                             asyncContext.complete();
                             break;

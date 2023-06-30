@@ -37,8 +37,6 @@ public class ChatValidator implements Validator<Chat> {
         if (chatIdNode == null) {
             return null;
         }
-        logger.info(chatIdNode + " " + lastMessageDateNode);
-
         String chatId = chatIdNode.asText();
         Date date = null;
         if (lastMessageDateNode != null)
