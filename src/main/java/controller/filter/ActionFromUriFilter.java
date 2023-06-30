@@ -44,7 +44,6 @@ public class ActionFromUriFilter implements Filter {
     }
 
     private static String getActionName(String uri, String contextPath) {
-        logger.debug("Processing action| uri: " + uri + "; contextPath: " + contextPath);
         if (!contextPath.equals("/water_war"))
             return "errorAction";
         String actionPath = uri.substring(contextPath.length());
@@ -66,16 +65,9 @@ public class ActionFromUriFilter implements Filter {
             String contextPath = httpRequest.getContextPath();
             String uri = httpRequest.getRequestURI();
             String actionName;
-            logger.info("Session Id:" + httpRequest.getSession().getId());
             logger.debug(String.format("Starting of processing of request for URI \"%s\"", uri));
-
             actionName = getActionName(uri, contextPath);
-
-            logger.debug("ActionFromUriFilter Word: " + actionName);
-
             Class<Action> actionClass = (Class<Action>) actions.get(actionName);
-
-            logger.debug(actionClass);
             try {
                 Action action = actionClass.newInstance();
                 action.setName(actionName);

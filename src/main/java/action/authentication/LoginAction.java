@@ -33,7 +33,6 @@ public class LoginAction extends Action {
             logger.debug("Request had no content");
             return;
         }
-        logger.debug("Trying to login with: [Username: " + user.getUsername() + "; Password: " + user.getPasswordHash() + "]");
         UserService service = factory.getService(User.class);
         User copy = user;
         user = service.getByUsernameAndPassword(user.getUsername(), user.getPasswordHash());
@@ -47,10 +46,8 @@ public class LoginAction extends Action {
             throw new RuntimeException(e);
         }
         HttpSession session = request.getSession();
-        logger.debug("|" + session + "|");
         if (session != null)
             session.setAttribute("authorizedUser", user);
-        logger.debug(request.getSession());
         logger.info(String.format("user \"%s\" is logged in from %s (%s:%s)", copy.getUsername(), request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
     }
 }

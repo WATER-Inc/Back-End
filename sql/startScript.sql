@@ -29,7 +29,7 @@ CREATE TABLE messages(
                          sender_id INT,
                          chat_id INT,
                          content VARCHAR(140),
-                         created_date DATE,
+                         created_date DATETIME,
                          FOREIGN KEY (sender_id) REFERENCES user (id) ON DELETE CASCADE,
                          FOREIGN KEY (chat_id) REFERENCES chat (id) ON DELETE CASCADE
 );

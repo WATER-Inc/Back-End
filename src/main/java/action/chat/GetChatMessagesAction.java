@@ -41,22 +41,24 @@ public class GetChatMessagesAction extends ChatAction {
         }
         MessageService Mservice = factory.getService(Message.class);
         ChatService Cservice = factory.getService(Chat.class);
-        AsyncContext asyncContext = request.startAsync(request,response);
+        AsyncContext asyncContext = request.startAsync(request, response);
         asyncContext.setTimeout(100);//TODO
         asyncContext.addListener(new AsyncListener() {
             @Override
             public void onComplete(AsyncEvent event) throws IOException {
-                
+                logger.debug("onComplete End Waiting User: " + getAuthorizedUser());
             }
 
             @Override
             public void onTimeout(AsyncEvent event) throws IOException {
                 SenderManager.sendObject(response, null);
+                logger.debug("onTimeout End Waiting User: " + getAuthorizedUser());
             }
 
             @Override
             public void onError(AsyncEvent event) throws IOException {
                 SenderManager.sendObject(response, null);
+                logger.debug("onError End Waiting User: " + getAuthorizedUser());
             }
 
             @Override
@@ -77,9 +79,8 @@ public class GetChatMessagesAction extends ChatAction {
                     asyncContext.wait(1000);
                     logger.debug("Start wait");
                     List<Message> messageList = null;
-                    while (chat.getLastMessageDate() == null || chat.getLastMessageDate().compareTo(date) <= 0) {
-                        chat = Cservice.getById(chat.getId());
-
+                    while (messageList == null || messageList.isEmpty()) {
+                        messageList = Mservice.getMessages(chat, date);
                         if (!messageList.isEmpty()) {
                             logger.info(String.format("chat \"%s\" is sent ", chat));
                             logger.info("Sending" + messageList.toString());
@@ -95,7 +96,6 @@ public class GetChatMessagesAction extends ChatAction {
                     logger.error("Error while getting chat messages", e);
                 }
                 asyncContext.complete();
-                logger.debug("End Waiting User: "+ getAuthorizedUser());
             }
         }
     }

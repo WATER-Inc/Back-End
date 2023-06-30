@@ -33,16 +33,13 @@ public class SecurityFilter implements Filter {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             Action action = (Action) httpRequest.getAttribute("action");
-            logger.debug(action);
             Set<Role> allowRoles = action.getAllowRoles();
             String userName = "unauthorized user";
             HttpSession session = httpRequest.getSession();
             session.setMaxInactiveInterval(300);
             User user = null;
-            logger.debug(session.getId());
             if (session != null) {
                 user = (User) session.getAttribute("authorizedUser");
-                logger.debug(user);
                 action.setAuthorizedUser(user);
                 String errorMessage = (String) session.getAttribute("SecurityFilterMessage");
                 if (errorMessage != null) {
@@ -55,7 +52,6 @@ public class SecurityFilter implements Filter {
             if (user != null) {
                 canExecute = canExecute || action.getAuthorizedUser() != null;
             }
-            logger.debug("|" + user + "|");
             logger.debug("CanExecute:" + canExecute);
 
             if (canExecute) {

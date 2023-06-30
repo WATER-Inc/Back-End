@@ -53,7 +53,6 @@ public class DispatcherServlet extends HttpServlet {
                     session.removeAttribute("redirectedData");
                 }
             }
-            logger.debug("Starting action execution");
             actionManager = ActionManagerFactory.getManager(getFactory());
             actionManager.execute(action, request, response);
 

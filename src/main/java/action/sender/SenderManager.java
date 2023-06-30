@@ -28,6 +28,6 @@ public class SenderManager {
         response.setCharacterEncoding("UTF-8");
         out.println(json);
         out.close();
-        logger.debug(response.getHeaderNames());
+        //logger.debug(response.getHeaderNames());
     }
 }

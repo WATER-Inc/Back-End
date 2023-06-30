@@ -10,6 +10,7 @@ import service.ChatService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 
@@ -25,8 +26,7 @@ public class UserNeedChatsAction extends ChatsAction {
         List<Chat> chats;
         ChatService service = factory.getService(Chat.class);
         chats = service.getByUser(getAuthorizedUser());
-        logger.debug("Chats: " + getAuthorizedUser());
-
+        logger.debug("Chats: " + chats);
         try {
             SenderManager.sendObject(response, chats);
         } catch (IOException e) {

@@ -82,7 +82,7 @@ public class ChatService extends Service {
         ServiceFactory factory = new ServiceFactory(daoFactory);
         MessageService service = factory.getService(Message.class);
         List<Message> messages = service.getMessages(chat);
-        return messages.stream().max(Comparator.comparing(Message::getDate)).orElse(null).getDate();
+        return messages.stream().max(Comparator.comparing(Message::getDate)).get().getDate();
     }
 
 }

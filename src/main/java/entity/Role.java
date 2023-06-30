@@ -1,8 +1,11 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Objects;
 
 public class Role extends Entity {
+    @JsonIgnore
     private String id = null;
     private String title;
 

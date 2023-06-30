@@ -1,10 +1,14 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Objects;
 
 public class User extends Entity {
+    @JsonIgnore
     private String id = null;
     private String username;
+    @JsonIgnore
     private String passwordHash;
     private final Role role = new Role("User");
 

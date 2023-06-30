@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Chat extends Entity {
+    @JsonIgnore
     private String id;
     private String name;
     private Date lastMessageDate;
@@ -59,6 +60,7 @@ public class Chat extends Entity {
         return "Chat{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", lastMessageDate='" + lastMessageDate + '\'' +
                 ", participants=" + participants +
                 '}';
     }
