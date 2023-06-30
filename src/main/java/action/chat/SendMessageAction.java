@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class SendMessageAction extends ChatAction {
 
@@ -42,8 +43,8 @@ public class SendMessageAction extends ChatAction {
         if (chat != null && user != null) {
             message.setSender(user);
             message.setChat(chat);
-            if (message.getDate() == null)
-                message.setDate(new Date(System.currentTimeMillis()));
+//            if (message.getDate() == null)//TODO
+            message.setDate(new Date());
             message = Mservice.persist(message);
             logger.debug(message);
             try {

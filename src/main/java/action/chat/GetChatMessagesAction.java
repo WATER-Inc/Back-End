@@ -42,7 +42,28 @@ public class GetChatMessagesAction extends ChatAction {
         MessageService Mservice = factory.getService(Message.class);
         ChatService Cservice = factory.getService(Chat.class);
         AsyncContext asyncContext = request.startAsync(request,response);
-        asyncContext.setTimeout(0);//TODO
+        asyncContext.setTimeout(100);//TODO
+        asyncContext.addListener(new AsyncListener() {
+            @Override
+            public void onComplete(AsyncEvent event) throws IOException {
+                
+            }
+
+            @Override
+            public void onTimeout(AsyncEvent event) throws IOException {
+                SenderManager.sendObject(response, null);
+            }
+
+            @Override
+            public void onError(AsyncEvent event) throws IOException {
+                SenderManager.sendObject(response, null);
+            }
+
+            @Override
+            public void onStartAsync(AsyncEvent event) throws IOException {
+
+            }
+        });
         ChatAction.map.get(chat.getId()).add(asyncContext);
         Date date = chat.getLastMessageDate();
         chat = Cservice.getById(chat.getId());
@@ -56,8 +77,9 @@ public class GetChatMessagesAction extends ChatAction {
                     asyncContext.wait(1000);
                     logger.debug("Start wait");
                     List<Message> messageList = null;
-                    while (messageList == null || messageList.isEmpty()) {
-                        messageList = Mservice.getMessages(chat, date);
+                    while (chat.getLastMessageDate() == null || chat.getLastMessageDate().compareTo(date) <= 0) {
+                        chat = Cservice.getById(chat.getId());
+
                         if (!messageList.isEmpty()) {
                             logger.info(String.format("chat \"%s\" is sent ", chat));
                             logger.info("Sending" + messageList.toString());
@@ -65,12 +87,15 @@ public class GetChatMessagesAction extends ChatAction {
                             asyncContext.complete();
                             break;
                         } else {
-                            asyncContext.wait(1000);//TODO update time
+                            logger.debug("Wait User: " + getAuthorizedUser() + "Last Date: " + chat.getLastMessageDate());
+                            asyncContext.wait(10000);//TODO update time
                         }
                     }
                 } catch (Exception e) {
                     logger.error("Error while getting chat messages", e);
                 }
+                asyncContext.complete();
+                logger.debug("End Waiting User: "+ getAuthorizedUser());
             }
         }
     }
