@@ -21,7 +21,7 @@ public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
     private final static String insertQ = "INSERT INTO water.messages (sender_id, chat_id, content, created_date) \n" +
             "VALUES (?, ?, ?, ?);";
     private final static String selectByUser = "SELECT messages.id FROM water.messages WHERE messages.sender_id = ?;";
-    private final static String selectByChat = "SELECT messages.id FROM water.messages WHERE messages.chat_id = ?;";
+    private final static String selectByChat = "SELECT messages.id FROM water.messages WHERE messages.chat_id = 1 ORDER BY messages.created_date;";
     private final static String updateQ = "UPDATE water.messages SET content=? WHERE id= ?;";
     private final static String deleteQ = "DELETE FROM water.messages WHERE id= ?;";
 
