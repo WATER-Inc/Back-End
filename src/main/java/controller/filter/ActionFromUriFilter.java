@@ -33,13 +33,13 @@ public class ActionFromUriFilter implements Filter {
         actions.put("registrationAction", RegistrationAction.class);
         actions.put("errorAction", ErrorAction.class);
 
-        actionName.put("/","loginAction");
-        actionName.put("/chat", "chatAction");
-        actionName.put("/chats", "chatsAction");
-        actionName.put("/login", "loginAction");
-        actionName.put("/logout", "logoutAction");
-        actionName.put("/message","messageAction");
-        actionName.put("/register", "registrationAction");
+        actionName.put("/water/","loginAction");
+        actionName.put("/water/chat", "chatAction");
+        actionName.put("/water/chats", "chatsAction");
+        actionName.put("/water/login", "loginAction");
+        actionName.put("/water/logout", "logoutAction");
+        actionName.put("/water/message","messageAction");
+        actionName.put("/water/register", "registrationAction");
 
     }
 

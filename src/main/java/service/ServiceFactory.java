@@ -35,7 +35,7 @@ public class ServiceFactory {
         Class<? extends Service> value = SERVICES.get(object);
         try {
             Service service = value.getConstructor(MySqlDaoFactory.class).newInstance(factory);
-            logger.info("Service created: " + service.getClass());
+            //logger.info("Service created: " + service.getClass());
             return (Type) service;
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
                  InvocationTargetException e) {

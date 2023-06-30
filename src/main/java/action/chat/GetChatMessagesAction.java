@@ -41,7 +41,7 @@ public class GetChatMessagesAction extends ChatAction {
         }
         MessageService Mservice = factory.getService(Message.class);
         ChatService Cservice = factory.getService(Chat.class);
-        AsyncContext asyncContext = request.startAsync();
+        AsyncContext asyncContext = request.startAsync(request,response);
         asyncContext.setTimeout(0);//TODO
         ChatAction.map.get(chat.getId()).add(asyncContext);
         Date date = chat.getLastMessageDate();
@@ -57,6 +57,7 @@ public class GetChatMessagesAction extends ChatAction {
                         messageList = Mservice.getMessages(chat, date);
                         if (!messageList.isEmpty()) {
                             logger.info(String.format("chat \"%s\" is sent ", chat));
+                            logger.info("Sending" + messageList.toString());
                             SenderManager.sendObject(response, messageList);
                             asyncContext.complete();
                             break;
