@@ -46,11 +46,6 @@ public class SendMessageAction extends ChatAction {
             message = Mservice.persist(message);
             try {
                 SenderManager.sendObject(response, message);
-                map.get(chat.getId()).stream().forEach(asyncContext -> {
-                    synchronized (asyncContext) {
-                        asyncContext.notifyAll();
-                    }
-                });
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }

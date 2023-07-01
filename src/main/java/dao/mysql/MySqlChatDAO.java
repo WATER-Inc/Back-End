@@ -3,16 +3,17 @@ package dao.mysql;
 import dao.PersistException;
 import dao.AbstractJDBCDao;
 import dao.DAOFactory;
+import entity.Message;
 import entity.auxiliary.ChatLink;
 import entity.Chat;
 import entity.User;
+import service.MessageService;
+import service.ServiceFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
     private final static String selectQ = "SELECT * FROM water.chat";
@@ -21,7 +22,7 @@ public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
     private final static String insertQ = "INSERT INTO water.chat (name) \n" + "VALUES (?);";
     private final static String updateQ = "UPDATE water.chat SET name=? WHERE id= ?;";
     private final static String deleteQ = "DELETE FROM water.chat WHERE id= ?;";
-
+    private final static String lastDateQ = "SELECT created_date from water.messages WHERE chat_id = ? ORDER BY created_date DESC LIMIT 1;";
     private class PersistChat extends Chat {
         public void setId(String id) {
             super.setId(id);
@@ -55,7 +56,7 @@ public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
     }
 
     public String getSelectByUser(){return selectByUser;}
-
+    protected String getLastDateQ(){return lastDateQ;}
     @Override
     public Chat create() throws PersistException {
         Chat chat = new Chat();
@@ -74,6 +75,7 @@ public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
                 PersistChat chat = new PersistChat();
                 chat.setId(rs.getString("id"));
                 chat.setName(rs.getString("name"));
+                chat.setLastMessageDate(getLastMessageDate(chat));
                 result.add(chat);
             }
         } catch (Exception e) {
@@ -113,6 +115,16 @@ public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
         }
         return list;
     }
-
+    protected java.util.Date getLastMessageDate(Chat chat) throws PersistException {
+        String sql = getLastDateQ();
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, chat.getId());
+            ResultSet rs = statement.executeQuery();
+            rs.next();
+            return new java.util.Date(rs.getTimestamp("created_date").getTime());
+        } catch (Exception e) {
+            throw new PersistException(e);
+        }
+    }
 
 }

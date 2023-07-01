@@ -20,15 +20,12 @@ public class ChatService extends Service {
 
     public List<Chat> getByUser(User user) throws PersistException {
         List<Chat> chats = ((MySqlChatDAO) genericDAO).getByUser(user);
-        for(Chat chat : chats)
-            chat.setLastMessageDate(getLastMessageDate(chat));
         return chats;
     }
 
     @Override
     public Chat getById(String id) throws PersistException {
         Chat chat = (Chat) super.getById(id);
-        chat.setLastMessageDate(getLastMessageDate(chat));
         return chat;
     }
 
@@ -38,7 +35,6 @@ public class ChatService extends Service {
         MySqlChatLinkDAO chatLinkDAO = (MySqlChatLinkDAO) daoFactory.getDao(ChatLink.class);
         for (Chat chat : chats) {
             chat.setParticipants(chatLinkDAO.getParticipants(chat));
-            chat.setLastMessageDate(getLastMessageDate(chat));
         }
         return chats;
     }
@@ -76,13 +72,6 @@ public class ChatService extends Service {
             link.setRoleId(roles.get(i).getId());
             mySqlChatLinkDAO.persist(link);
         }
-    }
-
-    private Date getLastMessageDate(Chat chat) throws PersistException {
-        ServiceFactory factory = new ServiceFactory(daoFactory);
-        MessageService service = factory.getService(Message.class);
-        List<Message> messages = service.getMessages(chat);
-        return messages.stream().max(Comparator.comparing(Message::getDate)).get().getDate();
     }
 
 }

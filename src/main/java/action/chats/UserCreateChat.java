@@ -51,7 +51,6 @@ public class UserCreateChat extends ChatsAction {
                 logger.info(String.format("user \"%s\" unsuccessfully tried to create chat (%s) in form %s (%s:%s)", getAuthorizedUser().getUsername(), chat.getName(), request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
                 return;
             }
-            ChatAction.map.put(chat.getId(), new CopyOnWriteArrayList<>());//TODO
             HttpSession session = request.getSession();
             logger.info(session.getAttribute("authorizedUser"));
             logger.info(String.format("user \"%s\" created chat (%s) in from %s (%s:%s)", getAuthorizedUser().getUsername(), chat.getName(), request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
