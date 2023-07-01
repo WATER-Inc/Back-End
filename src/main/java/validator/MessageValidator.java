@@ -48,6 +48,7 @@ public class MessageValidator implements Validator<Message> {
         message.setContent(messageNode.asText());
         if (dateNode != null)
             message.setDate(new Date(dateNode.asText()));
+        else message.setDate(new Date());
         return message;
     }
 }

@@ -36,7 +36,7 @@ public class SecurityFilter implements Filter {
             Set<Role> allowRoles = action.getAllowRoles();
             String userName = "unauthorized user";
             HttpSession session = httpRequest.getSession();
-            session.setMaxInactiveInterval(300);
+            session.setMaxInactiveInterval(10000);
             User user = null;
             if (session != null) {
                 user = (User) session.getAttribute("authorizedUser");

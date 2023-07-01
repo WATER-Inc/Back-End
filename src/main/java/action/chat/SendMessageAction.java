@@ -43,10 +43,7 @@ public class SendMessageAction extends ChatAction {
         if (chat != null && user != null) {
             message.setSender(user);
             message.setChat(chat);
-//            if (message.getDate() == null)//TODO
-            message.setDate(new Date());
             message = Mservice.persist(message);
-            logger.debug(message);
             try {
                 SenderManager.sendObject(response, message);
                 map.get(chat.getId()).stream().forEach(asyncContext -> {

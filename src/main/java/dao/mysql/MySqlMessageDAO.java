@@ -105,7 +105,7 @@ public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
             statement.setString(1, object.getSender().getId());
             statement.setString(2, object.getChat().getId());
             statement.setString(3, object.getContent());
-            statement.setString(4, new java.sql.Date(object.getDate().getTime()).toString());
+            statement.setString(4, new java.sql.Timestamp(object.getDate().getTime()).toString());
         } catch (Exception e) {
             throw new PersistException(e);
         }

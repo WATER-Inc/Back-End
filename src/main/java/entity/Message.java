@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Message extends Entity {
-    @JsonIgnore
     private String id;
     private User sender;
     @JsonIgnore

@@ -66,7 +66,8 @@ public class GetChatMessagesAction extends ChatAction {
 
             }
         });
-        ChatAction.map.get(chat.getId()).add(asyncContext);
+        logger.debug("ChatId: " + chat.getId());
+        map.get(chat.getId()).add(asyncContext);
         Date date = chat.getLastMessageDate();
         chat = Cservice.getById(chat.getId());
         if (chat == null) {
@@ -88,6 +89,7 @@ public class GetChatMessagesAction extends ChatAction {
                             asyncContext.complete();
                             break;
                         } else {
+                            chat = Cservice.getById(chat.getId());
                             logger.debug("Wait User: " + getAuthorizedUser() + "Last Date: " + chat.getLastMessageDate());
                             asyncContext.wait(10000);//TODO update time
                         }

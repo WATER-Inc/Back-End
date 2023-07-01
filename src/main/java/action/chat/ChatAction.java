@@ -26,11 +26,11 @@ abstract public class ChatAction extends AuthorizedUserAction {
         } catch (PersistException e) {
             throw new RuntimeException(e);
         }
+        logger.debug("Put" + chats);
         for (Chat chat : chats) {
             map.put(chat.getId(), new CopyOnWriteArrayList<>());
         }
     }
-
     public ChatAction() throws PersistException {
         super();
         getAllowRoles().add(new Role("User"));
