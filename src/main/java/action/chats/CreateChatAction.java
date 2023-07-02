@@ -5,11 +5,7 @@ import action.sender.SenderManager;
 import dao.PersistException;
 import entity.Chat;
 import entity.Role;
-import entity.User;
 import entity.auxiliary.Participants;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
-import service.UserService;
 import validator.IncorrectFormDataException;
 import validator.ValidatorFactory;
 
@@ -19,9 +15,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class UserCreateChat extends ChatsAction {
+public class CreateChatAction extends ChatsAction {
 
-    public UserCreateChat() throws PersistException {
+    public CreateChatAction() throws PersistException {
         super();
     }
 
@@ -33,10 +29,9 @@ public class UserCreateChat extends ChatsAction {
         } catch (IncorrectFormDataException ignored) {}
         logger.debug("Trying to create chat: [ChatName: " + chat.getName() + "]");
         if (chat != null) {
-            UserService service = factory.getService(User.class);
             Participants participants = new Participants();
             Role role = new Role();
-            role.setTitle("owner");
+            role.setTitle("Owner");
             participants.addUser(getAuthorizedUser(), role);
             chat.setParticipants(participants);
             chat = (Chat) factory.getService(Chat.class).persist(chat);
@@ -52,7 +47,6 @@ public class UserCreateChat extends ChatsAction {
             }
             ChatAction.map.put(chat.getId(), new CopyOnWriteArrayList<>());//TODO
             HttpSession session = request.getSession();
-            logger.info(session.getAttribute("authorizedUser"));
             logger.info(String.format("user \"%s\" created chat (%s) in from %s (%s:%s)", getAuthorizedUser().getUsername(), chat.getName(), request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
         }
     }
