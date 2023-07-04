@@ -75,7 +75,7 @@ public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
                 PersistChat chat = new PersistChat();
                 chat.setId(rs.getString("id"));
                 chat.setName(rs.getString("name"));
-                //chat.setLastMessageDate(getLastMessageDate(chat));
+                chat.setLastMessageDate(getLastMessageDate(chat));
                 result.add(chat);
             }
         } catch (Exception e) {
