@@ -40,8 +40,6 @@ public class GetChatMessagesAction extends ChatAction {
         Chat chat = null;
         try {
             chat = Objects.requireNonNull(ValidatorFactory.createValidator(Chat.class)).validate(request);
-            if(chat == null)
-                throw new IncorrectFormDataException("No one chat in request", "Error");
         } catch (IncorrectFormDataException e) {
             throw new PersistException(e);
         }

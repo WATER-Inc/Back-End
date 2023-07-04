@@ -9,6 +9,7 @@ import entity.User;
 import entity.auxiliary.Participants;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import service.ChatService;
 import service.UserService;
 import validator.IncorrectFormDataException;
 import validator.ValidatorFactory;
@@ -34,13 +35,15 @@ public class UserCreateChat extends ChatsAction {
         } catch (IncorrectFormDataException ignored) {}
         logger.debug("Trying to create chat: [ChatName: " + chat.getName() + "]");
         if (chat != null) {
-            UserService service = factory.getService(User.class);
+            UserService Uservice = factory.getService(User.class);
+            ChatService Cservice = factory.getService(Chat.class);
             Participants participants = new Participants();
             Role role = new Role();
             role.setTitle("owner");
             participants.addUser(getAuthorizedUser(), role);
             chat.setParticipants(participants);
-            chat = (Chat) factory.getService(Chat.class).persist(chat);
+            logger.info(chat);
+            chat = Cservice.persist(chat);
             try {
                 SenderManager.sendObject(response, chat);
             } catch (IOException e) {

@@ -28,23 +28,25 @@ public class ChatValidator implements Validator<Chat> {
             // todo process request with no body
         }
         JsonNode chatIdNode = null;
+        JsonNode chatNameNode = null;
         JsonNode lastMessageDateNode = null;
         if (jsonNode == null) {
             return null;
         }
         chatIdNode = jsonNode.get("chatId");
+        chatNameNode = jsonNode.get("chatName");
         lastMessageDateNode = jsonNode.get("lastMessageDate");
-        if (chatIdNode == null) {
-            return null;
-        }
-        String chatId = chatIdNode.asText();
-        Date date = null;
+        String chatId = null;
+        if(chatIdNode!=null)
+            chatId = chatIdNode.asText();
+        Date date = new Date(0);
         if (lastMessageDateNode != null)
             date = new Date(Long.valueOf(lastMessageDateNode.asText()));
         logger.info(chatId + " " + date);
         Chat chat = new Chat();
         chat.setId(chatId);
         chat.setLastMessageDate(date);
+        if(chatNameNode != null) chat.setName(chatNameNode.asText());
         return chat;
     }
 }
