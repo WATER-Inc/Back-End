@@ -2,6 +2,8 @@ package controller.filter;
 
 
 import action.*;
+import action.authentication.LoginAction;
+import action.authentication.RegistrationAction;
 import entity.Role;
 import entity.User;
 import org.apache.logging.log4j.Logger;
@@ -48,7 +50,7 @@ public class SecurityFilter implements Filter {
                 }
             }
             logger.debug("AuthorizedUser: " + user);
-            boolean canExecute = action.getName().equals("loginAction") || action.getName().equals("registrationAction");
+            boolean canExecute = action instanceof LoginAction || action instanceof RegistrationAction;
             if (user != null) {
                 canExecute = canExecute || action.getAuthorizedUser() != null;
             }

@@ -7,6 +7,7 @@ import action.authentication.LogoutAction;
 import action.authentication.RegistrationAction;
 import action.chat.SendMessageAction;
 import action.chat.GetChatMessagesAction;
+import action.chats.UserCreateChat;
 import action.chats.UserNeedChatsAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,29 +26,23 @@ public class ActionFromUriFilter implements Filter {
     private static final Map<String, String> actionName = new ConcurrentHashMap<>();
 
     static {
-        actions.put("chatsAction", UserNeedChatsAction.class);
-        actions.put("chatAction", GetChatMessagesAction.class);
-        actions.put("loginAction", LoginAction.class);
-        actions.put("logoutAction", LogoutAction.class);
-        actions.put("messageAction", SendMessageAction.class);
-        actions.put("registrationAction", RegistrationAction.class);
+        actions.put("/water/",LoginAction.class);
+        actions.put("/water/chat", GetChatMessagesAction.class);
+        actions.put("/water/chat-create", UserCreateChat.class);
+        actions.put("/water/chats", UserNeedChatsAction.class);
+        actions.put("/water/login", LoginAction.class);
+        actions.put("/water/logout", LogoutAction.class);
+        actions.put("/water/message", SendMessageAction.class);
+        actions.put("/water/register", RegistrationAction.class);
         actions.put("errorAction", ErrorAction.class);
-
-        actionName.put("/water/","loginAction");
-        actionName.put("/water/chat", "chatAction");
-        actionName.put("/water/chats", "chatsAction");
-        actionName.put("/water/login", "loginAction");
-        actionName.put("/water/logout", "logoutAction");
-        actionName.put("/water/message","messageAction");
-        actionName.put("/water/register", "registrationAction");
-
     }
 
     private static String getActionName(String uri, String contextPath) {
         if (!contextPath.equals("/water_war"))
             return "errorAction";
-        String actionPath = uri.substring(contextPath.length());
-        String action = actionName.get(actionPath);
+        String action = "null";
+        action = uri.substring(contextPath.length());
+        logger.debug(action);
         if (action == null)
             return "errorAction";
         return action;
@@ -68,6 +63,7 @@ public class ActionFromUriFilter implements Filter {
             logger.debug(String.format("Starting of processing of request for URI \"%s\"", uri));
             actionName = getActionName(uri, contextPath);
             Class<Action> actionClass = (Class<Action>) actions.get(actionName);
+            logger.debug(actionClass);
             try {
                 Action action = actionClass.newInstance();
                 action.setName(actionName);
