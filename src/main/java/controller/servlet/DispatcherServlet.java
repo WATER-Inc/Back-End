@@ -3,6 +3,7 @@ package controller.servlet;
 import action.Action;
 import action.ActionManager;
 import action.ActionManagerFactory;
+import action.sender.SenderManager;
 import dao.PersistException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -59,7 +60,8 @@ public class DispatcherServlet extends HttpServlet {
         } catch (PersistException e) {
             logger.error("It is impossible to process request", e);
             request.setAttribute("error", "Ошибка обработки данных");
-            getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
+            response.reset();
+            SenderManager.sendObject(response, e);
         }
         finally {
             if(actionManager != null) {

@@ -37,7 +37,7 @@ public class UserCreateChat extends ChatsAction {
             UserService service = factory.getService(User.class);
             Participants participants = new Participants();
             Role role = new Role();
-            role.setTitle("owner");
+            role.setTitle("Owner");//TODO create enum type OWNER
             participants.addUser(getAuthorizedUser(), role);
             chat.setParticipants(participants);
             chat = (Chat) factory.getService(Chat.class).persist(chat);
