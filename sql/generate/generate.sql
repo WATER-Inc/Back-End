@@ -18,7 +18,8 @@ INSERT INTO chat(name) VALUES
 INSERT INTO role(title)
 VALUES ('admin'),
        ('moderator'),
-       ('user');
+       ('user'),
+       ('owner');
 
 INSERT INTO chat_user(chat_id, user_id, role_id) VALUES
                                                      (1, 1, 1),

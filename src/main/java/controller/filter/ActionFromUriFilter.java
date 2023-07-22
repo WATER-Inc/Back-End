@@ -28,7 +28,7 @@ public class ActionFromUriFilter implements Filter {
     static {
         actions.put("/water/",LoginAction.class);
         actions.put("/water/chat", GetChatMessagesAction.class);
-        actions.put("/water/chat-create", UserCreateChat.class);
+        actions.put("/water/chatcreate", UserCreateChat.class);
         actions.put("/water/chats", UserNeedChatsAction.class);
         actions.put("/water/login", LoginAction.class);
         actions.put("/water/logout", LogoutAction.class);

@@ -116,12 +116,15 @@ public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
         return list;
     }
     protected java.util.Date getLastMessageDate(Chat chat) throws PersistException {
+        System.out.println("Abab");
         String sql = getLastDateQ();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, chat.getId());
             ResultSet rs = statement.executeQuery();
-            rs.next();
-            return new java.util.Date(rs.getTimestamp("created_date").getTime());
+            if(rs.next())
+                return new java.util.Date(rs.getTimestamp("created_date").getTime());
+            else
+                return null;
         } catch (Exception e) {
             throw new PersistException(e);
         }

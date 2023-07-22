@@ -1,4 +1,5 @@
 INSERT INTO role(title)
 VALUES ('admin'),
        ('moderator'),
-       ('user');
+       ('user'),
+       ('owner');

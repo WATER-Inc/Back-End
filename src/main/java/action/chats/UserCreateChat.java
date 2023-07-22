@@ -38,8 +38,10 @@ public class UserCreateChat extends ChatsAction {
             Participants participants = new Participants();
             Role role = new Role();
             role.setTitle("Owner");//TODO create enum type OWNER
+            role.setId("4");
             participants.addUser(getAuthorizedUser(), role);
             chat.setParticipants(participants);
+            logger.debug("In Chat: " + chat);
             chat = (Chat) factory.getService(Chat.class).persist(chat);
             try {
                 SenderManager.sendObject(response, chat);

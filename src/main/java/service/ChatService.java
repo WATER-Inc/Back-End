@@ -48,6 +48,7 @@ public class ChatService extends Service {
     }
 
     public void addUser(Chat chat, User user, Role role) throws PersistException {
+
         ChatLink chatLink = new ChatLink();
         chatLink.setUserId(user.getId());
         chatLink.setRoleId(role.getId());
@@ -65,6 +66,7 @@ public class ChatService extends Service {
         Participants participants = chat.getParticipants();
         List<User> users = participants.getUsers();
         List<Role> roles = participants.getRoles();
+        System.out.println("Test: " + users + " " + roles);
         ChatLink link = new ChatLink();
         for (int i = 0; i < users.size(); ++i) {
             link.setChatId(chat.getId());
