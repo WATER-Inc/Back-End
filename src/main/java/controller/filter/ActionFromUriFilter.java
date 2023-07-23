@@ -5,6 +5,7 @@ import action.*;
 import action.authentication.LoginAction;
 import action.authentication.LogoutAction;
 import action.authentication.RegistrationAction;
+import action.chat.AddUserToChatAction;
 import action.chat.SendMessageAction;
 import action.chat.GetChatMessagesAction;
 import action.chats.UserCreateChat;
@@ -28,7 +29,8 @@ public class ActionFromUriFilter implements Filter {
     static {
         actions.put("/water/",LoginAction.class);
         actions.put("/water/chat", GetChatMessagesAction.class);
-        actions.put("/water/chatcreate", UserCreateChat.class);
+        actions.put("/water/chats/create", UserCreateChat.class);
+        actions.put("/water/chat/add/user", AddUserToChatAction.class);
         actions.put("/water/chats", UserNeedChatsAction.class);
         actions.put("/water/login", LoginAction.class);
         actions.put("/water/logout", LogoutAction.class);
