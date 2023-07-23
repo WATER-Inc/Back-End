@@ -1,6 +1,8 @@
 package validator;
 
 import entity.*;
+import entity.auxiliary.ChatLink;
+import org.testng.internal.collections.Pair;
 
 import java.util.HashMap;
 import java.util.Map;

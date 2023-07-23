@@ -1,8 +1,9 @@
 package entity.auxiliary;
 
+import entity.Entity;
 import entity.Identified;
 
-public class ChatLink implements Identified<String> {
+public class ChatLink extends Entity {
     private String id;
     private String chatId;
     private String userId;

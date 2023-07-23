@@ -51,8 +51,13 @@ public class ChatService extends Service {
 
         ChatLink chatLink = new ChatLink();
         chatLink.setUserId(user.getId());
-        chatLink.setRoleId(role.getId());
         chatLink.setChatId(chat.getId());
+        if(role == null){
+            ServiceFactory factory = new ServiceFactory(daoFactory);
+            RoleService roleService = factory.getService(Role.class);
+            role = roleService.getByTitle("user");
+        }
+        chatLink.setRoleId(role.getId());
         daoFactory.getDao(ChatLink.class).persist(chatLink);
     }
 

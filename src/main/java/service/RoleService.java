@@ -2,6 +2,7 @@ package service;
 
 import dao.PersistException;
 import dao.mysql.MySqlDaoFactory;
+import dao.mysql.MySqlRoleDAO;
 import entity.Entity;
 import entity.Role;
 
@@ -26,6 +27,9 @@ public class RoleService extends Service {
     @Override
     public Role persist(Entity object) throws PersistException {
         return (Role) super.persist(object);
+    }
+    public Role getByTitle(String title) throws PersistException {
+        return ((MySqlRoleDAO) genericDAO).getByTitle(title);
     }
     @Override
     protected void finalize() throws Throwable {

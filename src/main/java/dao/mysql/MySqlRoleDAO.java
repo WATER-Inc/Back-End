@@ -4,6 +4,7 @@ import dao.PersistException;
 import dao.AbstractJDBCDao;
 import dao.DAOFactory;
 import entity.Role;
+import entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -94,5 +95,25 @@ public class MySqlRoleDAO extends AbstractJDBCDao<Role, String> {
         } catch (Exception e) {
             throw new PersistException(e);
         }
+    }
+    public Role getByTitle(String title) throws PersistException {
+        if(title == null)
+            throw new PersistException("Empty role title.");
+        List<Role> list;
+        String sql = getSelectQuery() + " WHERE title = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, title);
+            ResultSet rs = statement.executeQuery();
+            list = parseResultSet(rs);
+        } catch (Exception e) {
+            throw new PersistException(e);
+        }
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        if (list.size() > 1) {
+            throw new PersistException("Received more than one record.");
+        }
+        return list.iterator().next();
     }
 }

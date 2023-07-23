@@ -26,7 +26,7 @@ public class UserValidator implements Validator<User> {
             usernameNode = jsonNode.get("username");
             passwordNode = jsonNode.get("userpassword");
         }
-        if (usernameNode == null || passwordNode == null) {
+        if (usernameNode == null) {
             return null;
             // todo process request body without username & userpassword
         }
