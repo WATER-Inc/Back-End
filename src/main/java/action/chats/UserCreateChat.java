@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class UserCreateChat extends ChatsAction {
-    private static Logger logger = LogManager.getLogger(String.valueOf(UserCreateChat.class));
 
     public UserCreateChat() throws PersistException {
         super();

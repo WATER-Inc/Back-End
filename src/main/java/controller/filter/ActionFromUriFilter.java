@@ -10,6 +10,7 @@ import action.chat.SendMessageAction;
 import action.chat.GetChatMessagesAction;
 import action.chats.UserCreateChat;
 import action.chats.UserNeedChatsAction;
+import action.common.FindUserByLoginAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,9 +30,10 @@ public class ActionFromUriFilter implements Filter {
     static {
         actions.put("/water/",LoginAction.class);
         actions.put("/water/chat", GetChatMessagesAction.class);
-        actions.put("/water/chats/create", UserCreateChat.class);
         actions.put("/water/chat/add/user", AddUserToChatAction.class);
         actions.put("/water/chats", UserNeedChatsAction.class);
+        actions.put("/water/chats/create", UserCreateChat.class);
+        actions.put("/water/common/find/user", FindUserByLoginAction.class);
         actions.put("/water/login", LoginAction.class);
         actions.put("/water/logout", LogoutAction.class);
         actions.put("/water/message", SendMessageAction.class);
