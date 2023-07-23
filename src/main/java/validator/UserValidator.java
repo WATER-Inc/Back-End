@@ -31,7 +31,10 @@ public class UserValidator implements Validator<User> {
             // todo process request body without username & userpassword
         }
         String username = usernameNode.asText();
-        String password = passwordNode.asText();
+
+        String password = null;
+        if(passwordNode != null)
+           password = passwordNode.asText();
         User user = new User();
         user.setUsername(username);
         user.setPasswordHash(password);
