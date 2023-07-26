@@ -1,16 +1,13 @@
 package action.chats;
 
-import action.sender.SenderManager;
+import send_validate.sender.SenderManager;
 import dao.PersistException;
 import entity.Chat;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import service.ChatService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 

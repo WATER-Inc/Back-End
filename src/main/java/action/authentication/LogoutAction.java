@@ -1,7 +1,7 @@
 package action.authentication;
 
 import action.AuthorizedUserAction;
-import action.sender.SenderManager;
+import send_validate.sender.SenderManager;
 import dao.PersistException;
 import entity.User;
 import org.apache.logging.log4j.Logger;

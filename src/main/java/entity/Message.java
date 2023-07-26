@@ -63,7 +63,7 @@ public class Message extends Entity {
     public String toString() {
         return "Message{" +
                 "id='" + id + '\'' +
-                ", sender=" + sender +
+                ", send_validate.sender=" + sender +
                 ", chat=" + chat +
                 ", content='" + content + '\'' +
                 ", date=" + date +

@@ -2,16 +2,14 @@ package action.authentication;
 
 
 import action.Action;
-import action.parser.Parser;
-import action.sender.SenderManager;
-import com.fasterxml.jackson.databind.JsonNode;
+import send_validate.sender.SenderManager;
 import dao.PersistException;
 import entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.UserService;
-import validator.IncorrectFormDataException;
-import validator.ValidatorFactory;
+import send_validate.validator.IncorrectFormDataException;
+import send_validate.validator.ValidatorFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +24,7 @@ public class LoginAction extends Action {
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
         User user = null;
         try {
-            user = ValidatorFactory.createValidator(User.class).validate(request);
+            user = (User) ValidatorFactory.createValidator(User.class).validate(request);
         } catch (IncorrectFormDataException ignored) {
         }
         if (user == null) {

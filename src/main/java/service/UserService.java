@@ -1,16 +1,12 @@
 package service;
 
 import dao.PersistException;
-import dao.mysql.MySqlChatDAO;
 import dao.mysql.MySqlDaoFactory;
 import dao.mysql.MySqlUserDAO;
-import entity.Chat;
 import entity.Entity;
 import entity.User;
-import validator.IncorrectFormDataException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserService extends Service {
     public UserService(MySqlDaoFactory factory) throws PersistException {

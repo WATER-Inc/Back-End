@@ -1,4 +1,4 @@
-package validator;
+package send_validate.validator;
 
 public class IncorrectFormDataException extends Exception {
     public IncorrectFormDataException(String param, String value) {

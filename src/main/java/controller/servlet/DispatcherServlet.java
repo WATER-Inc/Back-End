@@ -3,7 +3,7 @@ package controller.servlet;
 import action.Action;
 import action.ActionManager;
 import action.ActionManagerFactory;
-import action.sender.SenderManager;
+import send_validate.sender.SenderManager;
 import dao.PersistException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

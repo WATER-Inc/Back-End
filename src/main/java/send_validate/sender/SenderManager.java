@@ -1,8 +1,9 @@
-package action.sender;
+package send_validate.sender;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import serealization_deserealization.serialization.Serializer;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -16,8 +17,8 @@ public class SenderManager {
 
     }
     public static void sendObject(HttpServletResponse response, Object object) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(object);
+        Serializer serializer = new Serializer();
+        String json = serializer.serialize(object);
         logger.debug("Send JSON: " + json);
         PrintWriter out = response.getWriter();
         response.setHeader("Access-Control-Allow-Origin","http://localhost:3000");

@@ -1,14 +1,13 @@
-package validator;
+package send_validate.validator;
 
 import entity.*;
-import entity.auxiliary.ChatLink;
 import org.testng.internal.collections.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ValidatorFactory {
-    private static Map<Class<? extends Entity>, Class<? extends Validator<?>>> validators = new HashMap<>();
+    private static Map<Class<?>, Class<? extends Validator<?>>> validators = new HashMap<>();
 
     static {
         validators.put(User.class, UserValidator.class);
@@ -18,9 +17,9 @@ public class ValidatorFactory {
     }
 
     @SuppressWarnings("unchecked")
-    public static <Type extends Entity> Validator<Type> createValidator(Class<Type> entity) {
+    public static <Type> Validator<Type> createValidator(Class<Type> typeClass) {
         try {
-            return (Validator<Type>) validators.get(entity).newInstance();
+            return (Validator<Type>) validators.get(typeClass).newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             return null;
         }
