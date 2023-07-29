@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Date;
 
-public class RoleValidator implements Validator<Role> {
+public class RoleValidator extends Validator<Role> {
     @Override
     public Role validate(HttpServletRequest request) throws IncorrectFormDataException {
         JsonNode jsonNode = null;

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Date;
 
-public class MessageValidator implements Validator<Message> {
+public class MessageValidator extends Validator<Message> {
     @Override
     public Message validate(HttpServletRequest request) throws IncorrectFormDataException {
         JsonNode jsonNode = null;

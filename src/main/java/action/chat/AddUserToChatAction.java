@@ -6,6 +6,7 @@ import entity.Chat;
 import entity.Message;
 import entity.Role;
 import entity.User;
+import entity.auxiliary.PreChatLink;
 import service.ChatService;
 import service.MessageService;
 import service.RoleService;
@@ -26,20 +27,19 @@ public class AddUserToChatAction extends ChatAction {
 
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
-        Chat chat = null;
-        User user = null;
-        Role role = null;
+        PreChatLink preChatLink = null;
         try {
-            chat = ValidatorFactory.createValidator(Chat.class).validate(request);
-            user = ValidatorFactory.createValidator(User.class).validate(request);
-            role = ValidatorFactory.createValidator(Role.class).validate(request);
+            preChatLink = ValidatorFactory.createValidator(PreChatLink.class).validate(request);
         } catch (IncorrectFormDataException ignored) {
         }
         ChatService Cservice = factory.getService(Chat.class);
         UserService Uservice = factory.getService(User.class);
         RoleService Rservice = factory.getService(Role.class);
-        chat = Cservice.getById(chat.getId());
-        user = Uservice.getByUsername(user.getUsername());
+
+        Chat chat = Cservice.getById(preChatLink.getChatId());
+        User user = Uservice.getByUsername(preChatLink.getUsername());
+        User invitor = Uservice.getByUsername(preChatLink.getInviterName());//TODO
+        Role role = Rservice.getByTitle(preChatLink.getRoleName());
         if (chat != null && user != null) {
             Cservice.addUser(chat, user, role);
             try {

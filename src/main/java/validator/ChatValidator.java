@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-public class ChatValidator implements Validator<Chat> {
-    private static Logger logger = LogManager.getLogger(ChatValidator.class);
+public class ChatValidator extends Validator<Chat> {
+
     @Override
     public Chat validate(HttpServletRequest request) throws IncorrectFormDataException {
         JsonNode jsonNode = null;

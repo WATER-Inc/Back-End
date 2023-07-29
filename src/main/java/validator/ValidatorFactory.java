@@ -2,6 +2,7 @@ package validator;
 
 import entity.*;
 import entity.auxiliary.ChatLink;
+import entity.auxiliary.PreChatLink;
 import org.testng.internal.collections.Pair;
 
 import java.util.HashMap;
@@ -15,6 +16,7 @@ public class ValidatorFactory {
         validators.put(Role.class, RoleValidator.class);
         validators.put(Message.class, MessageValidator.class);
         validators.put(Chat.class, ChatValidator.class);
+        validators.put(PreChatLink.class, PreChatLinkValidator.class);
     }
 
     @SuppressWarnings("unchecked")

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class UserValidator implements Validator<User> {
+public class UserValidator extends Validator<User> {
     @Override
     public User validate(HttpServletRequest request) throws IncorrectFormDataException {
         JsonNode jsonNode = null;
