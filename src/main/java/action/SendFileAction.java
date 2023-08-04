@@ -15,9 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SendFileAction extends Action{
-    private static Logger logger = LogManager.getLogger(String.valueOf(DispatcherServlet.class));
+    private static final Logger logger = LogManager.getLogger(String.valueOf(DispatcherServlet.class));
     final private static Integer BUFFER_SIZE = 4096;
-    private static Map<String,String> contentType = new HashMap<>();
+    private static final Map<String,String> contentType = new HashMap<>();
 
     static{
         contentType.put("css","text/css");

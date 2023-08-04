@@ -18,7 +18,7 @@ public class MySqlUserDAO extends AbstractJDBCDao<User, String> {
     private final static String updateQ = "UPDATE water.user SET username=?, password_hash=? WHERE id= ?;";
     private final static String deleteQ = "DELETE FROM water.user WHERE id= ?;";
 
-    private class PersistUser extends User {
+    private static class PersistUser extends User {
         public void setId(String id) {
             super.setId(id);
         }
@@ -65,7 +65,7 @@ public class MySqlUserDAO extends AbstractJDBCDao<User, String> {
         LinkedList<User> result = new LinkedList<User>();
         try {
             while (rs.next()) {
-                MySqlUserDAO.PersistUser user = new MySqlUserDAO.PersistUser();
+                MySqlUserDAO.PersistUser user = new PersistUser();
                 user.setId(rs.getString("id"));
                 user.setUsername(rs.getString("username"));
                 user.setPasswordHash(rs.getString("password_hash"));

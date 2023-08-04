@@ -25,7 +25,7 @@ public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
     private final static String updateQ = "UPDATE water.messages SET content=? WHERE id= ?;";
     private final static String deleteQ = "DELETE FROM water.messages WHERE id= ?;";
 
-    private class PersistMessage extends Message {
+    private static class PersistMessage extends Message {
         public void setId(String id) {
             super.setId(id);
         }

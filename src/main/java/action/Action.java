@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 abstract public class Action {
-    private Set<Role> allowRoles = new HashSet<>(List.of(new Role[]{new Role("User")}));
+    private final Set<Role> allowRoles = new HashSet<>(List.of(new Role[]{new Role("User")}));
     private User authorizedUser;
     private String name;
 
-    protected static ServiceFactory factory;
+    protected ServiceFactory factory;
 
     public Set<Role> getAllowRoles() {
         return allowRoles;

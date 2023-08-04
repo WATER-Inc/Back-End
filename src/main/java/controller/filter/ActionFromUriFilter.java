@@ -25,7 +25,6 @@ public class ActionFromUriFilter implements Filter {
     private static final Logger logger = LogManager.getLogger(ActionFromUriFilter.class);
 
     private static final Map<String, Class<? extends Action>> actions = new ConcurrentHashMap<>();
-    private static final Map<String, String> actionName = new ConcurrentHashMap<>();
 
     static {
         actions.put("/water/",LoginAction.class);
@@ -44,11 +43,9 @@ public class ActionFromUriFilter implements Filter {
     private static String getActionName(String uri, String contextPath) {
         if (!contextPath.equals("/water_war"))
             return "errorAction";
-        String action = "null";
+        String action;
         action = uri.substring(contextPath.length());
         logger.debug(action);
-        if (action == null)
-            return "errorAction";
         return action;
     }
 

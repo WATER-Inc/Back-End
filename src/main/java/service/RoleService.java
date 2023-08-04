@@ -31,8 +31,4 @@ public class RoleService extends Service {
     public Role getByTitle(String title) throws PersistException {
         return ((MySqlRoleDAO) genericDAO).getByTitle(title);
     }
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-    }
 }

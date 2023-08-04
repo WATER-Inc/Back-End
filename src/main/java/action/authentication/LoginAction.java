@@ -2,9 +2,7 @@ package action.authentication;
 
 
 import action.Action;
-import action.parser.Parser;
 import action.sender.SenderManager;
-import com.fasterxml.jackson.databind.JsonNode;
 import dao.PersistException;
 import entity.User;
 import org.apache.logging.log4j.LogManager;
@@ -19,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class LoginAction extends Action {
-    private static Logger logger = LogManager.getLogger(String.valueOf(LoginAction.class));
+    private static final Logger logger = LogManager.getLogger(String.valueOf(LoginAction.class));
 
 
     @Override

@@ -22,7 +22,7 @@ public class MessageService extends Service {
     public Message getById(String id) throws PersistException {
         Message message = (Message) super.getById(id);
         ServiceFactory factory = new ServiceFactory(daoFactory);
-//        message.setChat((Chat) factory.getService(Chat.class).getById(message.getChat().getId()));//TODO recursive send
+        message.setChat((Chat) factory.getService(Chat.class).getById(message.getChat().getId()));//TODO recursive send?
         message.setSender((User) factory.getService(User.class).getById(message.getSender().getId()));
         return message;
     }
@@ -47,8 +47,7 @@ public class MessageService extends Service {
 
     protected List<Message> getListById(List<Message> messagesId) throws PersistException {
         List<Message> messages = new ArrayList<>();
-        for (int i = 0; i < messagesId.size(); ++i)
-            messages.add(getById(messagesId.get(i).getId()));
+        for (Message message : messagesId) messages.add(getById(message.getId()));
         return messages;
     }
 

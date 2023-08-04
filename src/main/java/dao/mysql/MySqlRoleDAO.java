@@ -4,7 +4,6 @@ import dao.PersistException;
 import dao.AbstractJDBCDao;
 import dao.DAOFactory;
 import entity.Role;
-import entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +19,7 @@ public class MySqlRoleDAO extends AbstractJDBCDao<Role, String> {
     private final static String updateQ = "UPDATE water.role SET title=? WHERE id= ?;";
     private final static String deleteQ = "DELETE FROM water.role WHERE id= ?;";
 
-    private class PersistRole extends Role {
+    private static class PersistRole extends Role {
         public void setId(String id) {
             super.setId(id);
         }
@@ -67,7 +66,7 @@ public class MySqlRoleDAO extends AbstractJDBCDao<Role, String> {
         LinkedList<Role> result = new LinkedList<Role>();
         try {
             while (rs.next()) {
-                MySqlRoleDAO.PersistRole role = new MySqlRoleDAO.PersistRole();
+                MySqlRoleDAO.PersistRole role = new PersistRole();
                 role.setId(rs.getString("id"));
                 role.setTitle(rs.getString("title"));
                 result.add(role);

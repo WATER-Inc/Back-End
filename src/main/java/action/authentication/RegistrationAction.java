@@ -1,9 +1,7 @@
 package action.authentication;
 
 import action.Action;
-import action.parser.Parser;
 import action.sender.SenderManager;
-import com.fasterxml.jackson.databind.JsonNode;
 import dao.PersistException;
 import entity.User;
 import org.apache.logging.log4j.LogManager;

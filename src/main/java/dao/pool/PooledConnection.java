@@ -7,7 +7,7 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 
 public class PooledConnection implements Connection, Comparable<PooledConnection> {
-    private Connection connection;
+    private final Connection connection;
 
     public PooledConnection(Connection connection) {
         this.connection = connection;

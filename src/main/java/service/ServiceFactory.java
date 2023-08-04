@@ -12,9 +12,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.logging.log4j.*;
 
 public class ServiceFactory {
-    private static Logger logger = LogManager.getLogger(ServiceFactory.class);
+    private static final Logger logger = LogManager.getLogger(ServiceFactory.class);
     private static final Map<Class<? extends Entity>, Class<? extends Service>> SERVICES = new ConcurrentHashMap<>();
-    private MySqlDaoFactory factory;
+    private final MySqlDaoFactory factory;
 
     static {
         SERVICES.put(User.class, UserService.class);
@@ -35,7 +35,6 @@ public class ServiceFactory {
         Class<? extends Service> value = SERVICES.get(object);
         try {
             Service service = value.getConstructor(MySqlDaoFactory.class).newInstance(factory);
-            //logger.info("Service created: " + service.getClass());
             return (Type) service;
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
                  InvocationTargetException e) {

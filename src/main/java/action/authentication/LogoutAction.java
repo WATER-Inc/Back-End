@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class LogoutAction extends AuthorizedUserAction {
-    private static Logger logger = LogManager.getLogger(LogoutAction.class);
+    private static final Logger logger = LogManager.getLogger(LogoutAction.class);
 
     public LogoutAction() throws PersistException {
         super();

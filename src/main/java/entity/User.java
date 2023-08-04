@@ -11,17 +11,22 @@ public class User extends Entity {
     private String passwordHash;
     private final Role role = new Role("User");
 
-    public static enum Default{
+    public static enum Default {
         USER("User", "User"),
         ADMIN("Admin", "Admin");
         User user;
-        private Default(String username, String passwordHash){
+
+        Default(String username, String passwordHash) {
             user = new User();
             user.setUsername(username);
             user.setPasswordHash(passwordHash);
         }
-        public User getUser(){return user;}
+
+        public User getUser() {
+            return user;
+        }
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -34,6 +39,7 @@ public class User extends Entity {
     public Role getRole() {
         return role;
     }
+
     @Override
     public String getId() {
         return id;
@@ -42,15 +48,19 @@ public class User extends Entity {
     public void setId(String id) {
         this.id = id;
     }
+
     public String getUsername() {
         return username;
     }
+
     public void setUsername(String username) {
         this.username = username;
     }
+
     public String getPasswordHash() {
         return passwordHash;
     }
+
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }

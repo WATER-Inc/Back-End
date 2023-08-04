@@ -18,8 +18,8 @@ import java.io.IOException;
 import java.util.Set;
 @WebFilter(asyncSupported = true)
 public class SecurityFilter implements Filter {
-    private static Logger logger = LogManager.getLogger(SecurityFilter.class);
-    private static User mode = User.Default.ADMIN.getUser();
+    private static final Logger logger = LogManager.getLogger(SecurityFilter.class);
+    private static final User mode = User.Default.USER.getUser();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -35,12 +35,12 @@ public class SecurityFilter implements Filter {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             Action action = (Action) httpRequest.getAttribute("action");
-            Set<Role> allowRoles = action.getAllowRoles();
+            //Set<Role> allowRoles = action.getAllowRoles();TODO need to include in can execute calculation
             String userName = "unauthorized user";
             HttpSession session = httpRequest.getSession();
-            session.setMaxInactiveInterval(10000);
             User user = null;
             if (session != null) {
+                session.setMaxInactiveInterval(10000);
                 user = (User) session.getAttribute("authorizedUser");
                 action.setAuthorizedUser(user);
                 String errorMessage = (String) session.getAttribute("SecurityFilterMessage");

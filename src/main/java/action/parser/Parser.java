@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Parser {
     public static JsonNode parseRequest(HttpServletRequest request) throws IOException {
         StringBuilder sb = new StringBuilder();
-        BufferedReader reader = null;
+        BufferedReader reader;
         try {
             reader = request.getReader();
             String line;

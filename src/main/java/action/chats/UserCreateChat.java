@@ -31,9 +31,8 @@ public class UserCreateChat extends ChatsAction {
         try {
             chat = ValidatorFactory.createValidator(Chat.class).validate(request);
         } catch (IncorrectFormDataException ignored) {}
-        logger.debug("Trying to create chat: [ChatName: " + chat.getName() + "]");
         if (chat != null) {
-            UserService service = factory.getService(User.class);
+            logger.debug("Trying to create chat: [ChatName: " + chat.getName() + "]");
             Participants participants = new Participants();
             Role role = new Role();
             role.setTitle("Owner");//TODO create enum type OWNER

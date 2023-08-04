@@ -7,14 +7,9 @@ import org.apache.logging.log4j.LogManager;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
 
 public class SenderManager {
-    private static Logger logger = LogManager.getLogger(String.valueOf(SenderManager.class));
-    private static Map<Object, Class<Object>> senders;
-    static{
-
-    }
+    private static final Logger logger = LogManager.getLogger(String.valueOf(SenderManager.class));
     public static void sendObject(HttpServletResponse response, Object object) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(object);

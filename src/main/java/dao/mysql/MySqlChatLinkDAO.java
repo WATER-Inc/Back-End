@@ -25,7 +25,7 @@ public class MySqlChatLinkDAO extends AbstractJDBCDao<ChatLink, String> {
     private final static String updateQ = "UPDATE water.chat_user SET chat_id=?, user_id=?, role_id=? WHERE id= ?;";
     private final static String deleteQ = "DELETE FROM water.chat_user WHERE id= ?;";
 
-    private class PersistChatLink extends ChatLink {
+    private static class PersistChatLink extends ChatLink {
         public void setId(String id) {
             super.setId(id);
         }
@@ -109,9 +109,8 @@ public class MySqlChatLinkDAO extends AbstractJDBCDao<ChatLink, String> {
     }
 
     public Participants getParticipants(final Chat chat) throws PersistException {
-        String sql = selectUsersByChat;
         Participants participants = new Participants();
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (PreparedStatement statement = connection.prepareStatement(selectUsersByChat)) {
             statement.setString(1, chat.getId());
             ResultSet rs = statement.executeQuery();
             MySqlRoleDAO roleDAO = (MySqlRoleDAO) parentFactory.getDao(Role.class);
@@ -125,9 +124,8 @@ public class MySqlChatLinkDAO extends AbstractJDBCDao<ChatLink, String> {
     }
 
     public List<Chat> getChats(final User user) throws PersistException {
-        String sql = selectChatsByUser;
         List<Chat> list = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (PreparedStatement statement = connection.prepareStatement(selectChatsByUser)) {
             statement.setString(1, user.getId());
             ResultSet rs = statement.executeQuery();
             MySqlChatDAO chatDAO = (MySqlChatDAO) parentFactory.getDao(Chat.class);

@@ -8,9 +8,6 @@ import entity.auxiliary.Participants;
 import dao.mysql.MySqlChatDAO;
 import dao.mysql.MySqlChatLinkDAO;
 
-import java.sql.SQLException;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 public class ChatService extends Service {
@@ -19,14 +16,12 @@ public class ChatService extends Service {
     }
 
     public List<Chat> getByUser(User user) throws PersistException {
-        List<Chat> chats = ((MySqlChatDAO) genericDAO).getByUser(user);
-        return chats;
+        return ((MySqlChatDAO) genericDAO).getByUser(user);
     }
 
     @Override
     public Chat getById(String id) throws PersistException {
-        Chat chat = (Chat) super.getById(id);
-        return chat;
+        return (Chat) super.getById(id);
     }
 
     @Override
@@ -43,7 +38,7 @@ public class ChatService extends Service {
     public Chat persist(Entity object) throws PersistException {
         Chat chat = (Chat) super.persist(object);
         chat.setParticipants(((Chat) object).getParticipants());
-        addUsers((Chat) chat);
+        addUsers(chat);
         return getById(chat.getId());
     }
 

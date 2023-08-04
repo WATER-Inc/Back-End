@@ -1,9 +1,7 @@
 package action.chats;
 
 
-import action.Action;
 import action.AuthorizedUserAction;
-import action.chat.ChatAction;
 import dao.PersistException;
 import entity.Role;
 import org.apache.logging.log4j.LogManager;

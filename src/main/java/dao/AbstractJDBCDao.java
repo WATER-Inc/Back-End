@@ -1,16 +1,12 @@
 package dao;
 
-import dao.pool.ConnectionPool;
 import dao.pool.PooledConnection;
 import entity.Identified;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Абстрактный класс предоставляющий базовую реализацию CRUD операций с использованием JDBC.
@@ -26,12 +22,14 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
      * SELECT * FROM [Table]
      */
     public abstract String getSelectQuery();
+
     /**
      * Возвращает sql запрос для получения всех записей.
      * <p/>
      * SELECT * FROM [Table]
      */
     public abstract String getSelectAllQuery();
+
     /**
      * Возвращает sql запрос для вставки новой записи в базу данных.
      * <p/>
@@ -104,6 +102,7 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
         }
         return list;
     }
+
     @Override
     public T persist(T object) throws PersistException {
         if (object.getId() != null) {

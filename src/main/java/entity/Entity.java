@@ -2,5 +2,5 @@ package entity;
 
 import java.io.Serializable;
 
-public abstract class Entity implements Serializable, Identified<String> {
+public abstract class Entity implements Identified<String> {
 }

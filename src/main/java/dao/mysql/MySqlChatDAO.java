@@ -3,12 +3,8 @@ package dao.mysql;
 import dao.PersistException;
 import dao.AbstractJDBCDao;
 import dao.DAOFactory;
-import entity.Message;
-import entity.auxiliary.ChatLink;
 import entity.Chat;
 import entity.User;
-import service.MessageService;
-import service.ServiceFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,7 +19,7 @@ public class MySqlChatDAO extends AbstractJDBCDao<Chat, String> {
     private final static String updateQ = "UPDATE water.chat SET name=? WHERE id= ?;";
     private final static String deleteQ = "DELETE FROM water.chat WHERE id= ?;";
     private final static String lastDateQ = "SELECT created_date from water.messages WHERE chat_id = ? ORDER BY created_date DESC LIMIT 1;";
-    private class PersistChat extends Chat {
+    private static class PersistChat extends Chat {
         public void setId(String id) {
             super.setId(id);
         }

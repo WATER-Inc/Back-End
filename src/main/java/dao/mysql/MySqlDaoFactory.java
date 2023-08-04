@@ -19,13 +19,13 @@ import java.util.Map;
 
 public class MySqlDaoFactory implements DAOFactory<Connection> {
 
-    private Map<Class, DAOFactory.DaoCreator> creators;
+    private final Map<Class, DAOFactory.DaoCreator> creators;
 
     public PooledConnection getConnection() {
         return connection;
     }
 
-    private PooledConnection connection;
+    private final PooledConnection connection;
     @Override
     public GenericDAO getDao(Class dtoClass) throws PersistException {
         DAOFactory.DaoCreator creator = creators.get(dtoClass);
@@ -37,7 +37,7 @@ public class MySqlDaoFactory implements DAOFactory<Connection> {
 
     public MySqlDaoFactory() throws PersistException {
         connection = ConnectionPool.getInstance().getConnection();
-        creators = new HashMap<Class, DAOFactory.DaoCreator>();
+        creators = new HashMap<>();
         creators.put(User.class, new DaoCreator<Connection>() {
             @Override
             public GenericDAO create(Connection connection) {
