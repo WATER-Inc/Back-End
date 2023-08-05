@@ -5,8 +5,15 @@ import action.*;
 import action.authentication.LoginAction;
 import action.authentication.LogoutAction;
 import action.authentication.RegistrationAction;
+<<<<<<< Updated upstream
 import action.chat.SendMessageAction;
 import action.chat.GetChatMessagesAction;
+=======
+import action.chat.AddUserToChatAction;
+import action.chat.longpolling.SendMessageAction;
+import action.chat.longpolling.GetChatMessagesAction;
+import action.chats.UserCreateChat;
+>>>>>>> Stashed changes
 import action.chats.UserNeedChatsAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
