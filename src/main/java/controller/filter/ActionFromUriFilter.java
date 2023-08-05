@@ -5,12 +5,16 @@ import action.*;
 import action.authentication.LoginAction;
 import action.authentication.LogoutAction;
 import action.authentication.RegistrationAction;
-import action.chat.AddUserToChatAction;
+<<<<<<< Updated upstream
 import action.chat.SendMessageAction;
 import action.chat.GetChatMessagesAction;
+=======
+import action.chat.AddUserToChatAction;
+import action.chat.longpolling.SendMessageAction;
+import action.chat.longpolling.GetChatMessagesAction;
 import action.chats.UserCreateChat;
+>>>>>>> Stashed changes
 import action.chats.UserNeedChatsAction;
-import action.common.FindUserByLoginAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,27 +29,34 @@ public class ActionFromUriFilter implements Filter {
     private static final Logger logger = LogManager.getLogger(ActionFromUriFilter.class);
 
     private static final Map<String, Class<? extends Action>> actions = new ConcurrentHashMap<>();
+    private static final Map<String, String> actionName = new ConcurrentHashMap<>();
 
     static {
-        actions.put("/water/",LoginAction.class);
-        actions.put("/water/chat", GetChatMessagesAction.class);
-        actions.put("/water/chat/add/user", AddUserToChatAction.class);
-        actions.put("/water/chats", UserNeedChatsAction.class);
-        actions.put("/water/chats/create", UserCreateChat.class);
-        actions.put("/water/common/find/user", FindUserByLoginAction.class);
-        actions.put("/water/login", LoginAction.class);
-        actions.put("/water/logout", LogoutAction.class);
-        actions.put("/water/message", SendMessageAction.class);
-        actions.put("/water/register", RegistrationAction.class);
+        actions.put("chatsAction", UserNeedChatsAction.class);
+        actions.put("chatAction", GetChatMessagesAction.class);
+        actions.put("loginAction", LoginAction.class);
+        actions.put("logoutAction", LogoutAction.class);
+        actions.put("messageAction", SendMessageAction.class);
+        actions.put("registrationAction", RegistrationAction.class);
         actions.put("errorAction", ErrorAction.class);
+
+        actionName.put("/water/","loginAction");
+        actionName.put("/water/chat", "chatAction");
+        actionName.put("/water/chats", "chatsAction");
+        actionName.put("/water/login", "loginAction");
+        actionName.put("/water/logout", "logoutAction");
+        actionName.put("/water/message","messageAction");
+        actionName.put("/water/register", "registrationAction");
+
     }
 
     private static String getActionName(String uri, String contextPath) {
         if (!contextPath.equals("/water_war"))
             return "errorAction";
-        String action;
-        action = uri.substring(contextPath.length());
-        logger.debug(action);
+        String actionPath = uri.substring(contextPath.length());
+        String action = actionName.get(actionPath);
+        if (action == null)
+            return "errorAction";
         return action;
     }
 
@@ -64,7 +75,6 @@ public class ActionFromUriFilter implements Filter {
             logger.debug(String.format("Starting of processing of request for URI \"%s\"", uri));
             actionName = getActionName(uri, contextPath);
             Class<Action> actionClass = (Class<Action>) actions.get(actionName);
-            logger.debug(actionClass);
             try {
                 Action action = actionClass.newInstance();
                 action.setName(actionName);

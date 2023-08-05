@@ -1,4 +1,4 @@
-package action.chat;
+package action.chat.longpolling;
 
 import action.sender.SenderManager;
 import dao.PersistException;
@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class GetChatMessagesAction extends ChatAction {
+public class GetChatMessagesAction extends ChatLongPollingAction {
     private Integer timeOut = 30000;
     private static final Integer timeStep = 100;
 
@@ -37,22 +37,20 @@ public class GetChatMessagesAction extends ChatAction {
         MessageService Mservice = factory.getService(Message.class);
         ChatService Cservice = factory.getService(Chat.class);
         AsyncContext asyncContext = request.startAsync(request, response);
-        asyncContext.setTimeout(0);//TODO
+        asyncContext.setTimeout(timeOut);//TODO
         Date date = chat.getLastMessageDate();
         chat = Cservice.getById(chat.getId());
+        addContext(chat, asyncContext);
         if (chat == null) {
             request.setAttribute("message", "Чата не существует");
             logger.info(String.format("unsuccessfully tried to get chat %s %s (%s:%s)", chat, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
         } else {
             synchronized (asyncContext) {
                 try {
+                    if(chat.getLastMessageDate() == null || date.compareTo(chat.getLastMessageDate()) >= 0)
+                        asyncContext.wait(timeOut);
+                    logger.debug("Context Waked up!!!");
                     List<Message> messageList = null;
-                    while (timeOut >= 0 && (chat.getLastMessageDate() == null || date.compareTo(chat.getLastMessageDate()) >= 0)) {
-                        chat = Cservice.getById(chat.getId());
-                        //logger.debug("Wait User: " + getAuthorizedUser() + "Last Date: " + chat.getLastMessageDate() + asyncContext.getTimeout());
-                        timeOut -= timeStep;
-                        asyncContext.wait(timeStep);//TODO update time
-                    }
                     messageList = Mservice.getMessages(chat, date);
                     logger.info(String.format("chat \"%s\" is sent ", chat));
                     SenderManager.sendObject(response, messageList);
@@ -62,6 +60,7 @@ public class GetChatMessagesAction extends ChatAction {
                 asyncContext.complete();
             }
         }
+        removeContext(chat, asyncContext);
     }
 }
 
