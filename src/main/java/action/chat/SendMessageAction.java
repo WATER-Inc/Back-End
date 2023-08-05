@@ -1,4 +1,4 @@
-package action.chat.longpolling;
+package action.chat;
 
 import action.sender.SenderManager;
 import dao.PersistException;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class SendMessageAction extends ChatLongPollingAction {
+public class SendMessageAction extends ChatAction {
 
     public SendMessageAction() throws PersistException {
         super();
@@ -43,7 +43,6 @@ public class SendMessageAction extends ChatLongPollingAction {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-                notifyAllContexts(chat);
             } else
                 try {
                     SenderManager.sendObject(response, null);

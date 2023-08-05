@@ -22,7 +22,7 @@ import java.util.Map;
 public class DispatcherServlet extends HttpServlet {
     private static final Logger logger = LogManager.getLogger(String.valueOf(DispatcherServlet.class));
 
-    public static ServiceFactory getFactory() throws PersistException {
+    public ServiceFactory getFactory() throws PersistException {
         return new ServiceFactory();
     }
 
