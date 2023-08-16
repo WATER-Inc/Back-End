@@ -19,6 +19,15 @@
         <servlet-name>DispatcherServlet</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>WebSocketEndpoint</servlet-name>
+        <servlet-class>action.chat.websocket.ChatWebSocketAction</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>WebSocketEndpoint</servlet-name>
+        <url-pattern>/your-websocket-url</url-pattern>
+    </servlet-mapping>
     <filter>
         <filter-name>EncodingFilter</filter-name>
         <filter-class>controller.filter.EncodingFilter</filter-class>
