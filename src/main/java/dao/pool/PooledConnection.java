@@ -8,9 +8,10 @@ import java.util.concurrent.Executor;
 
 public class PooledConnection implements Connection, Comparable<PooledConnection> {
     private final Connection connection;
-
-    public PooledConnection(Connection connection) {
+    private final ConnectionPool pool;
+    public PooledConnection(Connection connection, ConnectionPool pool_) {
         this.connection = connection;
+        this.pool = pool_;
     }
 
     public Connection getConnection() {
@@ -39,7 +40,8 @@ public class PooledConnection implements Connection, Comparable<PooledConnection
 
     @Override
     public void close() throws SQLException {
-        ConnectionPool.getInstance().freeConnection(this);
+        if(pool != null)
+            pool.freeConnection(this);
     }
 
     @Override

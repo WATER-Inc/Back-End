@@ -4,9 +4,9 @@ package dao.mysql;
 import dao.DAOFactory;
 import dao.GenericDAO;
 import dao.PersistException;
+import dao.mysql.pool.MySqlConnectionPool;
 import dao.pool.PooledConnection;
 import entity.auxiliary.ChatLink;
-import dao.pool.ConnectionPool;
 import entity.Message;
 import entity.Role;
 import entity.Chat;
@@ -36,7 +36,7 @@ public class MySqlDaoFactory implements DAOFactory<Connection> {
     }
 
     public MySqlDaoFactory() throws PersistException {
-        connection = ConnectionPool.getInstance().getConnection();
+        connection = MySqlConnectionPool.getInstance().getConnection();
         creators = new HashMap<>();
         creators.put(User.class, new DaoCreator<Connection>() {
             @Override

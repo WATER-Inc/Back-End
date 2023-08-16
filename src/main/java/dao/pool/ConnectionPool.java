@@ -4,14 +4,20 @@ package dao.pool;
 import dao.PersistException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Paths;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.LinkedBlockingQueue;
 
-final public class ConnectionPool {
+public class ConnectionPool {
     private static final Logger logger = LogManager.getLogger(ConnectionPool.class);
 
     private String url;
@@ -23,7 +29,7 @@ final public class ConnectionPool {
     private final BlockingQueue<PooledConnection> freeConnections = new LinkedBlockingQueue<>();
     private final Set<PooledConnection> usedConnections = new ConcurrentSkipListSet<>();
 
-    private ConnectionPool() {
+    protected ConnectionPool() {
     }
 
     public synchronized PooledConnection getConnection() throws PersistException {
@@ -93,14 +99,14 @@ final public class ConnectionPool {
         }
     }
 
-    private static final ConnectionPool instance = new ConnectionPool();
+    //private static final ConnectionPool instance = new ConnectionPool();
 
-    public static ConnectionPool getInstance() {
-        return instance;
-    }
+//    public static ConnectionPool getInstance() {
+//        return instance;
+//    }
 
     private PooledConnection createConnection() throws SQLException {
-        return new PooledConnection(DriverManager.getConnection(url, user, password));
+        return new PooledConnection(DriverManager.getConnection(url, user, password), this);
     }
 
     public synchronized void destroy() {
