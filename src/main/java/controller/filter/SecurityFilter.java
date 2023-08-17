@@ -11,13 +11,14 @@ import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Set;
 @WebFilter(asyncSupported = true)
-public class SecurityFilter implements Filter {
+public class SecurityFilter extends HttpFilter {
     private static final Logger logger = LogManager.getLogger(SecurityFilter.class);
     private static final User mode = User.Default.USER.getUser();
 
@@ -27,10 +28,6 @@ public class SecurityFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        if (mode.equals(User.Default.ADMIN.getUser()))
-            logger.info("Admin mode");
-        else
-            logger.info("User mode");
         if (request instanceof HttpServletRequest && response instanceof HttpServletResponse) {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             HttpServletResponse httpResponse = (HttpServletResponse) response;

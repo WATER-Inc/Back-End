@@ -16,12 +16,13 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 @WebFilter(asyncSupported = true)
-public class ActionFromUriFilter implements Filter {
+public class ActionFromUriFilter extends HttpFilter {
     private static final Logger logger = LogManager.getLogger(ActionFromUriFilter.class);
 
     private static final Map<String, Class<? extends Action>> actions = new ConcurrentHashMap<>();
