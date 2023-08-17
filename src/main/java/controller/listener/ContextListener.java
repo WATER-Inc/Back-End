@@ -4,6 +4,7 @@ import controller.servlet.DispatcherServlet;
 import dao.PersistException;
 import dao.mysql.pool.MySqlConnectionPool;
 import dao.pool.ConnectionPool;
+import dao.pool.PollInit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,19 +13,12 @@ import javax.servlet.ServletContextListener;
 
 public class ContextListener implements ServletContextListener {
     private static final Logger logger = LogManager.getLogger(String.valueOf(DispatcherServlet.class));
-    public static final String DB_DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
-    public static final String DB_URL = "jdbc:mysql://localhost:3306/water?useUnicode=true&characterEncoding=UTF-8";
-    public static final String DB_USER = "root";
-    public static final String DB_PASSWORD = "S2h7D9Z4Hy";
-    public static final int DB_POOL_START_SIZE = 10;
-    public static final int DB_POOL_MAX_SIZE = 1000;
-    public static final int DB_POOL_CHECK_CONNECTION_TIMEOUT = 100;
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         try {
             logger.debug("Started...");
-            MySqlConnectionPool.getInstance().init(DB_DRIVER_CLASS, DB_URL, DB_USER, DB_PASSWORD, DB_POOL_START_SIZE, DB_POOL_MAX_SIZE, DB_POOL_CHECK_CONNECTION_TIMEOUT);
+            PollInit.init();
         } catch (PersistException e) {
             logger.error("It is impossible to initialize application", e);
         }
