@@ -1,6 +1,8 @@
 package controller.filter;
 
 
+import akka.http.javadsl.model.HttpRequest;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;

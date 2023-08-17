@@ -58,26 +58,31 @@ public class ActionFromUriFilter implements Filter {
         if (request instanceof HttpServletRequest) {
 
             HttpServletRequest httpRequest = (HttpServletRequest) request;
-            String contextPath = httpRequest.getContextPath();
-            String uri = httpRequest.getRequestURI();
-            String actionName;
-            logger.debug(String.format("Starting of processing of request for URI \"%s\"", uri));
-            actionName = getActionName(uri, contextPath);
-            Class<Action> actionClass = (Class<Action>) actions.get(actionName);
-            logger.debug(actionClass);
-            try {
-                Action action = actionClass.newInstance();
-                action.setName(actionName);
-                request.setAttribute("action", action);
+            if(httpRequest.getHeader("Upgrade").equals("websocket"))
                 chain.doFilter(request, response);
-            } catch (
-                    InstantiationException | IllegalAccessException |
-                    NullPointerException e) {
-                logger.error("It is impossible to create action handler object", e);
-                httpRequest.setAttribute("error", String.format("Запрошенный адрес %s не может быть обработан сервером", uri));
-                httpRequest.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
+            else {
+                String contextPath = httpRequest.getContextPath();
+                String uri = httpRequest.getRequestURI();
+                String actionName;
+                logger.debug(String.format("Starting of processing of request for URI \"%s\"", uri));
+                actionName = getActionName(uri, contextPath);
+                Class<Action> actionClass = (Class<Action>) actions.get(actionName);
+                logger.debug(actionClass);
+                try {
+                    Action action = actionClass.newInstance();
+                    action.setName(actionName);
+                    request.setAttribute("action", action);
+                    chain.doFilter(request, response);
+                } catch (
+                        InstantiationException | IllegalAccessException |
+                        NullPointerException e) {
+                    logger.error("It is impossible to create action handler object", e);
+                    httpRequest.setAttribute("error", String.format("Запрошенный адрес %s не может быть обработан сервером", uri));
+                    httpRequest.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
+                }
             }
         } else {
+            chain.doFilter(request, response);
             logger.error("It is impossible to use HTTP filter");
             request.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
         }
