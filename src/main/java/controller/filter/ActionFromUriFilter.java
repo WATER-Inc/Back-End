@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 @WebFilter(asyncSupported = true)
-public class ActionFromUriFilter extends HttpFilter {
+public class ActionFromUriFilter implements Filter {
     private static final Logger logger = LogManager.getLogger(ActionFromUriFilter.class);
 
     private static final Map<String, Class<? extends Action>> actions = new ConcurrentHashMap<>();
@@ -59,8 +59,10 @@ public class ActionFromUriFilter extends HttpFilter {
         if (request instanceof HttpServletRequest) {
 
             HttpServletRequest httpRequest = (HttpServletRequest) request;
-            if(httpRequest.getHeader("Upgrade").equals("websocket"))
+            if(httpRequest.getHeader("Upgrade") != null && httpRequest.getHeader("Upgrade").equals("websocket")) {
+                System.out.println("Socket");
                 chain.doFilter(request, response);
+            }
             else {
                 String contextPath = httpRequest.getContextPath();
                 String uri = httpRequest.getRequestURI();

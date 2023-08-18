@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Set;
 @WebFilter(asyncSupported = true)
-public class SecurityFilter extends HttpFilter {
+public class SecurityFilter implements Filter {
     private static final Logger logger = LogManager.getLogger(SecurityFilter.class);
     private static final User mode = User.Default.USER.getUser();
 
@@ -31,7 +31,7 @@ public class SecurityFilter extends HttpFilter {
         if (request instanceof HttpServletRequest && response instanceof HttpServletResponse) {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             HttpServletResponse httpResponse = (HttpServletResponse) response;
-            if(httpRequest.getHeader("Upgrade").equals("websocket"))
+            if(httpRequest.getHeader("Upgrade") != null && httpRequest.getHeader("Upgrade").equals("websocket"))
                 chain.doFilter(request, response);
             else {
                 Action action = (Action) httpRequest.getAttribute("action");

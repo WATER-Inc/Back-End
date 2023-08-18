@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpFilter;
 import java.io.IOException;
 @WebFilter(asyncSupported = true)
-public class EncodingFilter extends HttpFilter {
+public class EncodingFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {}
 
