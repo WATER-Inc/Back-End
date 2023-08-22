@@ -16,4 +16,4 @@ target/
 .DS_Store
 
 ### database password config ###
-src/main/resources/database/mysql/config.properties
+src/main/resources/database/*.properties
