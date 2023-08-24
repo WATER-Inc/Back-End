@@ -102,7 +102,9 @@ public class ConnectionPool {
         InputStream in = classloader.getResourceAsStream(configPath);
         properties.load(in);
         Objects.requireNonNull(in).close();
-        Class.forName(properties.getProperty("DB_DRIVER_CLASS"));
+       // try {
+            Class.forName(properties.getProperty("DB_DRIVER_CLASS"));
+        //}catch (ClassNotFoundException ignore){}
         this.url = properties.getProperty("DB_URL");
         this.user = properties.getProperty("DB_USER");
         this.password = properties.getProperty("DB_PASSWORD");
