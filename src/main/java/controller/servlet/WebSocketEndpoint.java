@@ -1,20 +1,44 @@
 package controller.servlet;
 
-import javax.websocket.*;
-import javax.websocket.server.ServerEndpoint;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import controller.config.GetHttpSessionConfigurator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-@ServerEndpoint("/websocket")//test service https://www.piesocket.com/websocket-tester
+import javax.websocket.*;
+import javax.websocket.server.HandshakeRequest;
+import javax.websocket.server.ServerEndpoint;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.*;
+
+
+@ServerEndpoint(value = "/websocket", configurator = GetHttpSessionConfigurator.class)//test service https://www.piesocket.com/websocket-tester
 public class WebSocketEndpoint {
+
+    private static final Logger logger = LogManager.getLogger(WebSocketEndpoint.class);
+
     private static Set<Session> sessions = Collections.synchronizedSet(new HashSet<>());
     @OnOpen
-    public void onOpen(Session session) {
+    public void onOpen(Session session, EndpointConfig config) {
         System.out.println("WebSocket connection opened: " + session.getId());
+        HttpSession httpSession = (HttpSession) config.getUserProperties()
+                .get(HttpSession.class.getName());
+        HandshakeRequest req = (HandshakeRequest) config.getUserProperties()
+                .get("handshakereq");
+        Map<String, List<String>> headers = req.getHeaders();
+        for (Map.Entry<String,List<String>> entry : headers.entrySet()) {
+            System.out.println("Key = " + entry.getKey());
+            if(entry.getKey().equals("cookie")){
+                System.out.println("\n\nCOOOOOOKIEEEE!!!!\n\n");
+            }
+            for (String str : entry.getValue()){
+                System.out.println("Value= " + str);
+            }
+        }
         try {
             session.getBasicRemote().sendText("Connection established");
+            logger.debug(session.getId());
+            session.getBasicRemote().sendText(String.valueOf(session.getId()));
             sessions.add(session);
         } catch (IOException e) {
             e.printStackTrace();
