@@ -58,17 +58,9 @@ public class ChatWebSocketEndPoint extends WebSocketAbstractEndPoint {
     void sendAllMessages(Session session) throws PersistException, IOException {
         MessageService messageService = getFactory().getService(Message.class);
         List<Message> messages = messageService.getMessages(chat);
-
-        for(Message message : messages) {
-            String response = "";
-            try {
-                ObjectMapper objectMapper = new ObjectMapper();
-                response = objectMapper.writeValueAsString(message);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-            sendMessage(session, response);
-        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        String response = objectMapper.writeValueAsString(messages);
+        session.getBasicRemote().sendText(response);
     }
     @OnMessage
     public void onMessage(String message, Session session) throws ServletException, IOException {
