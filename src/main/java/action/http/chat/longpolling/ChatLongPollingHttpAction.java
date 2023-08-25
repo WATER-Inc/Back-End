@@ -1,6 +1,6 @@
-package action.chat.longpolling;
+package action.http.chat.longpolling;
 
-import action.chat.ChatAction;
+import action.http.chat.ChatHttpAction;
 import dao.PersistException;
 import entity.Chat;
 
@@ -10,8 +10,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-public abstract class ChatLongPollingAction extends ChatAction {
-    public ChatLongPollingAction() throws PersistException {
+public abstract class ChatLongPollingHttpAction extends ChatHttpAction {
+    public ChatLongPollingHttpAction() throws PersistException {
         super();
     }
 

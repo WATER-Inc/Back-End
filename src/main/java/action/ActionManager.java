@@ -3,20 +3,18 @@ package action;
 import dao.PersistException;
 import service.ServiceFactory;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
-public class ActionManager {
+public class ActionManager<T1, T2> {
     private ServiceFactory factory;
 
     public ActionManager(ServiceFactory factory) {
         this.factory = factory;
     }
 
-    public void execute(Action action, HttpServletRequest request, HttpServletResponse response) throws PersistException {
+    public void execute(AbstractAction action, T1 t1, T2 t2) throws PersistException {
         action.setFactory(factory);
-        action.exec(request, response);
+        action.exec(t1, t2);
     }
 
     public void close() throws SQLException {

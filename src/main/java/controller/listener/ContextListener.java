@@ -1,9 +1,8 @@
 package controller.listener;
 
-import controller.servlet.DispatcherServlet;
+import controller.servlet.http.HttpDispatcherServlet;
 import dao.PersistException;
 import dao.mysql.pool.MySqlConnectionPool;
-import dao.pool.ConnectionPool;
 import dao.pool.PollInit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +11,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 public class ContextListener implements ServletContextListener {
-    private static final Logger logger = LogManager.getLogger(String.valueOf(DispatcherServlet.class));
+    private static final Logger logger = LogManager.getLogger(String.valueOf(HttpDispatcherServlet.class));
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {

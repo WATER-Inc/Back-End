@@ -1,6 +1,6 @@
-package action.authentication;
+package action.http.authentication;
 
-import action.AuthorizedUserAction;
+import action.http.AuthorizedUserHttpAction;
 import action.sender.SenderManager;
 import dao.PersistException;
 import entity.User;
@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class LogoutAction extends AuthorizedUserAction {
-    private static final Logger logger = LogManager.getLogger(LogoutAction.class);
+public class LogoutHttpAction extends AuthorizedUserHttpAction {
+    private static final Logger logger = LogManager.getLogger(LogoutHttpAction.class);
 
-    public LogoutAction() throws PersistException {
+    public LogoutHttpAction() throws PersistException {
         super();
     }
 

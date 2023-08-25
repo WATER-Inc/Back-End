@@ -1,4 +1,4 @@
-package action.common;
+package action.http.common;
 
 import action.sender.SenderManager;
 import dao.PersistException;
@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
-public class FindUserByLoginAction extends CommonAction{
-    public FindUserByLoginAction() throws PersistException {
+public class FindUserByLoginHttpAction extends CommonHttpAction {
+    public FindUserByLoginHttpAction() throws PersistException {
         super();
     }
 
@@ -27,7 +27,7 @@ public class FindUserByLoginAction extends CommonAction{
         } catch (IncorrectFormDataException e) {
             throw new PersistException(e);
         }
-        UserService Uservice = factory.getService(User.class);
+        UserService Uservice = getFactory().getService(User.class);
         user = Uservice.getByUsername(user.getUsername());
         try {
             SenderManager.sendObject(response, user);

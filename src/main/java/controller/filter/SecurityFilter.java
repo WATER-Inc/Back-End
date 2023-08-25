@@ -1,22 +1,21 @@
 package controller.filter;
 
 
-import action.*;
-import action.authentication.LoginAction;
-import action.authentication.RegistrationAction;
-import entity.Role;
+import action.http.HttpAction;
+import action.http.MainHttpAction;
+import action.http.authentication.LoginHttpAction;
+import action.http.authentication.RegistrationHttpAction;
 import entity.User;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Set;
+
 @WebFilter(asyncSupported = true)
 public class SecurityFilter implements Filter {
     private static final Logger logger = LogManager.getLogger(SecurityFilter.class);
@@ -34,7 +33,7 @@ public class SecurityFilter implements Filter {
             if(httpRequest.getHeader("Upgrade") != null && httpRequest.getHeader("Upgrade").equals("websocket"))
                 chain.doFilter(request, response);
             else {
-                Action action = (Action) httpRequest.getAttribute("action");
+                HttpAction httpAction = (HttpAction) httpRequest.getAttribute("action");
                 //Set<Role> allowRoles = action.getAllowRoles();TODO need to include in can execute calculation
                 String userName = "unauthorized user";
                 HttpSession session = httpRequest.getSession();
@@ -42,7 +41,7 @@ public class SecurityFilter implements Filter {
                 if (session != null) {
                     session.setMaxInactiveInterval(10000);
                     user = (User) session.getAttribute("authorizedUser");
-                    action.setAuthorizedUser(user);
+                    httpAction.setAuthorizedUser(user);
                     String errorMessage = (String) session.getAttribute("SecurityFilterMessage");
                     if (errorMessage != null) {
                         httpRequest.setAttribute("message", errorMessage);
@@ -50,17 +49,17 @@ public class SecurityFilter implements Filter {
                     }
                 }
                 logger.debug("AuthorizedUser: " + user);
-                boolean canExecute = action instanceof LoginAction || action instanceof RegistrationAction;
+                boolean canExecute = httpAction instanceof LoginHttpAction || httpAction instanceof RegistrationHttpAction;
                 if (user != null) {
-                    canExecute = canExecute || action.getAuthorizedUser() != null;
+                    canExecute = canExecute || httpAction.getAuthorizedUser() != null;
                 }
                 logger.debug("CanExecute:" + canExecute);
 
                 if (canExecute) {
                     chain.doFilter(request, response);
                 } else {
-                    logger.info(String.format("Trying of %s access to forbidden resource \"%s\"", userName, action.getName()));
-                    if (session != null && action.getClass() != MainAction.class) {
+                    logger.info(String.format("Trying of %s access to forbidden resource \"%s\"", userName, httpAction.getName()));
+                    if (session != null && httpAction.getClass() != MainHttpAction.class) {
                         session.setAttribute("SecurityFilterMessage", "Доступ запрещён");
                     }
                     httpResponse.sendRedirect(httpRequest.getContextPath() + "/");

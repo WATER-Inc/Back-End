@@ -1,6 +1,5 @@
-package action.chat.longpolling;
+package action.http.chat.longpolling;
 
-import action.chat.ChatAction;
 import action.sender.SenderManager;
 import dao.PersistException;
 import entity.Chat;
@@ -17,11 +16,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class GetChatMessagesAction extends ChatLongPollingAction {
+public class GetChatMessagesHttpAction extends ChatLongPollingHttpAction {
     private Integer timeOut = 30000;
     private static final Integer timeStep = 100;
 
-    public GetChatMessagesAction() throws PersistException {
+    public GetChatMessagesHttpAction() throws PersistException {
         super();
     }
 
@@ -35,8 +34,8 @@ public class GetChatMessagesAction extends ChatLongPollingAction {
         } catch (IncorrectFormDataException e) {
             throw new PersistException(e);
         }
-        MessageService Mservice = factory.getService(Message.class);
-        ChatService Cservice = factory.getService(Chat.class);
+        MessageService Mservice = getFactory().getService(Message.class);
+        ChatService Cservice = getFactory().getService(Chat.class);
         AsyncContext asyncContext = request.startAsync(request, response);
         asyncContext.setTimeout(0);//TODO
         Date date = chat.getLastMessageDate();

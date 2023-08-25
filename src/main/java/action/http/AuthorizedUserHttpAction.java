@@ -1,14 +1,14 @@
-package action;
+package action.http;
 
-import action.authentication.LoginAction;
+import action.http.authentication.LoginHttpAction;
 import dao.PersistException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public abstract class AuthorizedUserAction extends Action {
-    private static Logger logger = LogManager.getLogger(String.valueOf(LoginAction.class));
+public abstract class AuthorizedUserHttpAction extends HttpAction {
+    private static Logger logger = LogManager.getLogger(String.valueOf(LoginHttpAction.class));
 
-    public AuthorizedUserAction() throws PersistException {
+    public AuthorizedUserHttpAction() throws PersistException {
         super();
 //        try {
 //            getAllowRoles().addAll(((RoleService) factory.getService(Role.class)).getAll());

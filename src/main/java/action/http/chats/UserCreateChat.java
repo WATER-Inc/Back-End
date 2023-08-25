@@ -1,15 +1,10 @@
-package action.chats;
+package action.http.chats;
 
-import action.chat.ChatAction;
 import action.sender.SenderManager;
 import dao.PersistException;
 import entity.Chat;
 import entity.Role;
-import entity.User;
 import entity.auxiliary.Participants;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
-import service.UserService;
 import validator.IncorrectFormDataException;
 import validator.ValidatorFactory;
 
@@ -17,9 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.concurrent.CopyOnWriteArrayList;
 
-public class UserCreateChat extends ChatsAction {
+public class UserCreateChat extends ChatsHttpAction {
 
     public UserCreateChat() throws PersistException {
         super();
@@ -40,7 +34,7 @@ public class UserCreateChat extends ChatsAction {
             participants.addUser(getAuthorizedUser(), role);
             chat.setParticipants(participants);
             logger.debug("In Chat: " + chat);
-            chat = (Chat) factory.getService(Chat.class).persist(chat);
+            chat = (Chat) getFactory().getService(Chat.class).persist(chat);
             try {
                 SenderManager.sendObject(response, chat);
             } catch (IOException e) {

@@ -1,6 +1,6 @@
-package action.authentication;
+package action.http.authentication;
 
-import action.Action;
+import action.http.HttpAction;
 import action.sender.SenderManager;
 import dao.PersistException;
 import entity.User;
@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class RegistrationAction extends Action {
-    final private static Logger logger = LogManager.getLogger(String.valueOf(RegistrationAction.class));
+public class RegistrationHttpAction extends HttpAction {
+    final private static Logger logger = LogManager.getLogger(String.valueOf(RegistrationHttpAction.class));
 
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
@@ -31,7 +31,7 @@ public class RegistrationAction extends Action {
         String username = user.getUsername();
         String password = user.getPasswordHash();
         logger.debug("Trying to register with: [Username: " + username + "; Password: " + password + "]");
-        UserService service = factory.getService(User.class);
+        UserService service = getFactory().getService(User.class);
         user.setUsername(username);
         user.setPasswordHash(password);
         try {

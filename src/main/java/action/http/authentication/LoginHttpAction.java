@@ -1,7 +1,7 @@
-package action.authentication;
+package action.http.authentication;
 
 
-import action.Action;
+import action.http.HttpAction;
 import action.sender.SenderManager;
 import dao.PersistException;
 import entity.User;
@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class LoginAction extends Action {
-    private static final Logger logger = LogManager.getLogger(String.valueOf(LoginAction.class));
+public class LoginHttpAction extends HttpAction {
+    private static final Logger logger = LogManager.getLogger(String.valueOf(LoginHttpAction.class));
 
 
     @Override
@@ -31,7 +31,7 @@ public class LoginAction extends Action {
             logger.debug("Request had no content");
             return;
         }
-        UserService service = factory.getService(User.class);
+        UserService service = getFactory().getService(User.class);
         User copy = user;
         user = service.getByUsernameAndPassword(user.getUsername(), user.getPasswordHash());
         if (user == null) {

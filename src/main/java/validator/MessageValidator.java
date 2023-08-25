@@ -47,7 +47,7 @@ public class MessageValidator extends Validator<Message> {
         message.setChat(chat);
         message.setContent(messageNode.asText());
         if (dateNode != null)
-            message.setDate(new Date(dateNode.asText()));
+            message.setDate(new Date(dateNode.asLong()));
         else message.setDate(new Date());
         return message;
     }

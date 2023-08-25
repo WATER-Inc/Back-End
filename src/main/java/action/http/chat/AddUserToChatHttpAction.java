@@ -1,4 +1,4 @@
-package action.chat;
+package action.http.chat;
 
 import action.sender.SenderManager;
 import dao.PersistException;
@@ -16,9 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AddUserToChatAction extends ChatAction {
+public class AddUserToChatHttpAction extends ChatHttpAction {
 
-    public AddUserToChatAction() throws PersistException {
+    public AddUserToChatHttpAction() throws PersistException {
         super();
     }
 
@@ -30,9 +30,9 @@ public class AddUserToChatAction extends ChatAction {
         } catch (IncorrectFormDataException ignored) {
         }
         if (preChatLink != null) {
-            ChatService Cservice = factory.getService(Chat.class);
-            UserService Uservice = factory.getService(User.class);
-            RoleService Rservice = factory.getService(Role.class);
+            ChatService Cservice = getFactory().getService(Chat.class);
+            UserService Uservice = getFactory().getService(User.class);
+            RoleService Rservice = getFactory().getService(Role.class);
 
             Chat chat = Cservice.getById(preChatLink.getChatId());
             User user = Uservice.getByUsername(preChatLink.getUsername());

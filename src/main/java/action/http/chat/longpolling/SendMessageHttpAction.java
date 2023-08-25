@@ -1,6 +1,5 @@
-package action.chat.longpolling;
+package action.http.chat.longpolling;
 
-import action.chat.ChatAction;
 import action.sender.SenderManager;
 import dao.PersistException;
 import entity.Chat;
@@ -16,9 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class SendMessageAction extends ChatLongPollingAction {
+public class SendMessageHttpAction extends ChatLongPollingHttpAction {
 
-    public SendMessageAction() throws PersistException {
+    public SendMessageHttpAction() throws PersistException {
         super();
     }
 
@@ -30,9 +29,9 @@ public class SendMessageAction extends ChatLongPollingAction {
         } catch (IncorrectFormDataException ignored) {
         }
         if(message != null) {
-            MessageService Mservice = factory.getService(Message.class);
-            ChatService Cservice = factory.getService(Chat.class);
-            UserService Uservice = factory.getService(User.class);
+            MessageService Mservice = getFactory().getService(Message.class);
+            ChatService Cservice = getFactory().getService(Chat.class);
+            UserService Uservice = getFactory().getService(User.class);
             Chat chat = Cservice.getById(message.getChat().getId());
             User user = Uservice.getById(message.getSender().getId());
             if (chat != null && user != null) {

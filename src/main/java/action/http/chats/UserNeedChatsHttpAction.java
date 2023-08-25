@@ -1,4 +1,4 @@
-package action.chats;
+package action.http.chats;
 
 import action.sender.SenderManager;
 import dao.PersistException;
@@ -11,16 +11,16 @@ import java.io.IOException;
 import java.util.List;
 
 
-public class UserNeedChatsAction extends ChatsAction {
+public class UserNeedChatsHttpAction extends ChatsHttpAction {
 
-    public UserNeedChatsAction() throws PersistException {
+    public UserNeedChatsHttpAction() throws PersistException {
         super();
     }
 
     @Override
     public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException {
         List<Chat> chats;
-        ChatService service = factory.getService(Chat.class);
+        ChatService service = getFactory().getService(Chat.class);
         chats = service.getByUser(getAuthorizedUser());
         logger.debug("Chats: " + chats);
         try {

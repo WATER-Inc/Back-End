@@ -1,21 +1,19 @@
-package action;
+package action.http;
 
 
+import action.AbstractAction;
 import dao.PersistException;
 import entity.Role;
 import entity.User;
-import service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
-abstract public class Action {
+abstract public class HttpAction extends AbstractAction<HttpServletRequest, HttpServletResponse> {
     private final Set<Role> allowRoles = new HashSet<>(List.of(new Role[]{new Role("User")}));
     private User authorizedUser;
     private String name;
-
-    protected ServiceFactory factory;
 
     public Set<Role> getAllowRoles() {
         return allowRoles;
@@ -37,10 +35,7 @@ abstract public class Action {
         this.name = name;
     }
 
-    public void setFactory(ServiceFactory factory) {
-        this.factory = factory;
-    }
-
+    @Override
     abstract public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException;
 
     @Override
@@ -49,7 +44,7 @@ abstract public class Action {
                 "allowRoles=" + allowRoles +
                 ", authorizedUser=" + authorizedUser +
                 ", name='" + name + '\'' +
-                ", factory=" + factory +
+                ", factory=" + getFactory() +
                 '}';
     }
 }
