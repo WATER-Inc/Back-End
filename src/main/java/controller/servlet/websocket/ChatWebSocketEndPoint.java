@@ -44,10 +44,8 @@ public class ChatWebSocketEndPoint extends WebSocketAbstractEndPoint {
         HandshakeRequest req = (HandshakeRequest) config.getUserProperties()
                 .get("handshakereq");
         HttpSession httpSession = (HttpSession) req.getHttpSession();
-       // authorizeUser = (User) httpSession.getAttribute("authorizedUser");
-        if(chat == null
-         //       || authorizeUser == null
-        ){
+        authorizeUser = (User) httpSession.getAttribute("authorizedUser");
+        if(chat == null || authorizeUser == null){
             logger.info("No chat or authorize user");
             session.close();
         } else{
