@@ -7,6 +7,6 @@ import dao.mysql.pool.MySqlConnectionPool;
 public class PollInit {
     public static void init() throws PersistException {
         MySqlConnectionPool.getInstance().init();
-       // MongoDBConnectionPool.getInstance().init();
+        MongoDBConnectionPool.getInstance().init();
     }
 }

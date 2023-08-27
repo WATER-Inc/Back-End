@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
-public class MySqlConnection extends PoolConnection<Connection> {
+public class MySqlConnection extends PoolConnection<Connection> implements Connection {
 
     public MySqlConnection(Connection connection, MySqlConnectionPool pool_) {
         super(connection, pool_);
