@@ -18,8 +18,7 @@ import java.util.List;
 public class MySqlMessageDAO extends AbstractJDBCDao<Message, String> {
     private final static String selectQ = "SELECT * FROM water.messages";
     private final static String selectAllQ = "SELECT * FROM water.messages";
-    private final static String insertQ = "INSERT INTO water.messages (sender_id, chat_id, content, created_date) \n" +
-            "VALUES (?, ?, ?, ?);";
+    private final static String insertQ = "INSERT INTO water.messages (sender_id, chat_id, content, created_date) \n" +"VALUES (?, ?, ?, ?);";
     private final static String selectByUser = "SELECT messages.id FROM water.messages WHERE messages.sender_id = ?;";
     private final static String selectByChat = "SELECT messages.id FROM water.messages WHERE messages.chat_id = ? ORDER BY messages.created_date;";
     private final static String updateQ = "UPDATE water.messages SET content=? WHERE id= ?;";
