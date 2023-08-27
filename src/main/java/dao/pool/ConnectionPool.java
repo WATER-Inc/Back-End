@@ -15,7 +15,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class ConnectionPool {
+public abstract class ConnectionPool<PoolType extends PoolConnection> {
     private static final Logger logger = LogManager.getLogger(ConnectionPool.class);
 
     private String url;
@@ -25,22 +25,46 @@ public class ConnectionPool {
     private int startSize;
     private int checkConnectionTimeout;
 
-    private final BlockingQueue<PooledConnection> freeConnections = new LinkedBlockingQueue<>();
-    private final Set<PooledConnection> usedConnections = new ConcurrentSkipListSet<>();
+    private final BlockingQueue<PoolType> freeConnections = new LinkedBlockingQueue<>();
+    private final Set<PoolType> usedConnections = new ConcurrentSkipListSet<>();
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public int getMaxSize() {
+        return maxSize;
+    }
+
+    public int getStartSize() {
+        return startSize;
+    }
+
+    public int getCheckConnectionTimeout() {
+        return checkConnectionTimeout;
+    }
 
     protected ConnectionPool() {
     }
-
-    public synchronized PooledConnection getConnection() throws PersistException {
-        PooledConnection connection = null;
+    protected abstract boolean isValid(PoolType connection) throws PersistException;
+    public synchronized PoolType getConnection() throws PersistException {
+        PoolType connection = null;
         while (connection == null) {
             try {
                 if (!freeConnections.isEmpty()) {
                     connection = freeConnections.take();
-                    if (!connection.isValid(checkConnectionTimeout)) {
+                    if (!isValid(connection)) {
                         try {
-                            connection.getConnection().close();
-                        } catch (SQLException e) {
+                            connection.closePermanently();
+                        } catch (PersistException e) {
                             logger.warn("Can't close connection");
                         }
                         connection = null;
@@ -51,7 +75,7 @@ public class ConnectionPool {
                     logger.error("The limit of number of database connections is exceeded");
                     throw new PersistException();
                 }
-            } catch (InterruptedException | SQLException e) {
+            } catch (InterruptedException e) {
                 logger.error("It is impossible to connect to a database", e);
                 throw new PersistException(e);
             }
@@ -61,20 +85,21 @@ public class ConnectionPool {
         return connection;
     }
 
-    synchronized void freeConnection(PooledConnection connection) {
+    public synchronized void freeConnection(PoolType connection) {
         try {
-            if (connection.isValid(checkConnectionTimeout)) {
-                connection.clearWarnings();
-                connection.setAutoCommit(true);
+            if (isValid(connection)) {
+//                connection.clearWarnings();
+//                connection.setAutoCommit(true);
+                connection.free();
                 usedConnections.remove(connection);
                 freeConnections.put(connection);
                 logger.info(String.format("Connection was returned into pool. Current pool size: %d used connections; %d free connection", usedConnections.size(), freeConnections.size()));
             }
-        } catch (SQLException | InterruptedException e1) {
+        } catch (PersistException | InterruptedException e1) {
             logger.warn("It is impossible to return database connection into pool", e1);
             try {
-                connection.getConnection().close();
-            } catch (SQLException e2) {
+                connection.closePermanently();
+            } catch (PersistException e2) {
                 logger.warn("Can't close connection");
             }
         }
@@ -87,7 +112,7 @@ public class ConnectionPool {
             for (int counter = 0; counter < startSize; counter++) {
                 freeConnections.put(createConnection());
             }
-        } catch (ClassNotFoundException | SQLException | InterruptedException | IOException e) {
+        } catch (InterruptedException | IOException e) {
             logger.fatal("It is impossible to initialize connection pool", e);
             throw new PersistException(e);
         }
@@ -95,15 +120,15 @@ public class ConnectionPool {
     protected String getConfigPath() throws IOException {
         return "database/config.properties";
     }
-    protected void setProperties() throws ClassNotFoundException, IOException {
+    protected void setProperties() throws IOException {
         String configPath = getConfigPath();
         Properties properties = new Properties();
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         InputStream in = classloader.getResourceAsStream(configPath);
         properties.load(in);
         Objects.requireNonNull(in).close();
-       // try {
-            Class.forName(properties.getProperty("DB_DRIVER_CLASS"));
+        // try {
+        //    Class.forName(properties.getProperty("DB_DRIVER_CLASS"));//TODO only for jdbc
         //}catch (ClassNotFoundException ignore){}
         this.url = properties.getProperty("DB_URL");
         this.user = properties.getProperty("DB_USER");
@@ -113,17 +138,16 @@ public class ConnectionPool {
         this.checkConnectionTimeout = Integer.parseInt(properties.getProperty("DB_POOL_CHECK_CONNECTION_TIMEOUT"));
     }
 
-    private PooledConnection createConnection() throws SQLException {
-        return new PooledConnection(DriverManager.getConnection(url, user, password), this);
-    }
+    protected abstract PoolType createConnection() throws PersistException;
+
 
     public synchronized void destroy() {
         usedConnections.addAll(freeConnections);
         freeConnections.clear();
-        for (PooledConnection connection : usedConnections) {
+        for (PoolConnection connection : usedConnections) {
             try {
-                connection.getConnection().close();
-            } catch (SQLException e) {
+                connection.closePermanently();
+            } catch (PersistException e) {
                 logger.warn("Can't close connection");
             }
         }

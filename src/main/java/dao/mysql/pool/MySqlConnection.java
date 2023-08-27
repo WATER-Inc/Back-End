@@ -1,297 +1,256 @@
-package dao.pool;
+package dao.mysql.pool;
 
+
+import dao.PersistException;
+import dao.pool.ConnectionPool;
+import dao.pool.PoolConnection;
 
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
-public class PooledConnection implements Connection, Comparable<PooledConnection> {
-    private final Connection connection;
-    private final ConnectionPool pool;
-    public PooledConnection(Connection connection, ConnectionPool pool_) {
-        this.connection = connection;
-        this.pool = pool_;
-    }
+public class MySqlConnection extends PoolConnection<Connection> {
 
+    public MySqlConnection(Connection connection, MySqlConnectionPool pool_) {
+        super(connection, pool_);
+    }
     public Connection getConnection() {
-        return connection;
+        return getConnection();
     }
 
-    @Override
     public boolean isWrapperFor(Class<?> arg0) throws SQLException {
-        return connection.isWrapperFor(arg0);
+        return getConnection().isWrapperFor(arg0);
     }
 
-    @Override
+
     public <T> T unwrap(Class<T> arg0) throws SQLException {
-        return connection.unwrap(arg0);
+        return getConnection().unwrap(arg0);
     }
 
-    @Override
     public void abort(Executor arg0) throws SQLException {
-        connection.abort(arg0);
+        getConnection().abort(arg0);
     }
 
-    @Override
     public void clearWarnings() throws SQLException {
-        connection.clearWarnings();
+        getConnection().clearWarnings();
     }
 
-    @Override
-    public void close() throws SQLException {
-        if(pool != null)
-            pool.freeConnection(this);
-    }
-
-    @Override
     public void commit() throws SQLException {
-        connection.commit();
+        getConnection().commit();
     }
 
-    @Override
     public Array createArrayOf(String arg0, Object[] arg1) throws SQLException {
-        return connection.createArrayOf(arg0, arg1);
+        return getConnection().createArrayOf(arg0, arg1);
     }
 
-    @Override
     public Blob createBlob() throws SQLException {
-        return connection.createBlob();
+        return getConnection().createBlob();
     }
 
-    @Override
     public Clob createClob() throws SQLException {
-        return connection.createClob();
+        return getConnection().createClob();
     }
 
-    @Override
     public NClob createNClob() throws SQLException {
-        return connection.createNClob();
+        return getConnection().createNClob();
     }
 
-    @Override
     public SQLXML createSQLXML() throws SQLException {
-        return connection.createSQLXML();
+        return getConnection().createSQLXML();
     }
 
-    @Override
     public Statement createStatement() throws SQLException {
-        return connection.createStatement();
+        return getConnection().createStatement();
     }
 
-    @Override
     public Statement createStatement(int arg0, int arg1) throws SQLException {
-        return connection.createStatement(arg0, arg1);
+        return getConnection().createStatement(arg0, arg1);
     }
 
-    @Override
     public Statement createStatement(int arg0, int arg1, int arg2) throws SQLException {
-        return connection.createStatement(arg0, arg1, arg2);
+        return getConnection().createStatement(arg0, arg1, arg2);
     }
 
-    @Override
     public Struct createStruct(String arg0, Object[] arg1) throws SQLException {
-        return connection.createStruct(arg0, arg1);
+        return getConnection().createStruct(arg0, arg1);
     }
 
-    @Override
     public boolean getAutoCommit() throws SQLException {
-        return connection.getAutoCommit();
+        return getConnection().getAutoCommit();
     }
 
-    @Override
     public String getCatalog() throws SQLException {
-        return connection.getCatalog();
+        return getConnection().getCatalog();
     }
 
-    @Override
     public Properties getClientInfo() throws SQLException {
-        return connection.getClientInfo();
+        return getConnection().getClientInfo();
     }
 
-    @Override
     public String getClientInfo(String arg0) throws SQLException {
-        return connection.getClientInfo(arg0);
+        return getConnection().getClientInfo(arg0);
     }
 
-    @Override
     public int getHoldability() throws SQLException {
-        return connection.getHoldability();
+        return getConnection().getHoldability();
     }
 
-    @Override
     public DatabaseMetaData getMetaData() throws SQLException {
-        return connection.getMetaData();
+        return getConnection().getMetaData();
     }
 
-    @Override
     public int getNetworkTimeout() throws SQLException {
-        return connection.getNetworkTimeout();
+        return getConnection().getNetworkTimeout();
     }
 
-    @Override
     public String getSchema() throws SQLException {
-        return connection.getSchema();
+        return getConnection().getSchema();
     }
 
-    @Override
     public int getTransactionIsolation() throws SQLException {
-        return connection.getTransactionIsolation();
+        return getConnection().getTransactionIsolation();
     }
 
-    @Override
     public Map<String, Class<?>> getTypeMap() throws SQLException {
-        return connection.getTypeMap();
+        return getConnection().getTypeMap();
     }
 
-    @Override
     public SQLWarning getWarnings() throws SQLException {
-        return connection.getWarnings();
+        return getConnection().getWarnings();
     }
 
-    @Override
     public boolean isClosed() throws SQLException {
-        return connection.isClosed();
+        return getConnection().isClosed();
     }
 
-    @Override
     public boolean isReadOnly() throws SQLException {
-        return connection.isReadOnly();
+        return getConnection().isReadOnly();
     }
 
-    @Override
     public boolean isValid(int arg0) throws SQLException {
-        return connection.isValid(arg0);
+        return getConnection().isValid(arg0);
     }
 
-    @Override
     public String nativeSQL(String arg0) throws SQLException {
-        return connection.nativeSQL(arg0);
+        return getConnection().nativeSQL(arg0);
     }
 
-    @Override
     public CallableStatement prepareCall(String arg0) throws SQLException {
-        return connection.prepareCall(arg0);
+        return getConnection().prepareCall(arg0);
     }
 
-    @Override
     public CallableStatement prepareCall(String arg0, int arg1, int arg2) throws SQLException {
-        return connection.prepareCall(arg0, arg1, arg2);
+        return getConnection().prepareCall(arg0, arg1, arg2);
     }
 
-    @Override
     public CallableStatement prepareCall(String arg0, int arg1, int arg2, int arg3) throws SQLException {
-        return connection.prepareCall(arg0, arg1, arg2, arg3);
+        return getConnection().prepareCall(arg0, arg1, arg2, arg3);
     }
 
-    @Override
     public PreparedStatement prepareStatement(String arg0) throws SQLException {
-        return connection.prepareStatement(arg0);
+        return getConnection().prepareStatement(arg0);
     }
 
-    @Override
     public PreparedStatement prepareStatement(String arg0, int arg1) throws SQLException {
-        return connection.prepareStatement(arg0, arg1);
+        return getConnection().prepareStatement(arg0, arg1);
     }
 
-    @Override
     public PreparedStatement prepareStatement(String arg0, int[] arg1) throws SQLException {
-        return connection.prepareStatement(arg0, arg1);
+        return getConnection().prepareStatement(arg0, arg1);
     }
 
-    @Override
     public PreparedStatement prepareStatement(String arg0, String[] arg1) throws SQLException {
-        return connection.prepareStatement(arg0, arg1);
+        return getConnection().prepareStatement(arg0, arg1);
     }
 
-    @Override
     public PreparedStatement prepareStatement(String arg0, int arg1, int arg2) throws SQLException {
-        return connection.prepareStatement(arg0, arg1, arg2);
+        return getConnection().prepareStatement(arg0, arg1, arg2);
     }
 
-    @Override
     public PreparedStatement prepareStatement(String arg0, int arg1, int arg2, int arg3) throws SQLException {
-        return connection.prepareStatement(arg0, arg1, arg2, arg3);
+        return getConnection().prepareStatement(arg0, arg1, arg2, arg3);
     }
 
-    @Override
     public void releaseSavepoint(Savepoint arg0) throws SQLException {
-        connection.releaseSavepoint(arg0);
+        getConnection().releaseSavepoint(arg0);
     }
 
-    @Override
     public void rollback() throws SQLException {
-        connection.rollback();
+        getConnection().rollback();
     }
 
-    @Override
     public void rollback(Savepoint arg0) throws SQLException {
-        connection.rollback(arg0);
+        getConnection().rollback(arg0);
     }
 
-    @Override
     public void setAutoCommit(boolean arg0) throws SQLException {
-        connection.setAutoCommit(arg0);
+        getConnection().setAutoCommit(arg0);
     }
 
-    @Override
     public void setCatalog(String arg0) throws SQLException {
-        connection.setCatalog(arg0);
+        getConnection().setCatalog(arg0);
     }
 
-    @Override
     public void setClientInfo(Properties arg0) throws SQLClientInfoException {
-        connection.setClientInfo(arg0);
+        getConnection().setClientInfo(arg0);
     }
 
-    @Override
     public void setClientInfo(String arg0, String arg1) throws SQLClientInfoException {
-        connection.setClientInfo(arg0, arg1);
+        getConnection().setClientInfo(arg0, arg1);
     }
 
-    @Override
     public void setHoldability(int arg0) throws SQLException {
-        connection.setHoldability(arg0);
+        getConnection().setHoldability(arg0);
     }
 
-    @Override
     public void setNetworkTimeout(Executor arg0, int arg1) throws SQLException {
-        connection.setNetworkTimeout(arg0, arg1);
+        getConnection().setNetworkTimeout(arg0, arg1);
     }
 
-    @Override
     public void setReadOnly(boolean arg0) throws SQLException {
-        connection.setReadOnly(arg0);
+        getConnection().setReadOnly(arg0);
     }
 
-    @Override
     public Savepoint setSavepoint() throws SQLException {
-        return connection.setSavepoint();
+        return getConnection().setSavepoint();
     }
 
-    @Override
     public Savepoint setSavepoint(String arg0) throws SQLException {
-        return connection.setSavepoint(arg0);
+        return getConnection().setSavepoint(arg0);
     }
 
-    @Override
     public void setSchema(String arg0) throws SQLException {
-        connection.setSchema(arg0);
+        getConnection().setSchema(arg0);
     }
 
-    @Override
     public void setTransactionIsolation(int arg0) throws SQLException {
-        connection.setTransactionIsolation(arg0);
+        getConnection().setTransactionIsolation(arg0);
     }
 
-    @Override
     public void setTypeMap(Map<String, Class<?>> arg0) throws SQLException {
-        connection.setTypeMap(arg0);
+        getConnection().setTypeMap(arg0);
+    }
+
+
+    @Override
+    public void closePermanently() throws PersistException {
+        try {
+            getConnection().close();
+        } catch (SQLException e) {
+            throw new PersistException(e);
+        }
     }
 
     @Override
-    public int compareTo(PooledConnection connection) {
-        return hashCode() - connection.hashCode();
+    public void free() throws PersistException {
+        try {
+            getConnection().clearWarnings();
+            getConnection().setAutoCommit(true);
+        } catch (SQLException e) {
+            throw new PersistException(e);
+        }
+
     }
 }
 

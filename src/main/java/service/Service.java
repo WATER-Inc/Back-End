@@ -3,7 +3,7 @@ package service;
 import dao.GenericDAO;
 import dao.PersistException;
 import dao.mysql.MySqlDaoFactory;
-import dao.pool.PooledConnection;
+import dao.mysql.pool.MySqlConnection;
 import entity.Entity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +18,7 @@ public abstract class Service {
     }
 
     protected MySqlDaoFactory daoFactory;
-    protected PooledConnection connection = null;
+    protected MySqlConnection connection = null;
     protected GenericDAO genericDAO;
     protected Class<? extends Entity> entityClass;
 

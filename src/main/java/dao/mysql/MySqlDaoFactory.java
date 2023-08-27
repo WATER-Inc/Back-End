@@ -5,7 +5,7 @@ import dao.DAOFactory;
 import dao.GenericDAO;
 import dao.PersistException;
 import dao.mysql.pool.MySqlConnectionPool;
-import dao.pool.PooledConnection;
+import dao.mysql.pool.MySqlConnection;
 import entity.auxiliary.ChatLink;
 import entity.Message;
 import entity.Role;
@@ -21,11 +21,11 @@ public class MySqlDaoFactory implements DAOFactory<Connection> {
 
     private final Map<Class, DAOFactory.DaoCreator> creators;
 
-    public PooledConnection getConnection() {
+    public MySqlConnection getConnection() {
         return connection;
     }
 
-    private final PooledConnection connection;
+    private final MySqlConnection connection;
     @Override
     public GenericDAO getDao(Class dtoClass) throws PersistException {
         DAOFactory.DaoCreator creator = creators.get(dtoClass);

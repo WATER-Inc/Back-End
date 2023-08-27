@@ -1,6 +1,6 @@
 package dao;
 
-import dao.pool.PooledConnection;
+import dao.mysql.pool.MySqlConnection;
 import entity.Identified;
 
 import java.sql.Connection;
@@ -68,7 +68,7 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
 
     protected DAOFactory<Connection> parentFactory;
 
-    protected PooledConnection connection;
+    protected MySqlConnection connection;
 
     @Override
     public T getByPrimaryKey(String key) throws PersistException {
@@ -171,7 +171,7 @@ public abstract class AbstractJDBCDao<T extends Identified<PK>, PK extends Strin
 
     public AbstractJDBCDao(DAOFactory<Connection> parentFactory, Connection connection) {
         this.parentFactory = parentFactory;
-        this.connection = (PooledConnection) connection;
+        this.connection = (MySqlConnection) connection;
     }
 
 }
