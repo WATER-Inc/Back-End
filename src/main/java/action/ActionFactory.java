@@ -11,6 +11,8 @@ import action.http.chat.longpolling.SendMessageHttpAction;
 import action.http.chats.UserCreateChat;
 import action.http.chats.UserNeedChatsHttpAction;
 import action.http.common.FindUserByLoginHttpAction;
+import action.websocket.MainWsAction;
+import action.websocket.WsAction;
 import action.websocket.chat.SendMessageWsAction;
 
 import java.util.Map;
@@ -31,6 +33,7 @@ public class ActionFactory {
         actions.put("/water/message", SendMessageHttpAction.class);
         actions.put("/water/register", RegistrationHttpAction.class);
         actions.put("errorAction", ErrorHttpAction.class);
+        actions.put("websocket", MainWsAction.class);
     }
     public static Class<? extends AbstractAction> getAction(String uri){
                 return actions.get(uri);

@@ -13,7 +13,7 @@ import java.util.*;
 abstract public class HttpAction extends AbstractAction<HttpServletRequest, HttpServletResponse> {
     private final Set<Role> allowRoles = new HashSet<>(List.of(new Role[]{new Role("User")}));
     private User authorizedUser;
-    private String name;
+
 
     public Set<Role> getAllowRoles() {
         return allowRoles;
@@ -27,13 +27,7 @@ abstract public class HttpAction extends AbstractAction<HttpServletRequest, Http
         this.authorizedUser = authorizedUser;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @Override
     abstract public void exec(HttpServletRequest request, HttpServletResponse response) throws PersistException;
@@ -43,7 +37,7 @@ abstract public class HttpAction extends AbstractAction<HttpServletRequest, Http
         return "Action{" +
                 "allowRoles=" + allowRoles +
                 ", authorizedUser=" + authorizedUser +
-                ", name='" + name + '\'' +
+                ", name='" + getName() + '\'' +
                 ", factory=" + getFactory() +
                 '}';
     }

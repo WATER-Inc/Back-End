@@ -1,6 +1,7 @@
 package controller.filter;
 
 
+import action.AbstractAction;
 import action.http.HttpAction;
 import action.http.MainHttpAction;
 import action.http.authentication.LoginHttpAction;
@@ -30,40 +31,38 @@ public class SecurityFilter implements Filter {
         if (request instanceof HttpServletRequest && response instanceof HttpServletResponse) {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             HttpServletResponse httpResponse = (HttpServletResponse) response;
-            if(httpRequest.getHeader("Upgrade") != null && httpRequest.getHeader("Upgrade").equals("websocket"))
-                chain.doFilter(request, response);
-            else {
-                HttpAction httpAction = (HttpAction) httpRequest.getAttribute("action");
-                //Set<Role> allowRoles = action.getAllowRoles();TODO need to include in can execute calculation
-                String userName = "unauthorized user";
-                HttpSession session = httpRequest.getSession();
-                User user = null;
-                if (session != null) {
-                    session.setMaxInactiveInterval(10000);
-                    user = (User) session.getAttribute("authorizedUser");
-                    httpAction.setAuthorizedUser(user);
-                    String errorMessage = (String) session.getAttribute("SecurityFilterMessage");
-                    if (errorMessage != null) {
-                        httpRequest.setAttribute("message", errorMessage);
-                        session.removeAttribute("SecurityFilterMessage");
-                    }
+            boolean isWs = httpRequest.getHeader("Upgrade") != null && httpRequest.getHeader("Upgrade").equals("websocket");
+            AbstractAction abstractAction = (AbstractAction) httpRequest.getAttribute("action");
+            //Set<Role> allowRoles = action.getAllowRoles();TODO need to include in can execute calculation
+            String userName = "unauthorized user";
+            HttpSession session = httpRequest.getSession();
+            User user = null;
+            if (session != null) {
+                session.setMaxInactiveInterval(10000);
+                user = (User) session.getAttribute("authorizedUser");
+                if (!isWs)
+                    ((HttpAction) abstractAction).setAuthorizedUser(user);
+                String errorMessage = (String) session.getAttribute("SecurityFilterMessage");
+                if (errorMessage != null) {
+                    httpRequest.setAttribute("message", errorMessage);
+                    session.removeAttribute("SecurityFilterMessage");
                 }
-                logger.debug("AuthorizedUser: " + user);
-                boolean canExecute = httpAction instanceof LoginHttpAction || httpAction instanceof RegistrationHttpAction;
-                if (user != null) {
-                    canExecute = canExecute || httpAction.getAuthorizedUser() != null;
-                }
-                logger.debug("CanExecute:" + canExecute);
+            }
+            logger.debug("AuthorizedUser: " + user);
+            boolean canExecute = abstractAction instanceof LoginHttpAction || abstractAction instanceof RegistrationHttpAction;
+            if (user != null) {
+                canExecute = canExecute || session.getAttribute("authorizedUser") != null;
+            }
+            logger.debug("CanExecute:" + canExecute);
 
-                if (canExecute) {
-                    chain.doFilter(request, response);
-                } else {
-                    logger.info(String.format("Trying of %s access to forbidden resource \"%s\"", userName, httpAction.getName()));
-                    if (session != null && httpAction.getClass() != MainHttpAction.class) {
-                        session.setAttribute("SecurityFilterMessage", "Доступ запрещён");
-                    }
-                    httpResponse.sendRedirect(httpRequest.getContextPath() + "/");
+            if (canExecute) {
+                chain.doFilter(request, response);
+            } else {
+                logger.info(String.format("Trying of %s access to forbidden resource \"%s\"", userName, abstractAction.getName()));
+                if (session != null && abstractAction.getClass() != MainHttpAction.class) {
+                    session.setAttribute("SecurityFilterMessage", "Доступ запрещён");
                 }
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/");
             }
         } else {
             logger.error("It is impossible to use HTTP filter");
