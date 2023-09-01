@@ -30,6 +30,7 @@ public abstract class WebSocketAbstractEndPoint extends Dispatcher<String, Sessi
         WsAction action = null;
         try {
             action = actionClass.newInstance();
+            action.setName(uri);;
         } catch (InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }

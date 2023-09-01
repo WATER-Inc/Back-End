@@ -1,7 +1,6 @@
 package action;
 
 import action.http.ErrorHttpAction;
-import action.http.HttpAction;
 import action.http.authentication.LoginHttpAction;
 import action.http.authentication.LogoutHttpAction;
 import action.http.authentication.RegistrationHttpAction;
@@ -12,8 +11,7 @@ import action.http.chats.UserCreateChat;
 import action.http.chats.UserNeedChatsHttpAction;
 import action.http.common.FindUserByLoginHttpAction;
 import action.websocket.MainWsAction;
-import action.websocket.WsAction;
-import action.websocket.chat.SendMessageWsAction;
+import action.websocket.chat.sendmessage.SendMessageWsAction;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

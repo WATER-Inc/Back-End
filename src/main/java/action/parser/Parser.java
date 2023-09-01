@@ -24,4 +24,14 @@ public class Parser {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readTree(sb.toString());
     }
+    public static JsonNode parseRequest(String message) throws IOException{
+        JsonNode jsonNode = null;
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            jsonNode = objectMapper.readTree(message);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return jsonNode;
+    }
 }
