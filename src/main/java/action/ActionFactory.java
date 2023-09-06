@@ -23,9 +23,9 @@ public class ActionFactory {
     static {
         actions.put("/water/", LoginHttpAction.class);
         actions.put("/water/chat", GetChatMessagesHttpAction.class);
-        actions.put("/water/chat/send", SendMessageWsAction.class);
-        actions.put("/water/chat/remove", RemoveMessageWsAction.class);
-        actions.put("/water/chat/update", UpdateMessageWsAction.class);
+        actions.put("/water/chat/message/send", SendMessageWsAction.class);
+        actions.put("/water/chat/message/remove", RemoveMessageWsAction.class);
+        actions.put("/water/chat/message/update", UpdateMessageWsAction.class);
         actions.put("/water/chat/add/user", AddUserToChatHttpAction.class);
         actions.put("/water/chats", UserNeedChatsHttpAction.class);
         actions.put("/water/chats/create", UserCreateChat.class);
