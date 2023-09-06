@@ -1,9 +1,6 @@
-package action.websocket.chat.sendmessage;
+package action.websocket.chat.message.send;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import controller.servlet.websocket.ChatWebSocketEndPoint;
-import dao.PersistException;
 import deserializer.Deserializer;
 import deserializer.DeserializerFactory;
 import entity.Message;
@@ -11,10 +8,8 @@ import entity.User;
 
 import java.util.Date;
 
-public class SendMessageWsDeserializer implements Deserializer<Message> {
-    static{
-        DeserializerFactory.registrationDeserializer(SendMessageWsAction.class, SendMessageWsDeserializer.class);
-    }
+public class SendMessageWsDeserializer extends Deserializer<Message> {
+
     @Override
     public Message deserialize(JsonNode jsonNode) {
         if(jsonNode == null)

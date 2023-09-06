@@ -20,8 +20,10 @@ import java.io.IOException;
 @WebFilter(asyncSupported = true)
 public class SecurityFilter implements Filter {
     private static final Logger logger = LogManager.getLogger(SecurityFilter.class);
-    private static final User mode = User.Default.USER.getUser();
-
+    private static final User mode = User.Default.ADMIN.getUser();
+    public static boolean isAdminMode(){
+        return mode.equals(User.Default.ADMIN.getUser());
+    }
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -50,6 +52,10 @@ public class SecurityFilter implements Filter {
             }
             logger.debug("AuthorizedUser: " + user);
             boolean canExecute = abstractAction instanceof LoginHttpAction || abstractAction instanceof RegistrationHttpAction;
+            if(isAdminMode()){
+                logger.info("Admin mode");
+                canExecute = true;
+            }
             if (user != null) {
                 canExecute = canExecute || session.getAttribute("authorizedUser") != null;
             }

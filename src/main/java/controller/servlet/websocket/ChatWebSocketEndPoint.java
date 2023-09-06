@@ -3,6 +3,7 @@ package controller.servlet.websocket;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import controller.config.GetHttpSessionConfigurator;
+import controller.filter.SecurityFilter;
 import dao.PersistException;
 import entity.Chat;
 import entity.Message;
@@ -45,7 +46,7 @@ public class ChatWebSocketEndPoint extends WebSocketAbstractEndPoint {
                 .get("handshakereq");
         HttpSession httpSession = (HttpSession) req.getHttpSession();
         authorizeUser = (User) httpSession.getAttribute("authorizedUser");
-        if(chat == null || authorizeUser == null){
+        if(chat == null || (authorizeUser == null && !SecurityFilter.isAdminMode())){
             logger.info("No chat or authorize user");
             session.close();
         } else{

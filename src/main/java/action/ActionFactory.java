@@ -11,7 +11,9 @@ import action.http.chats.UserCreateChat;
 import action.http.chats.UserNeedChatsHttpAction;
 import action.http.common.FindUserByLoginHttpAction;
 import action.websocket.MainWsAction;
-import action.websocket.chat.sendmessage.SendMessageWsAction;
+import action.websocket.chat.message.remove.RemoveMessageWsAction;
+import action.websocket.chat.message.send.SendMessageWsAction;
+import action.websocket.chat.message.update.UpdateMessageWsAction;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,6 +24,8 @@ public class ActionFactory {
         actions.put("/water/", LoginHttpAction.class);
         actions.put("/water/chat", GetChatMessagesHttpAction.class);
         actions.put("/water/chat/send", SendMessageWsAction.class);
+        actions.put("/water/chat/remove", RemoveMessageWsAction.class);
+        actions.put("/water/chat/update", UpdateMessageWsAction.class);
         actions.put("/water/chat/add/user", AddUserToChatHttpAction.class);
         actions.put("/water/chats", UserNeedChatsHttpAction.class);
         actions.put("/water/chats/create", UserCreateChat.class);

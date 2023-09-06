@@ -25,19 +25,6 @@ public class WebSocketEndpoint {
 
         HandshakeRequest req = (HandshakeRequest) config.getUserProperties()
                 .get("handshakereq");
-        HttpSession httpSession = (HttpSession) req.getHttpSession();
-        Map<String, List<String>> headers = req.getHeaders();
-        for (Map.Entry<String,List<String>> entry : headers.entrySet()) {
-            System.out.println("Key = " + entry.getKey());
-            if(entry.getKey().equals("cookie")){
-                System.out.println("Session " + httpSession);
-                System.out.println("User " + ((User)httpSession.getAttribute("authorizedUser")));
-                System.out.println("\n\nCOOOOOOKIEEEE!!!!\n\n");
-            }
-            for (String str : entry.getValue()){
-                System.out.println("Value= " + str);
-            }
-        }
         try {
             session.getBasicRemote().sendText("Connection established");
             logger.debug(session.getId());
