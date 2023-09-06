@@ -69,7 +69,8 @@ public class ChatWebSocketEndPoint extends WebSocketAbstractEndPoint {
         process(message, session);
     }
     void sendMessage(Session session, String message) throws IOException {
-        session.getBasicRemote().sendText(message);
+        if(session.isOpen())//TODO we need to log this exception
+            session.getBasicRemote().sendText(message);
     }
     @OnClose
     public void onClose(Session session, CloseReason reason) throws PersistException {

@@ -20,9 +20,15 @@ import java.io.IOException;
 @WebFilter(asyncSupported = true)
 public class SecurityFilter implements Filter {
     private static final Logger logger = LogManager.getLogger(SecurityFilter.class);
-    private static final User mode = User.Default.ADMIN.getUser();
+    private static User mode;
     public static boolean isAdminMode(){
         return mode.equals(User.Default.ADMIN.getUser());
+    }
+    public static void setAdminMode(){
+        mode = User.Default.ADMIN.getUser();
+    }
+    public static void setUserMode(){
+        mode = User.Default.USER.getUser();
     }
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
